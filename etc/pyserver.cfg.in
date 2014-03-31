@@ -1,0 +1,8 @@
+[WebService]
+servercodedir=src/sbmledit
+wsdl=SBMLEdit_batchmode.wsdl
+port=8080
+
+[Logging]
+# Available levels: debug, info, warning, error, critical
+defaultlevel=info

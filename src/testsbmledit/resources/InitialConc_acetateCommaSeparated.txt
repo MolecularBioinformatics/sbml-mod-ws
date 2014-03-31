@@ -1,0 +1,13 @@
+Species,Init_conc
+aca,0.5
+oaa,0.0014
+coa,0.0001
+cit,9
+icit,0.15
+akg,0.2
+sca,0.04
+suc,6
+fa,0.3
+mal,5
+gly,4
+biosyn,0.1

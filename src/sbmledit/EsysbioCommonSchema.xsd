@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://esysbio.org/common/schema" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://esysbio.org/common/schema" elementFormDefault="qualified">
+
+	
+	<xsd:element name="FaultEnum" type="tns:FaultEnumType"></xsd:element>
+	<xsd:simpleType name="FaultEnumType">
+		<xsd:annotation>
+			<xsd:documentation>
+				Error types to expect from the system
+			 </xsd:documentation>			
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="AUTHENTICATION_ERROR"></xsd:enumeration>
+			<xsd:enumeration value="ENTITY_NOT_FOUND"></xsd:enumeration>
+			<xsd:enumeration value="AUTHORIZATION_ERROR"></xsd:enumeration>			
+			<xsd:enumeration value="MISSING_ELEMENT"></xsd:enumeration>	
+			<xsd:enumeration value="ENTITY_EXISTS"></xsd:enumeration>	
+			<xsd:enumeration value="INTERNAL_ERROR"></xsd:enumeration>					
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:element name="Permission" type="tns:PermissionType" />
+	<simpleType name="PermissionType">
+		<xsd:annotation>
+				<xsd:documentation>
+			 Permission values for policies
+			 </xsd:documentation>			
+		</xsd:annotation>
+		<restriction base="xsd:string">
+			<enumeration value="READ" />
+			<enumeration value="WRITE" />
+			<enumeration value="EXECUTE" />
+		</restriction>
+	</simpleType>
+
+	<xsd:element name="MessageBoard" type="tns:MessageBoardType" />
+	<xsd:complexType name="MessageBoardType">
+		<xsd:annotation>
+				<xsd:documentation>
+			 Type for a message board, user, project and group have one. A message board can be used for posting messages to the entity.
+			 </xsd:documentation>			
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="Id" type="xsd:string" />
+			<xsd:element name="Owner" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Messages" type="tns:MessageType"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="Message" type="tns:MessageType" />
+	<xsd:complexType name="MessageType">	
+		<xsd:annotation>
+				<xsd:documentation>
+			 A message for the message board
+			 </xsd:documentation>			
+		</xsd:annotation>			
+		<xsd:sequence>
+			<xsd:element name="Id" type="xsd:string" minOccurs="0"/>	
+			<xsd:element name="CreatedBy" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Created" type="xsd:dateTime" minOccurs="0"/>
+			<xsd:element name="Read" type="xsd:boolean" minOccurs="0"/>
+			<xsd:element ref="tns:MessageEnum" minOccurs="0"/>
+			<xsd:element name="Recipient" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="Subject" type="xsd:string"  minOccurs="0"/>
+			<xsd:element name="Issuer" type="xsd:string" minOccurs="0"/>	
+			<xsd:element name="IssuerId" type="xsd:string" minOccurs="0"/>		
+			<xsd:choice>					
+				<xsd:element name="ConfimatioId" type="xsd:string" />
+				<xsd:element name="FreeText" type="xsd:string"/>
+			</xsd:choice>
+		</xsd:sequence>
+		<xsd:attribute name="entity" type="tns:EntityEnumType" />	
+	</xsd:complexType>
+	
+
+
+	<xsd:element name="MessageEnum" type="tns:MessageEnumType">
+		
+	</xsd:element>
+	<xsd:simpleType name="MessageEnumType">		
+			<xsd:annotation>
+					<xsd:documentation>
+			 Types of messages we have, invitation is to a project/group, ...
+			 </xsd:documentation>			
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="INVITATION"></xsd:enumeration>
+			<xsd:enumeration value="SYSTEM_MESSAGE"></xsd:enumeration>
+			<xsd:enumeration value="MESSAGE"></xsd:enumeration>
+		</xsd:restriction>
+		
+	</xsd:simpleType>
+	
+	<xsd:element name="EntityEnum" type="tns:EntityEnumType">
+		
+	</xsd:element>
+	<xsd:simpleType name="EntityEnumType">		
+			<xsd:annotation>
+					<xsd:documentation>
+			 Types of messages we have, invitation is to a project/group, ...
+			 </xsd:documentation>			
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="USER"/>
+			<xsd:enumeration value="PROJECT"/>
+			<xsd:enumeration value="GROUP"/>
+		</xsd:restriction>
+		
+	</xsd:simpleType>
+	
+
+	<xsd:element name="Role" type="tns:RoleType"></xsd:element>
+	<xsd:simpleType name="RoleType">
+		<xsd:annotation>
+				<xsd:documentation>
+			 Different types of roles in the system
+			 	</xsd:documentation>			
+		</xsd:annotation>
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ADMIN"></xsd:enumeration>
+			<xsd:enumeration value="USER"></xsd:enumeration>
+			<xsd:enumeration value="TESTER"></xsd:enumeration>
+			<xsd:enumeration value="GUEST"></xsd:enumeration>
+			<xsd:enumeration value="INVITED_USER"></xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:element name="Roles" type="tns:RolesType" />
+	<xsd:complexType name="RolesType">
+		<xsd:sequence>
+			<xsd:element ref="tns:Role" maxOccurs="unbounded"
+				minOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="Email" type="tns:EmailType" />
+	<xsd:simpleType name="EmailType">
+		<xsd:annotation>
+			<xsd:documentation>
+				A email string that checks to see if the email in syntactilly valid
+			</xsd:documentation>			 			
+		</xsd:annotation>
+		<xsd:restriction base="string">
+			<xsd:pattern value="[^@]+@[^\.]+\..+" />
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>	
