@@ -17,6 +17,6 @@ setup(name='sbmlmod',
           [console_scripts]
           gencode = sbmlmod.gencode:generate_server_code
           serverd = pyserver.serverd:serverd
-          client = pyclient.SBMLEditClient:main
+          test = testsbmlmod.all_tests:main
       """,
       )

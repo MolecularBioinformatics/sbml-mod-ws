@@ -1,1 +1,1 @@
-resources_folder = 'resources/'
+resources_folder = 'src/testsbmlmod/resources/'

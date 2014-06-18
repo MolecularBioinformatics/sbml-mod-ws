@@ -23,6 +23,11 @@ To generate web service stub code:
 
 Configure service (if needed) by editing pyserver.cfg. Note that the port in pyserver.cfg must correspond to the one defined in the WSDL file.
 
+Run tests
+---------
+
+`./bin/test`
+
 Running web service
 -------------------
 
