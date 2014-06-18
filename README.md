@@ -1,6 +1,13 @@
 SBMLmod web service
 ===================
 
+Dependencies
+------------
+ - Python > 2.6
+ - [Setuptools](https://bitbucket.org/pypa/setuptools/raw/0.8/ez_setup.py)
+ - [libSBML](http://sbml.org/Software/libSBML/docs/python-api/libsbml-installation.html)
+
+
 Setup/install
 -------------
 
