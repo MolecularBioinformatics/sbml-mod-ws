@@ -1,6 +1,6 @@
 [WebService]
-servercodedir=src/sbmledit
-wsdl=SBMLEdit_batchmode.wsdl
+servercodedir=src/sbmlmod
+wsdl=SBMLmod.wsdl
 port=8080
 
 [Logging]

@@ -1,12 +1,12 @@
 import unittest
-from sbmledit import DataMapper2
-from sbmledit.SBMLEditFault import SBMLEditFault
+from sbmlmod import DataMapper
+from sbmlmod.SBMLmod_fault import SBMLmodFault
 
 class TestDataMapperBatchProcessing(unittest.TestCase):
 
 
     def testMapExpressionToEnzymesDefault(self):
-        mapper = DataMapper2.DataMapper2()
+        mapper = DataMapper.DataMapper()
         mapinput = 'GenSymbol\tExpr_verdi\nIDO\tIndo2\nTDO\tTdo\nTPH\tTph1\nIDO\tIndo1\nTPH\tTph2'
         exprinput = 'Gen_navn\tExpr1\tExpr2\tExpr3\nIndo2\t46.8\t982.8\t9.6\nTdo\t83.5\t45.9\t73.9\nTph1\t37.2\t78.2\t2.0\nIndo1\t24.3\t78.2\t97.0\nTph2\t0.23\t9.6\t45.9'
 
@@ -23,7 +23,7 @@ class TestDataMapperBatchProcessing(unittest.TestCase):
 
 
     def testCorrectNumberOfColumnsIncludedInDataTable(self):
-        mapper = DataMapper2.DataMapper2()
+        mapper = DataMapper.DataMapper()
         mapinput = 'GenSymbol\tExpr_verdi\nIDO\tIndo2\nTDO\tTdo\nTPH\tTph1\nIDO\tIndo1\nTPH\tTph2'
         exprinput = 'Gen_navn\tExpr1\tExpr2\tExpr3\nIndo2\t46.8\t982.8\t9.6\nTdo\t83.5\t45.9\t73.9\nTph1\t37.2\t78.2\t23.0\nIndo1\t24.3\t78.2\t97.0\nTph2\t0.23\t9.6\t4.9'
 
@@ -36,7 +36,7 @@ class TestDataMapperBatchProcessing(unittest.TestCase):
         self.assertEquals(3,len(testexpr[0]))
 
     def testMapExpressionToEnzymesSUM(self):
-        mapper = DataMapper2.DataMapper2()
+        mapper = DataMapper.DataMapper()
         mapinput = 'GenSymbol\tExpr_verdi\nIDO\tIndo2\nTDO\tTdo\nTPH\tTph1\nIDO\tIndo1\nTPH\tTph2'
         exprinput = 'Gen_navn\tExpr1\tExpr2\tExpr3\nIndo2\t46.8\t982.8\t9.6\nTdo\t83.5\t45.9\t73.9\nTph1\t37.2\t78.2\t2.0\nIndo1\t24.3\t78.2\t97.0\nTph2\t0.23\t9.6\t45.9'
 

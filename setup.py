@@ -3,9 +3,9 @@ from setuptools import setup, find_packages
 
 version = '0.1.6'
 
-setup(name='sbmledit',
+setup(name='sbmlmod',
       version=version,
-      description="Python Web Service Template",
+      description="SBMLmod Web Service",
       author=["Siv Hollup and Anne-Kristin Stavrum"],
       author_email=["annes@ii.uib.no"],
       package_dir={'': 'src'},
@@ -15,7 +15,7 @@ setup(name='sbmledit',
       install_requires=['ZSI==2.1-a4','suds==0.3.9'],
       entry_points="""
           [console_scripts]
-          gencode = sbmledit.gencode:generate_server_code
+          gencode = sbmlmod.gencode:generate_server_code
           serverd = pyserver.serverd:serverd
           client = pyclient.SBMLEditClient:main
       """,

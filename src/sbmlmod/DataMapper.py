@@ -1,12 +1,7 @@
-'''
-Created on 4 Nov 2010
-
-@author: st08574
-'''
-from sbmledit.SBMLEditFault import SBMLEditFault
+from sbmlmod.SBMLmod_fault import SBMLmodFault
 
 
-class DataMapper2(object):
+class DataMapper(object):
 
     def setup(self,mapping_string,expr_string,col=2,header=True,batch=False):
         self.setup_mapping(mapping_string)
@@ -28,7 +23,7 @@ class DataMapper2(object):
                 columns = line.split('\t')
                 if len(columns)<2:
                     message='The mapping file must have at least 2 columns'
-                    raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                    raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
                 key=columns[0].strip()
                 value = columns[1].strip()
                 if key not in self.mapping.keys():
@@ -55,7 +50,7 @@ class DataMapper2(object):
 
         if col >lineLength:
             message='The data column index is outside the range of the number of columns in the data file.'
-            raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
 
         self.exprId = []
@@ -77,7 +72,7 @@ class DataMapper2(object):
                 columns = line.split('\t')
                 if len(columns) != lineLength:
                     message='Columns are of unequal length'
-                    raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                    raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
                 self.exprId.append(columns[0].strip())
                 if batch:
@@ -86,7 +81,7 @@ class DataMapper2(object):
                             newrow.append(float(columns[i]))
                         except:
                             message='A value in the data column cannot be converted to float: '+columns[i]
-                            raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
 
                 else:
@@ -94,7 +89,7 @@ class DataMapper2(object):
                         newrow.append(float(columns[col]))
                     except:
                         message='A value in the data column cannot be converted to float: '+columns[col]
-                        raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                        raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
                 self.expr.append(newrow)
 
             lno=lno+1
@@ -125,7 +120,7 @@ class DataMapper2(object):
             return self.expr,self.exprId,warning
         else:
             message = "The merge mode parameter has not been set to a valid option. Valid options are: 'MAX','MIN','MEDIAN','MEAN' and'SUM'."
-            raise SBMLEditFault(message, "INTERNAL_ERROR")
+            raise SBMLmodFault(message, "INTERNAL_ERROR")
 
 
 
@@ -145,7 +140,7 @@ class DataMapper2(object):
             warning.append("Checking Mapping...")
             if noMissing==total:
                 message = "None of the reaction id's can be found in the dataset."
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
             warning.append(str(noMissing)+' of '+str(total)+" of reaction id's from the mapping file are not found in the dataset.")
             warning.append('Expression value not found for: '+str(missingExpr))
             warning.append('Make sure the ids in either the mapping file or the data file does not contain '"'"'.')
@@ -320,7 +315,7 @@ class DataMapper2(object):
 
         if not self.iso and not self.complex:
             message='To use E-FLUX a third column must be specified in the mapping file marking genes that contributes to enzyme complexes and/or iso-enzymes. Annotation should be "COMPLEX" and "ISO" respectively.'
-            raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         for key in mapping:
             genes = mapping[key]
@@ -340,7 +335,7 @@ class DataMapper2(object):
 
                     else:
                         message='More than one gene maps to the enzyme '+key +', however the genes are not annotated with "COMPLEX" or "ISO" in the mapping file'
-                        raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                        raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
                     if val:
                         newrow.append(val)
                 mergeExpression.append(newrow)

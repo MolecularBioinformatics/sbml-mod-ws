@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-	xmlns:tns="http://esysbio.org/service/bio/SBMLEdit" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SBMLEdit"
-	xmlns:sbmlmns="http://esysbio.org/schema/sbmledit" xmlns:sbmlns="http://esysbio.org/schema/sbmledit"
+	xmlns:tns="http://esysbio.org/service/bio/SBMLmod" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SBMLmod"
+	xmlns:sbmlmns="http://esysbio.org/schema/sbmlmod" xmlns:sbmlns="http://esysbio.org/schema/sbmlmod"
 	xmlns:sawsdl="http://www.w3.org/ns/sawsdl"
 	xmlns:sbml="http://www.sbml.org/sbml/level2/version3"
 
-	targetNamespace="http://esysbio.org/service/bio/SBMLEdit">
+	targetNamespace="http://esysbio.org/service/bio/SBMLmod">
 
 	<wsdl:types>
-		<xsd:schema targetNamespace="http://esysbio.org/service/bio/SBMLEdit">
+		<xsd:schema targetNamespace="http://esysbio.org/service/bio/SBMLmod">
 
 			<xsd:simpleType name="MergeModeType">
 				<xsd:restriction base="xsd:string">
@@ -370,7 +370,7 @@
 				</xsd:complexType>
 			</xsd:element>
 
-			<xsd:element name="SBMLEditFault" type="tns:FaultType" />
+			<xsd:element name="SBMLmodFault" type="tns:FaultType" />
 
 			<xsd:complexType name="FaultType">
 				<xsd:annotation>
@@ -1450,8 +1450,8 @@
 		<wsdl:part name="parameters" element="tns:AddBoundsToKineticLawResponse" />
 	</wsdl:message>
 
-	<wsdl:message name="SBMLEditFault">
-		<wsdl:part name="fault" element="tns:SBMLEditFault" />
+	<wsdl:message name="SBMLmodFault">
+		<wsdl:part name="fault" element="tns:SBMLmodFault" />
 	</wsdl:message>
 
 	<wsdl:message name="GetVersionRequest">
@@ -1652,7 +1652,7 @@
 		<wsdl:part name="parameters" element="tns:ScaleGlobalParametersGzippedBase64EncodedResponse"></wsdl:part>
 	</wsdl:message>
 	<wsdl:message name="ScaleGlobalParametersTextFault">
-		<wsdl:part name="fault" element="tns:SBMLEditFault"></wsdl:part>
+		<wsdl:part name="fault" element="tns:SBMLmodFault"></wsdl:part>
 	</wsdl:message>
 	<wsdl:message name="ScaleGlobalParametersBase64EncodedFault">
 		<wsdl:part name="parameters" element="tns:ScaleGlobalParametersBase64EncodedFault"></wsdl:part>
@@ -1661,47 +1661,47 @@
 		name="ScaleGlobalParametersGzippedBase64EncodedFault">
 		<wsdl:part name="parameters" element="tns:ScaleGlobalParametersGzippedBase64EncodedFault"></wsdl:part>
 	</wsdl:message>
-	<wsdl:portType name="SBMLEdit">
+	<wsdl:portType name="SBMLmod">
 		<wsdl:operation name="ReplaceGlobalParameters">
 			<wsdl:input message="tns:ReplaceGlobalParametersRequest" />
 			<wsdl:output message="tns:ReplaceGlobalParametersResponse" />
-			<wsdl:fault name="ReplaceGlobalParametersFault" message="tns:SBMLEditFault" />
+			<wsdl:fault name="ReplaceGlobalParametersFault" message="tns:SBMLmodFault" />
 		</wsdl:operation>
 		<wsdl:operation name="ReplaceKineticLawParameter">
 			<wsdl:input message="tns:ReplaceKineticLawParameterRequest" />
 			<wsdl:output message="tns:ReplaceKineticLawParameterResponse" />
-			<wsdl:fault name="ReplaceKineticLawParameterFault" message="tns:SBMLEditFault" />
+			<wsdl:fault name="ReplaceKineticLawParameterFault" message="tns:SBMLmodFault" />
 		</wsdl:operation>
 
 		<wsdl:operation name="ValidateSBMLModel">
 			<wsdl:input message="tns:ValidateSBMLModelRequest" />
 			<wsdl:output message="tns:ValidateSBMLModelResponse" />
-			<wsdl:fault name="ValidateSBMLModelFault" message="tns:SBMLEditFault" />
+			<wsdl:fault name="ValidateSBMLModelFault" message="tns:SBMLmodFault" />
 		</wsdl:operation>
 
 		<wsdl:operation name="ScaleKineticLawParameter">
 			<wsdl:input message="tns:ScaleKineticLawParameterRequest" />
 			<wsdl:output message="tns:ScaleKineticLawParameterResponse" />
-			<wsdl:fault name="ScaleKineticLawParameterFault" message="tns:SBMLEditFault" />
+			<wsdl:fault name="ScaleKineticLawParameterFault" message="tns:SBMLmodFault" />
 		</wsdl:operation>
 
 		<wsdl:operation name="AddKineticLawParameter">
 			<wsdl:input message="tns:AddKineticLawParameterRequest" />
 			<wsdl:output message="tns:AddKineticLawParameterResponse" />
-			<wsdl:fault name="AddKineticLawParameterFault" message="tns:SBMLEditFault" />
+			<wsdl:fault name="AddKineticLawParameterFault" message="tns:SBMLmodFault" />
 		</wsdl:operation>
 
 		<wsdl:operation name="AddBoundsToKineticLaw">
 			<wsdl:input message="tns:AddBoundsToKineticLawRequest" />
 			<wsdl:output message="tns:AddBoundsToKineticLawResponse" />
-			<wsdl:fault name="AddBoundsToKineticLawFault" message="tns:SBMLEditFault" />
+			<wsdl:fault name="AddBoundsToKineticLawFault" message="tns:SBMLmodFault" />
 		</wsdl:operation>
 
 		<wsdl:operation name="ReplaceInitialConcentrationsOfSpecies">
 			<wsdl:input message="tns:ReplaceInitialConcentrationsOfSpeciesRequest" />
 			<wsdl:output message="tns:ReplaceInitialConcentrationsOfSpeciesResponse" />
 			<wsdl:fault name="ReplaceInitialConcentrationsOfSpeciesFault"
-				message="tns:SBMLEditFault" />
+				message="tns:SBMLmodFault" />
 		</wsdl:operation>
 		<wsdl:operation name="GetVersion">
 			<wsdl:input message="tns:GetVersionRequest"></wsdl:input>
@@ -1710,117 +1710,117 @@
 		<wsdl:operation name="ValidateSBMLModelText">
 			<wsdl:input message="tns:ValidateSBMLModelTextRequest"></wsdl:input>
 			<wsdl:output message="tns:ValidateSBMLModelTextResponse"></wsdl:output>
-			<wsdl:fault name="ValidateSBMLTextFault" message="tns:SBMLEditFault" />
+			<wsdl:fault name="ValidateSBMLTextFault" message="tns:SBMLmodFault" />
 		</wsdl:operation>
 		<wsdl:operation name="ValidateSBMLModelBase64Encoded">
 			<wsdl:input message="tns:ValidateSBMLModelBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ValidateSBMLModelBase64EncodedResponse"></wsdl:output>
-			<wsdl:fault name="ValidateSBMLbase64encodedFault" message="tns:SBMLEditFault" />
+			<wsdl:fault name="ValidateSBMLbase64encodedFault" message="tns:SBMLmodFault" />
 		</wsdl:operation>
 		<wsdl:operation name="ValidateSBMLModelGzippedBase64Encoded">
 			<wsdl:input message="tns:ValidateSBMLModelGzippedBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ValidateSBMLModelGzippedBase64EncodedResponse"></wsdl:output>
-			<wsdl:fault name="ValidateSBMLbase64encodedGzippedFault" message="tns:SBMLEditFault" />
+			<wsdl:fault name="ValidateSBMLbase64encodedGzippedFault" message="tns:SBMLmodFault" />
 		</wsdl:operation>
 		<wsdl:operation name="ReplaceGlobalParametersText">
 			<wsdl:input message="tns:ReplaceGlobalParametersTextRequest"></wsdl:input>
 			<wsdl:output message="tns:ReplaceGlobalParametersTextResponse"></wsdl:output>
-            <wsdl:fault name="ReplaceGlobalParamtersTextFault" message="tns:SBMLEditFault"></wsdl:fault>
+            <wsdl:fault name="ReplaceGlobalParamtersTextFault" message="tns:SBMLmodFault"></wsdl:fault>
         </wsdl:operation>
 		<wsdl:operation name="ReplaceGlobalParametersGzippedBase64Encoded">
 			<wsdl:input message="tns:ReplaceGlobalParametersGzippedBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ReplaceGlobalParametersGzippedBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="ReplaceGlobalParametersGzippedBase64EncodedFault" message="tns:SBMLEditFault"></wsdl:fault>
+            <wsdl:fault name="ReplaceGlobalParametersGzippedBase64EncodedFault" message="tns:SBMLmodFault"></wsdl:fault>
         </wsdl:operation>
 		<wsdl:operation name="ReplaceKineticLawParameterText">
 			<wsdl:input message="tns:ReplaceKineticLawParameterTextRequest"></wsdl:input>
 			<wsdl:output message="tns:ReplaceKineticLawParameterTextResponse"></wsdl:output>
-            <wsdl:fault name="ReplaceKineticLawParameterTextFault" message="tns:SBMLEditFault"></wsdl:fault>
+            <wsdl:fault name="ReplaceKineticLawParameterTextFault" message="tns:SBMLmodFault"></wsdl:fault>
         </wsdl:operation>
 		<wsdl:operation name="ReplaceKineticLawParameterBase64Encoded">
 			<wsdl:input message="tns:ReplaceKineticLawParameterBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ReplaceKineticLawParameterBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="ReplaceKineticLawParamterBase64EncodedFault" message="tns:SBMLEditFault"></wsdl:fault>
+            <wsdl:fault name="ReplaceKineticLawParamterBase64EncodedFault" message="tns:SBMLmodFault"></wsdl:fault>
         </wsdl:operation>
 		<wsdl:operation name="ReplaceKineticLawParameterGzippedBase64Encoded">
 			<wsdl:input message="tns:ReplaceKineticLawParameterGzippedBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ReplaceKineticLawParameterGzippedBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="ReplaceKineticLawParamterGzippedBase64Encoded" message="tns:SBMLEditFault"></wsdl:fault>
+            <wsdl:fault name="ReplaceKineticLawParamterGzippedBase64Encoded" message="tns:SBMLmodFault"></wsdl:fault>
         </wsdl:operation>
 		<wsdl:operation name="ReplaceGlobalParametersBase64Encoded">
 			<wsdl:input message="tns:ReplaceGlobalParametersBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ReplaceGlobalParametersBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="ReplaceGlobalParametersBase64EncodedFault" message="tns:SBMLEditFault"></wsdl:fault>
+            <wsdl:fault name="ReplaceGlobalParametersBase64EncodedFault" message="tns:SBMLmodFault"></wsdl:fault>
         </wsdl:operation>
 		<wsdl:operation name="ScaleKineticLawParameterText">
 			<wsdl:input message="tns:ScaleKineticLawParameterTextRequest"></wsdl:input>
 			<wsdl:output message="tns:ScaleKineticLawParameterTextResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLEditFault"></wsdl:fault>
+            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
         </wsdl:operation>
 		<wsdl:operation name="ScaleKineticLawParameterBase64Encoded">
 			<wsdl:input message="tns:ScaleKineticLawParameterBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ScaleKineticLawParameterBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLEditFault"></wsdl:fault>
+            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
         </wsdl:operation>
 		<wsdl:operation name="ScaleKineticLawParameterGzippedBase64Encoded">
 			<wsdl:input message="tns:ScaleKineticLawParameterGzippedBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ScaleKineticLawParameterGzippedBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLEditFault"></wsdl:fault>
+            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
         </wsdl:operation>
 		<wsdl:operation name="AddBoundsToKineticLawText">
 			<wsdl:input message="tns:AddBoundsToKineticLawTextRequest"></wsdl:input>
 			<wsdl:output message="tns:AddBoundsToKineticLawTextResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLEditFault"></wsdl:fault>
+            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
         </wsdl:operation>
 		<wsdl:operation name="AddBoundsToKineticLawBase64Encoded">
 			<wsdl:input message="tns:AddBoundsToKineticLawBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:AddBoundsToKineticLawBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLEditFault"></wsdl:fault>
+            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
         </wsdl:operation>
 		<wsdl:operation name="AddBoundsToKineticLawGzippedBase64Encoded">
 			<wsdl:input message="tns:AddBoundsToKineticLawGzippedBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:AddBoundsToKineticLawGzippedBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLEditFault"></wsdl:fault>
+            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
         </wsdl:operation>
 		<wsdl:operation name="ReplaceInitialConcentrationsOfSpeciesText">
 			<wsdl:input message="tns:ReplaceInitialConcentrationsOfSpeciesTextRequest"></wsdl:input>
 			<wsdl:output message="tns:ReplaceInitialConcentrationsOfSpeciesTextResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLEditFault"></wsdl:fault>
+            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
         </wsdl:operation>
 		<wsdl:operation name="ReplaceInitialConcentrationsOfSpeciesBase64Encoded">
 			<wsdl:input message="tns:ReplaceInitialConcentrationsOfSpeciesBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ReplaceInitialConcentrationsOfSpeciesBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLEditFault"></wsdl:fault>
+            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
         </wsdl:operation>
 		<wsdl:operation name="ReplaceInitialConcentrationsOfSpeciesGzippedBase64Encoded">
 			<wsdl:input message="tns:ReplaceInitialConcentrationsOfSpeciesGzippedBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ReplaceInitialConcentrationsOfSpeciesGzippedBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLEditFault"></wsdl:fault>
+            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
         </wsdl:operation>
 		<wsdl:operation name="ScaleGlobalParametersText">
 			<wsdl:input message="tns:ScaleGlobalParametersTextRequest"></wsdl:input>
 			<wsdl:output message="tns:ScaleGlobalParametersTextResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLEditFault"></wsdl:fault>
+            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
         </wsdl:operation>
 		<wsdl:operation name="ScaleGlobalParametersBase64Encoded">
 			<wsdl:input message="tns:ScaleGlobalParametersBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ScaleGlobalParametersBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLEditFault"></wsdl:fault>
+            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
         </wsdl:operation>
 		<wsdl:operation name="ScaleGlobalParametersGzippedBase64Encoded">
 			<wsdl:input message="tns:ScaleGlobalParametersGzippedBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ScaleGlobalParametersGzippedBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLEditFault"></wsdl:fault>
+            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
         </wsdl:operation>
 	</wsdl:portType>
 
 
-	<wsdl:binding name="SBMLEditSOAP" type="tns:SBMLEdit">
+	<wsdl:binding name="SBMLmodSOAP" type="tns:SBMLmod">
 		<soap:binding style="document"
 			transport="http://schemas.xmlsoap.org/soap/http" />
 		<wsdl:operation name="ReplaceGlobalParameters">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ReplaceGlobalParameters" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ReplaceGlobalParameters" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -1834,7 +1834,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="ReplaceKineticLawParameter">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ReplaceKineticLawParameter" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ReplaceKineticLawParameter" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -1848,7 +1848,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="ValidateSBMLModel">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ValidateSBMLModel" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ValidateSBMLModel" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -1861,7 +1861,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="ScaleKineticLawParameter">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ScaleKineticLawParameter" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ScaleKineticLawParameter" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -1875,7 +1875,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="AddKineticLawParameter">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/AddKineticLawParameter" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/AddKineticLawParameter" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -1889,7 +1889,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="AddBoundsToKineticLaw">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/AddBoundsToKineticLaw" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/AddBoundsToKineticLaw" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -1903,7 +1903,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="ReplaceInitialConcentrationsOfSpecies">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ReplaceInitialConcentrationsOfSpecies" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ReplaceInitialConcentrationsOfSpecies" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -1918,7 +1918,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="GetVersion">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/GetVersion" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/GetVersion" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -1928,7 +1928,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="ValidateSBMLModelText">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ValidateSBMLModelText" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ValidateSBMLModelText" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -1941,7 +1941,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="ValidateSBMLModelBase64Encoded">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ValidateSBMLModelBase64Encoded" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ValidateSBMLModelBase64Encoded" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -1955,7 +1955,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="ValidateSBMLModelGzippedBase64Encoded">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ValidateSBMLModelGzippedBase64Encoded" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ValidateSBMLModelGzippedBase64Encoded" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -1969,7 +1969,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="ReplaceGlobalParametersText">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ReplaceGlobalParametersText" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ReplaceGlobalParametersText" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -1983,7 +1983,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="ReplaceGlobalParametersBase64Encoded">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ReplaceGlobalParametersBase64Encoded" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ReplaceGlobalParametersBase64Encoded" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -1999,7 +1999,7 @@
 		<wsdl:operation
 			name="ReplaceGlobalParametersGzippedBase64Encoded">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ReplaceGlobalParametersGzippedBase64Encoded" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ReplaceGlobalParametersGzippedBase64Encoded" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -2014,7 +2014,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="ReplaceKineticLawParameterText">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ReplaceKineticLawParameterText" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ReplaceKineticLawParameterText" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -2029,7 +2029,7 @@
 		<wsdl:operation
 			name="ReplaceKineticLawParameterBase64Encoded">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ReplaceKineticLawParameterBase64Encoded" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ReplaceKineticLawParameterBase64Encoded" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -2045,7 +2045,7 @@
 		<wsdl:operation
 			name="ReplaceKineticLawParameterGzippedBase64Encoded">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ReplaceKineticLawParameterGzippedBase64Encoded" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ReplaceKineticLawParameterGzippedBase64Encoded" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -2060,7 +2060,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="ScaleKineticLawParameterText">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ScaleKineticLawParameterText" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ScaleKineticLawParameterText" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -2073,7 +2073,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="ScaleKineticLawParameterBase64Encoded">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ScaleKineticLawParameterBase64Encoded" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ScaleKineticLawParameterBase64Encoded" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -2087,7 +2087,7 @@
 		<wsdl:operation
 			name="ScaleKineticLawParameterGzippedBase64Encoded">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ScaleKineticLawParameterGzippedBase64Encoded" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ScaleKineticLawParameterGzippedBase64Encoded" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -2100,7 +2100,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="AddBoundsToKineticLawText">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/AddBoundsToKineticLawText" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/AddBoundsToKineticLawText" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -2113,7 +2113,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="AddBoundsToKineticLawBase64Encoded">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/AddBoundsToKineticLawBase64Encoded" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/AddBoundsToKineticLawBase64Encoded" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -2127,7 +2127,7 @@
 		<wsdl:operation
 			name="AddBoundsToKineticLawGzippedBase64Encoded">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/AddBoundsToKineticLawGzippedBase64Encoded" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/AddBoundsToKineticLawGzippedBase64Encoded" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -2141,7 +2141,7 @@
 		<wsdl:operation
 			name="ReplaceInitialConcentrationsOfSpeciesText">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ReplaceInitialConcentrationsOfSpeciesText" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ReplaceInitialConcentrationsOfSpeciesText" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -2155,7 +2155,7 @@
 		<wsdl:operation
 			name="ReplaceInitialConcentrationsOfSpeciesBase64Encoded">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ReplaceInitialConcentrationsOfSpeciesBase64Encoded" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ReplaceInitialConcentrationsOfSpeciesBase64Encoded" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -2169,7 +2169,7 @@
 		<wsdl:operation
 			name="ReplaceInitialConcentrationsOfSpeciesGzippedBase64Encoded">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ReplaceInitialConcentrationsOfSpeciesGzippedBase64Encoded" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ReplaceInitialConcentrationsOfSpeciesGzippedBase64Encoded" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -2182,7 +2182,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="ScaleGlobalParametersText">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ScaleGlobalParametersText" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ScaleGlobalParametersText" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -2195,7 +2195,7 @@
 		</wsdl:operation>
 		<wsdl:operation name="ScaleGlobalParametersBase64Encoded">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ScaleGlobalParametersBase64Encoded" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ScaleGlobalParametersBase64Encoded" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -2209,7 +2209,7 @@
 		<wsdl:operation
 			name="ScaleGlobalParametersGzippedBase64Encoded">
 			<soap:operation
-				soapAction="http://esysbio.org/service/bio/SBMLEdit/ScaleGlobalParametersGzippedBase64Encoded" />
+				soapAction="http://esysbio.org/service/bio/SBMLmod/ScaleGlobalParametersGzippedBase64Encoded" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>
@@ -2221,11 +2221,11 @@
 			</wsdl:fault>
 		</wsdl:operation>
 	</wsdl:binding>
-	<wsdl:service name="SBMLEdit">
-		<wsdl:port binding="tns:SBMLEditSOAP" name="SBMLEditSOAP">
-			  <soap:address location="http://localhost:8080/sbmledit" />
+	<wsdl:service name="SBMLmod">
+		<wsdl:port binding="tns:SBMLmodSOAP" name="SBMLmodSOAP">
+			  <soap:address location="http://localhost:8080/sbmlmod" />
 
-			<!--<soap:address location="http://test-app.bccs.uib.no:8105/sbmledit" />-->
+			<!--<soap:address location="http://test-app.bccs.uib.no:8105/sbmlmod" />-->
 
 		</wsdl:port>
 	</wsdl:service>

@@ -1,0 +1,1 @@
+resources_folder = 'resources/'
