@@ -1,25 +1,20 @@
-'''
-Created on Nov 4, 2010
-
-@author: mblso
-'''
-from SBMLEdit_server import SBMLEdit
+from SBMLmod_server import SBMLmod
 #from pyserver.config import WSDL
 from ZSI import ServiceContainer
 import base64
 import zlib
 import tarfile
 from libsbml import SBMLReader, SBMLWriter
-from sbmledit.SBMLEditFault import SBMLEditFault
-from sbmledit.DataMapper2 import DataMapper2
-from sbmledit.ModelEditor import ModelEditor
+from sbmlmod.SBMLmod_fault import SBMLmodFault
+from sbmlmod.DataMapper import DataMapper
+from sbmlmod.ModelEditor import ModelEditor
 import StringIO
-from sbmledit.SBMLEdit_types import ns0 as SBMLfiletypeNs
+from sbmlmod.SBMLmod_types import ns0 as SBMLfiletypeNs
 
-from sbmledit.facades import version_facade
-from sbmledit.facades import ValidateSBMLmodel_facade
+from sbmlmod.facades import version_facade
+from sbmlmod.facades import ValidateSBMLmodel_facade
 
-class SBMLEditImpl(SBMLEdit):
+class SBMLmodWS(SBMLmod):
     '''
     classdocs
     '''
@@ -29,14 +24,14 @@ class SBMLEditImpl(SBMLEdit):
 
 
     def soap_GetVersion(self, ps):
-        request, response = SBMLEdit.soap_GetVersion(self, ps)
+        request, response = SBMLmod.soap_GetVersion(self, ps)
         return self.getVersion(request, response)
     def getVersion(self, request, response):
         response.set_element_Version(version_facade.getVersion())
         return request, response
 
     def soap_ValidateSBMLModel(self, ps):
-        request, response = SBMLEdit.soap_ValidateSBMLModel(self, ps)
+        request, response = SBMLmod.soap_ValidateSBMLModel(self, ps)
         return self.validateSBMLModel(request, response)
     def validateSBMLModel(self, request, response):
         sbml_file = request.get_element_SbmlModelFile()
@@ -44,13 +39,13 @@ class SBMLEditImpl(SBMLEdit):
             sbml_file = zlib.decompress(base64.b64decode(request.get_element_SbmlModelFile()))
         except:
             message = "File could not be decompressed, ensure file is not empty and that file is zipped and then encoded as a string."
-            raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         self.checkSBMLFileForErrors(response, sbml_file)
         return request, response
 
     def soap_ValidateSBMLModelText(self, ps):
-        request, response = SBMLEdit.soap_ValidateSBMLModelText(self, ps)
+        request, response = SBMLmod.soap_ValidateSBMLModelText(self, ps)
         return self.validateSBMLModelText(request, response)
 
     def validateSBMLModelText(self, request, response):
@@ -60,7 +55,7 @@ class SBMLEditImpl(SBMLEdit):
         return request, response
 
     def soap_ValidateSBMLModelBase64Encoded(self,ps):
-        request, response = SBMLEdit.soap_ValidateSBMLModelBase64Encoded(self, ps)
+        request, response = SBMLmod.soap_ValidateSBMLModelBase64Encoded(self, ps)
         return self.validateSBMLModelBase64encoded(request, response)
 
     def validateSBMLModelBase64encoded(self, request, response):
@@ -70,7 +65,7 @@ class SBMLEditImpl(SBMLEdit):
 
 
     def soap_ValidateSBMLModelGzippedBase64Encoded(self, ps):
-        request, response = SBMLEdit.soap_ValidateSBMLModelGzippedBase64Encoded(self, ps)
+        request, response = SBMLmod.soap_ValidateSBMLModelGzippedBase64Encoded(self, ps)
         return self.validateSBMLModelGzippedBase64Encoded(request, response)
 
     def validateSBMLModelGzippedBase64Encoded(self, request, response):
@@ -81,7 +76,7 @@ class SBMLEditImpl(SBMLEdit):
             sbml_file = zlib.decompress(base64.b64decode(request.get_element_SbmlModelFile()))
         except:
             message = "File could not be decompressed, ensure file is not empty and that file is zipped and then encoded as a string."
-            raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
 
         self.checkSBMLFileForErrors(response, sbml_file)
@@ -96,7 +91,7 @@ class SBMLEditImpl(SBMLEdit):
             response.set_element_ErrorMessages(listOfErrors)
 
     def soap_ReplaceKineticLawParameter(self, ps):
-        request, response = SBMLEdit.soap_ReplaceKineticLawParameter(self, ps)
+        request, response = SBMLmod.soap_ReplaceKineticLawParameter(self, ps)
         return self.replaceKineticLawParameter(request, response)
     def replaceKineticLawParameter(self, request, response):
 
@@ -108,13 +103,13 @@ class SBMLEditImpl(SBMLEdit):
 
         if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(datafile):
             message = "The data file is not tab delimited or rows contain unequal number of columns."
-            raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         if request.get_element_MappingFile():
             mappingfile = self.getMappingFile(request)
             if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(mappingfile):
                 message = "The mapping file is not tab delimited or rows contain unequal number of columns."
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         results,warnings= self.executeReplaceKineticLawParameter(request, sbmlfiles, datafile, mappingfile)
 
@@ -133,7 +128,7 @@ class SBMLEditImpl(SBMLEdit):
             document = reader.readSBMLFromString(file)
             if document.getNumErrors():
                 message = "Invalid SBML file"
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         datafile=None
 
@@ -143,7 +138,7 @@ class SBMLEditImpl(SBMLEdit):
 
             if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(datafile):
                 message = "The data file is not tab delimited or rows contain unequal number of columns."
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
 
         mappingfile=None
@@ -153,7 +148,7 @@ class SBMLEditImpl(SBMLEdit):
             mappingfile = request.get_element_MappingFile()
             if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(mappingfile):
                 message = "The mapping file is not tab delimited or rows contain unequal number of columns."
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         return [sbmlfiles, datafile, mappingfile]
 
@@ -168,7 +163,7 @@ class SBMLEditImpl(SBMLEdit):
             document = reader.readSBMLFromString(file)
             if document.getNumErrors():
                 message = "Invalid SBML file"
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
             sbmlfiles.append(file)
 
         datafile=None
@@ -179,7 +174,7 @@ class SBMLEditImpl(SBMLEdit):
 
             if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(datafile):
                 message = "The data file is not tab delimited or rows contain unequal number of columns."
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
 
         mappingfile=None
@@ -190,7 +185,7 @@ class SBMLEditImpl(SBMLEdit):
 
             if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(mappingfile):
                 message = "The mapping file is not tab delimited or rows contain unequal number of columns."
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         return [sbmlfiles, datafile, mappingfile]
 
@@ -206,7 +201,7 @@ class SBMLEditImpl(SBMLEdit):
 
             if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(datafile):
                 message = "The data file is not tab delimited or rows contain unequal number of columns."
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
 
         mappingfile=None
@@ -215,12 +210,12 @@ class SBMLEditImpl(SBMLEdit):
             mappingfile = self.getMappingFile(request)
             if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(mappingfile):
                 message = "The mapping file is not tab delimited or rows contain unequal number of columns."
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         return [sbmlfiles, datafile, mappingfile]
 
     def soap_ReplaceKineticLawParameterText(self,ps):
-        request, response = SBMLEdit.soap_ReplaceKineticLawParameterText(self, ps)
+        request, response = SBMLmod.soap_ReplaceKineticLawParameterText(self, ps)
         return self.replaceKineticLawParameterText(request, response)
 
     def replaceKineticLawParameterText(self, request, response):
@@ -238,7 +233,7 @@ class SBMLEditImpl(SBMLEdit):
         return request, response
 
     def soap_ReplaceKineticLawParameterBase64Encoded(self,ps):
-        request, response = SBMLEdit.soap_ReplaceKineticLawParameterBase64Encoded(self, ps)
+        request, response = SBMLmod.soap_ReplaceKineticLawParameterBase64Encoded(self, ps)
         return self.replaceKineticLawParameterBase64Encoded(request, response)
 
 
@@ -259,7 +254,7 @@ class SBMLEditImpl(SBMLEdit):
 
 
     def soap_ReplaceKineticLawParameterGzippedBase64Encoded(self,ps):
-        request, response = SBMLEdit.soap_ReplaceKineticLawParameterGzippedBase64Encoded(self, ps)
+        request, response = SBMLmod.soap_ReplaceKineticLawParameterGzippedBase64Encoded(self, ps)
         return self.replaceKineticLawParameterGzippedBase64Encoded(request, response)
 
 
@@ -282,9 +277,9 @@ class SBMLEditImpl(SBMLEdit):
     def executeReplaceKineticLawParameter(self, request, sbmlfiles, datafile, mappingfile):
         if not request.get_element_ParameterId():
             message = "Please state which parameter to scale."
-            raise SBMLEditFault(message, "MISSING_ELEMENT")
+            raise SBMLmodFault(message, "MISSING_ELEMENT")
 
-        mapper = DataMapper2()
+        mapper = DataMapper()
         warnings=[]
 
         datacolumn=2
@@ -298,11 +293,11 @@ class SBMLEditImpl(SBMLEdit):
         if batch:
             if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile)-datacolumn+1:
                 message = "The there are more model files than number of columns in the datafile"
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
         else:
             if len(sbmlfiles) > 1:
                 message = "Only one model file can be submitted when batch mode is set to False"
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
 
 
@@ -347,7 +342,7 @@ class SBMLEditImpl(SBMLEdit):
 
                     if sbmlDocument.getNumErrors():
                         message = "The SBML file is not valid."
-                        raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                        raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
                     newModel, warnings = editor.replaceKineticLawParameter(document = sbmlDocument, data=self.expr, column=i,datainfo=self.exprId,parameter=request.get_element_ParameterId(), warnings=warnings)
 
                     sbmlDocument.setModel(newModel)
@@ -360,7 +355,7 @@ class SBMLEditImpl(SBMLEdit):
 
                 if sbmlDocument.getNumErrors():
                     message = "The SBML file is not valid."
-                    raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                    raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
                 for i in range(len(self.expr[0])):
                     reader = SBMLReader()
@@ -378,7 +373,7 @@ class SBMLEditImpl(SBMLEdit):
 
             if sbmlDocument.getNumErrors():
                 message = "The SBML file is not valid."
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
             newModel, warnings = editor.replaceKineticLawParameter(document = sbmlDocument, data=self.expr, column=0,datainfo=self.exprId,parameter=request.get_element_ParameterId(), warnings=warnings)
 
             sbmlDocument.setModel(newModel)
@@ -388,7 +383,7 @@ class SBMLEditImpl(SBMLEdit):
         return [newmodels,header],warnings
 
     def soap_ScaleKineticLawParameter(self, ps):
-        request, response = SBMLEdit.soap_ScaleKineticLawParameter(self, ps)
+        request, response = SBMLmod.soap_ScaleKineticLawParameter(self, ps)
         return self.scaleKineticLawParameter(request, response)
     def scaleKineticLawParameter(self, request, response):
 
@@ -397,14 +392,14 @@ class SBMLEditImpl(SBMLEdit):
 
         if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(datafile):
             message = "The data file is not tab delimited or rows contain unequal number of columns."
-            raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         mappingfile = None
         if request.get_element_MappingFile():
             mappingfile = self.getMappingFile(request)
             if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(mappingfile):
                 message = "The mapping file is not tab delimited or rows contain unequal number of columns."
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         results,warnings= self.executeScaleKineticLawParameter(request, sbmlfiles, datafile, mappingfile)
 
@@ -416,7 +411,7 @@ class SBMLEditImpl(SBMLEdit):
 
     def soap_ScaleKineticLawParameterText(self,ps):
 
-        request, response = SBMLEdit.soap_ScaleKineticLawParameterText(self, ps)
+        request, response = SBMLmod.soap_ScaleKineticLawParameterText(self, ps)
         return self.scaleKineticLawParameterText(request, response)
 
     def scaleKineticLawParameterText(self, request, response):
@@ -436,7 +431,7 @@ class SBMLEditImpl(SBMLEdit):
 
 
     def soap_ScaleKineticLawParameterBase64Encoded(self,ps):
-        request, response = SBMLEdit.soap_ScaleKineticLawParameterBase64Encoded(self, ps)
+        request, response = SBMLmod.soap_ScaleKineticLawParameterBase64Encoded(self, ps)
         return self.scaleKineticLawParameterBase64Encoded(request, response)
 
 
@@ -458,7 +453,7 @@ class SBMLEditImpl(SBMLEdit):
 
 
     def soap_ScaleKineticLawParameterGzippedBase64Encoded(self,ps):
-        request, response = SBMLEdit.soap_ScaleKineticLawParameterGzippedBase64Encoded(self, ps)
+        request, response = SBMLmod.soap_ScaleKineticLawParameterGzippedBase64Encoded(self, ps)
         return self.scaleKineticLawParameterGzippedBase64Encoded(request, response)
 
 
@@ -482,9 +477,9 @@ class SBMLEditImpl(SBMLEdit):
 
         if not request.get_element_ParameterId():
             message = "Please state which parameter to scale."
-            raise SBMLEditFault(message, "MISSING_ELEMENT")
+            raise SBMLmodFault(message, "MISSING_ELEMENT")
 
-        mapper = DataMapper2()
+        mapper = DataMapper()
         warnings=[]
         datacolumn=2
         if request.get_element_DataColumnNumber():
@@ -497,11 +492,11 @@ class SBMLEditImpl(SBMLEdit):
         if batch:
             if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile)-datacolumn+1:
                 message = "The there are more model files than number of columns in the datafile"
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
         else:
             if len(sbmlfiles) > 1:
                 message = "Only one model file can be submitted when batch mode is set to False"
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
 
         if mappingfile!=None:
@@ -542,7 +537,7 @@ class SBMLEditImpl(SBMLEdit):
 
                     if sbmlDocument.getNumErrors():
                         message = "The SBML file is not valid."
-                        raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                        raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
                     newModel, warnings = editor.scaleKineticLawParameter(document=sbmlDocument, data=self.expr, column=i,datainfo=self.exprId,parameter=request.get_element_ParameterId(), warnings=warnings)
 
                     sbmlDocument.setModel(newModel)
@@ -554,7 +549,7 @@ class SBMLEditImpl(SBMLEdit):
 
                 if sbmlDocument.getNumErrors():
                     message = "The SBML file is not valid."
-                    raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                    raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
                 for i in range(len(self.expr[0])):
                     reader = SBMLReader()
@@ -573,7 +568,7 @@ class SBMLEditImpl(SBMLEdit):
 
             if sbmlDocument.getNumErrors():
                 message = "The SBML file is not valid."
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
             newModel, warnings = editor.scaleKineticLawParameter(document=sbmlDocument, data=self.expr, column=0,datainfo=self.exprId,parameter=request.get_element_ParameterId(), warnings=warnings)
 
             sbmlDocument.setModel(newModel)
@@ -583,7 +578,7 @@ class SBMLEditImpl(SBMLEdit):
         return [newsbmlmodels,header],warnings
 
     def soap_AddKineticLawParameter(self, ps):
-        request, response = SBMLEdit.soap_AddKineticLawParameter(self, ps)
+        request, response = SBMLmod.soap_AddKineticLawParameter(self, ps)
         return self.addKineticLawParameter(request, response)
     def addKineticLawParameter(self, request, response):
 
@@ -593,7 +588,7 @@ class SBMLEditImpl(SBMLEdit):
         self.option = self.getOption(request)
 
         if not self.option:
-            raise SBMLEditFault('A DefaultValue and/or a DataFile must be supplied', "MISSING_ELEMENT")
+            raise SBMLmodFault('A DefaultValue and/or a DataFile must be supplied', "MISSING_ELEMENT")
 
         reader = SBMLReader()
 
@@ -601,7 +596,7 @@ class SBMLEditImpl(SBMLEdit):
         newsbmlfiles=[]
         editor = ModelEditor()
 
-        SBMLEdit_file=SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLEdit","SbmlModelFilesType")).pyclass
+        SBMLmod_file=SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLmod","SbmlModelFilesType")).pyclass
 
         if self.option=='INSERT_DEFAULT':
 
@@ -610,7 +605,7 @@ class SBMLEditImpl(SBMLEdit):
 
             sbmlDocument.setModel(newModel)
             writer = SBMLWriter()
-            sbmlEditfile = SBMLEdit_file()
+            sbmlEditfile = SBMLmod_file()
             sbmlEditfile.set_element_Name("NewModelWithDefault_"+parameter+"_Value")
             sbmlEditfile.set_element_SbmlModelFile(base64.b64encode(zlib.compress(writer.writeSBMLToString(sbmlDocument))))
 
@@ -620,11 +615,11 @@ class SBMLEditImpl(SBMLEdit):
             datafile = self.getDataFile(request)
             if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(datafile):
                 message = "The data file is not tab delimited or rows contain unequal number of columns."
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
             if not request.get_element_DefaultValue():
                 message = "A default value must be set for the parameter 'DefaultValue' for reactions that do not have an entry in the data file"
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
 
             batch = False
@@ -638,13 +633,13 @@ class SBMLEditImpl(SBMLEdit):
             if batch:
                 if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile)-datacolumn+1:
                     message = "The there are more model files than number of columns in the datafile"
-                    raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                    raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
             else:
                 if len(sbmlfiles) > 1:
                     message = "Only one model file can be submitted when batch mode is set to False"
-                    raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                    raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-            mapper = DataMapper2()
+            mapper = DataMapper()
             if self.option=='INSERT_DATA_THEN_DEFAULT':
                 self.expr,self.exprId = mapper.setup_expr(expr_string=datafile, col=datacolumn, batch = batch)
 
@@ -653,7 +648,7 @@ class SBMLEditImpl(SBMLEdit):
                 mappingfile = self.getMappingFile(request)
                 if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(mappingfile):
                     message = "The mapping file is not tab delimited or rows contain unequal number of columns."
-                    raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                    raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
                 mapper.setup(mapping_string=mappingfile,expr_string=datafile, col=datacolumn, batch=batch)
                 ret=[]
@@ -676,13 +671,13 @@ class SBMLEditImpl(SBMLEdit):
 
                         if sbmlDocument.getNumErrors():
                             message = "The SBML file is not valid."
-                            raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
                         newModel, warnings = editor.addKineticLawParameter(document=sbmlDocument, parameter=parameter,warnings=warnings, default_value=request.get_element_DefaultValue(), data=self.expr,column=i,datainfo=self.exprId)
 
                         sbmlDocument.setModel(newModel)
                         writer = SBMLWriter()
-                        sbmlEditfile = SBMLEdit_file()
+                        sbmlEditfile = SBMLmod_file()
                         sbmlEditfile.set_element_Name(header[i+datacolumn-1])
                         sbmlEditfile.set_element_SbmlModelFile(base64.b64encode(zlib.compress(writer.writeSBMLToString(sbmlDocument))))
 
@@ -695,13 +690,13 @@ class SBMLEditImpl(SBMLEdit):
 
                         if sbmlDocument.getNumErrors():
                             message = "The SBML file is not valid."
-                            raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
                         newModel, warnings = editor.addKineticLawParameter(document=sbmlDocument, parameter=parameter,warnings=warnings, default_value=request.get_element_DefaultValue(), data=self.expr,column=i,datainfo=self.exprId)
 
                         sbmlDocument.setModel(newModel)
                         writer = SBMLWriter()
-                        sbmlEditfile = SBMLEdit_file()
+                        sbmlEditfile = SBMLmod_file()
                         sbmlEditfile.set_element_Name(header[i+datacolumn-2])
                         sbmlEditfile.set_element_SbmlModelFile(base64.b64encode(zlib.compress(writer.writeSBMLToString(sbmlDocument))))
 
@@ -714,11 +709,11 @@ class SBMLEditImpl(SBMLEdit):
 
                 if sbmlDocument.getNumErrors():
                     message = "The SBML file is not valid."
-                    raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                    raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
                 newModel, warnings = editor.addKineticLawParameter(document=sbmlDocument, parameter=parameter,warnings=warnings, default_value=request.get_element_DefaultValue(), data=self.expr,datainfo=self.exprId)
                 sbmlDocument.setModel(newModel)
                 writer = SBMLWriter()
-                sbmlEditfile = SBMLEdit_file()
+                sbmlEditfile = SBMLmod_file()
 
                 sbmlEditfile.set_element_Name(header[datacolumn-2])
                 sbmlEditfile.set_element_SbmlModelFile(base64.b64encode(zlib.compress(writer.writeSBMLToString(sbmlDocument))))
@@ -737,7 +732,7 @@ class SBMLEditImpl(SBMLEdit):
 
 
     def soap_AddBoundsToKineticLaw(self, ps):
-        request, response = SBMLEdit.soap_AddBoundsToKineticLaw(self, ps)
+        request, response = SBMLmod.soap_AddBoundsToKineticLaw(self, ps)
         return self.addBoundsToKineticLaw(request, response)
     def addBoundsToKineticLaw(self, request, response):
 
@@ -748,14 +743,14 @@ class SBMLEditImpl(SBMLEdit):
             datafile = self.getDataFile(request)
             if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(datafile):
                 message = "The data file is not tab delimited or rows contain unequal number of columns."
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         mappingfile = None
         if request.get_element_MappingFile():
             mappingfile = self.getMappingFile(request)
             if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(mappingfile):
                 message = "The mapping file is not tab delimited or rows contain unequal number of columns."
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         results,warnings= self.executeAddBoundsToKineticLaw(request, sbmlfiles, datafile, mappingfile)
 
@@ -768,7 +763,7 @@ class SBMLEditImpl(SBMLEdit):
 
     def soap_AddBoundsToKineticLawText(self,ps):
 
-        request, response = SBMLEdit.soap_AddBoundsToKineticLawText(self, ps)
+        request, response = SBMLmod.soap_AddBoundsToKineticLawText(self, ps)
         return self.addBoundsToKineticLawText(request, response)
 
     def addBoundsToKineticLawText(self, request, response):
@@ -788,7 +783,7 @@ class SBMLEditImpl(SBMLEdit):
 
 
     def soap_AddBoundsToKineticLawBase64Encoded(self,ps):
-        request, response = SBMLEdit.soap_AddBoundsToKineticLawBase64Encoded(self, ps)
+        request, response = SBMLmod.soap_AddBoundsToKineticLawBase64Encoded(self, ps)
         return self.addBoundsToKineticLawBase64Encoded(request, response)
 
 
@@ -809,7 +804,7 @@ class SBMLEditImpl(SBMLEdit):
 
 
     def soap_AddBoundsToKineticLawGzippedBase64Encoded(self,ps):
-        request, response = SBMLEdit.soap_AddBoundsToKineticLawGzippedBase64Encoded(self, ps)
+        request, response = SBMLmod.soap_AddBoundsToKineticLawGzippedBase64Encoded(self, ps)
         return self.addBoundsToKineticLawGzippedBase64Encoded(request, response)
 
 
@@ -835,11 +830,11 @@ class SBMLEditImpl(SBMLEdit):
         #self.option = self.getOption(request)
 
         #if not self.option:
-        #    raise SBMLEditFault('A DefaultValue and/or a DataFile must be supplied', "MISSING_ELEMENT")
+        #    raise SBMLmodFault('A DefaultValue and/or a DataFile must be supplied', "MISSING_ELEMENT")
 
         if not request.get_element_DefaultValue():
                 message = "A default value must be set for the parameter 'DefaultValue' for reactions that do not have an entry in the data file"
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         reader = SBMLReader()
 
@@ -872,13 +867,13 @@ class SBMLEditImpl(SBMLEdit):
             if batch:
                 if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile)-datacolumn+1:
                     message = "The there are more model files than number of columns in the datafile"
-                    raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                    raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
             else:
                 if len(sbmlfiles) > 1:
                     message = "Only one model file can be submitted when batch mode is set to False"
-                    raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                    raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-            mapper = DataMapper2()
+            mapper = DataMapper()
             if mappingfile==None:
             #if self.option=='INSERT_DATA_THEN_DEFAULT':
                 self.expr,self.exprId = mapper.setup_expr(expr_string=datafile, col=datacolumn, batch = batch)
@@ -904,7 +899,7 @@ class SBMLEditImpl(SBMLEdit):
 
                         if sbmlDocument.getNumErrors():
                             message = "The SBML file is not valid."
-                            raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
                         newModel, warnings = editor.addBounds(document=sbmlDocument,warnings=warnings, default_value=request.get_element_DefaultValue(), data=self.expr,column=i,datainfo=self.exprId)
 
@@ -918,7 +913,7 @@ class SBMLEditImpl(SBMLEdit):
 
                         if sbmlDocument.getNumErrors():
                             message = "The SBML file is not valid."
-                            raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
                         newModel, warnings = editor.addBounds(document=sbmlDocument,warnings=warnings, default_value=request.get_element_DefaultValue(), data=self.expr,column=i,datainfo=self.exprId)
 
@@ -932,7 +927,7 @@ class SBMLEditImpl(SBMLEdit):
 
                 if sbmlDocument.getNumErrors():
                     message = "The SBML file is not valid."
-                    raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                    raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
                 newModel, warnings = editor.addBounds(document=sbmlDocument,warnings=warnings, default_value=request.get_element_DefaultValue(), data=self.expr,datainfo=self.exprId)
 
@@ -943,7 +938,7 @@ class SBMLEditImpl(SBMLEdit):
         return [newsbmlmodels,header],warnings
 
     def soap_ReplaceInitialConcentrationsOfSpecies(self, ps):
-        request, response = SBMLEdit.soap_ReplaceInitialConcentrationsOfSpecies(self, ps)
+        request, response = SBMLmod.soap_ReplaceInitialConcentrationsOfSpecies(self, ps)
         return self.replaceInitialConcentrationsOfSpecies(request, response)
     def replaceInitialConcentrationsOfSpecies(self, request, response):
         files = self.getFilesDecodeBase64Gunzip(request)
@@ -960,7 +955,7 @@ class SBMLEditImpl(SBMLEdit):
         return request, response
 
     def soap_ReplaceInitialConcentrationsOfSpeciesText(self, ps):
-        request, response = SBMLEdit.soap_ReplaceInitialConcentrationsOfSpeciesText(self, ps)
+        request, response = SBMLmod.soap_ReplaceInitialConcentrationsOfSpeciesText(self, ps)
         return self.replaceInitialConcentrationsOfSpeciesText(request, response)
 
     def replaceInitialConcentrationsOfSpeciesText(self, request, response):
@@ -979,7 +974,7 @@ class SBMLEditImpl(SBMLEdit):
 
 
     def soap_ReplaceInitialConcentrationsOfSpeciesBase64Encoded(self, ps):
-        request, response = SBMLEdit.soap_ReplaceInitialConcentrationsOfSpeciesBase64Encoded(self, ps)
+        request, response = SBMLmod.soap_ReplaceInitialConcentrationsOfSpeciesBase64Encoded(self, ps)
         return self.replaceInitialConcentrationsOfSpeciesBase64Encoded(request, response)
 
     def replaceInitialConcentrationsOfSpeciesBase64Encoded(self, request, response):
@@ -997,7 +992,7 @@ class SBMLEditImpl(SBMLEdit):
         return request, response
 
     def soap_ReplaceInitialConcentrationsOfSpeciesGzippedBase64Encoded(self, ps):
-        request, response = SBMLEdit.soap_ReplaceInitialConcentrationsOfSpeciesGzippedBase64Encoded(self, ps)
+        request, response = SBMLmod.soap_ReplaceInitialConcentrationsOfSpeciesGzippedBase64Encoded(self, ps)
         return self.replaceInitialConcentrationsOfSpeciesGzippedBase64Encoded(request, response)
 
     def replaceInitialConcentrationsOfSpeciesGzippedBase64Encoded(self, request, response):
@@ -1017,7 +1012,7 @@ class SBMLEditImpl(SBMLEdit):
 
 
     def executeReplaceInitialConcentrationsOfSpecies(self, request, sbmlfiles, datafile, mappingfile=None):
-        mapper = DataMapper2()
+        mapper = DataMapper()
         warnings=[]
         datacolumn=2
 
@@ -1031,7 +1026,7 @@ class SBMLEditImpl(SBMLEdit):
         if batch:
             if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile)-datacolumn+1:
                 message = "The there are more model files than number of columns in the datafile"
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         if mappingfile:
 
@@ -1057,7 +1052,7 @@ class SBMLEditImpl(SBMLEdit):
 
             if sbmlDocument.getNumErrors():
                 message = "The SBML file is not valid."
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
             if batch:
                 newModel, warnings = editor.editInitialConcentrations(document=sbmlDocument, data = self.conc, datainfo=self.metId,warnings=warnings, column=i)
@@ -1071,7 +1066,7 @@ class SBMLEditImpl(SBMLEdit):
         return [newsbmlfiles,header],warnings
 
     def soap_ReplaceGlobalParameters(self, ps):
-        request, response = SBMLEdit.soap_ReplaceGlobalParameters(self, ps)
+        request, response = SBMLmod.soap_ReplaceGlobalParameters(self, ps)
         return self.replaceGlobalParameters(request, response)
 
     def replaceGlobalParameters(self, request, response):
@@ -1081,13 +1076,13 @@ class SBMLEditImpl(SBMLEdit):
 
         if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(datafile):
             message = "The data file is not tab delimited or rows contain unequal number of columns."
-            raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         if request.get_element_MappingFile():
             mappingfile = self.getMappingFile(request)
             if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(mappingfile):
                 message = "The mapping file is not tab delimited or rows contain unequal number of columns."
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         results,warnings= self.executeReplaceGlobalParameters(request, sbmlfiles, datafile, mappingfile)
 
@@ -1098,7 +1093,7 @@ class SBMLEditImpl(SBMLEdit):
 
 
     def soap_ReplaceGlobalParametersText(self,ps):
-        request, response = SBMLEdit.soap_ReplaceGlobalParametersText(self,ps)
+        request, response = SBMLmod.soap_ReplaceGlobalParametersText(self,ps)
         return self.replaceGlobalParametersText(request,response)
 
     def replaceGlobalParametersText(self,request, response):
@@ -1117,7 +1112,7 @@ class SBMLEditImpl(SBMLEdit):
         return request, response
 
     def soap_ReplaceGlobalParametersBase64Encoded(self,ps):
-        request, response = SBMLEdit.soap_ReplaceGlobalParametersBase64Encoded(self, ps)
+        request, response = SBMLmod.soap_ReplaceGlobalParametersBase64Encoded(self, ps)
         return self.replaceGlobalParametersBase64Encoded(request, response)
 
 
@@ -1136,7 +1131,7 @@ class SBMLEditImpl(SBMLEdit):
         return request, response
 
     def soap_ReplaceGlobalParametersGzippedBase64Encoded(self,ps):
-        request, response = SBMLEdit.soap_ReplaceGlobalParametersGzippedBase64Encoded(self, ps)
+        request, response = SBMLmod.soap_ReplaceGlobalParametersGzippedBase64Encoded(self, ps)
         return self.replaceGlobalParametersGzippedBase64Encoded(request, response)
 
 
@@ -1160,7 +1155,7 @@ class SBMLEditImpl(SBMLEdit):
     def executeReplaceGlobalParameters(self,request, sbmlfiles, datafile, mappingfile):
 
 
-        mapper = DataMapper2()
+        mapper = DataMapper()
         warnings=[]
 
         datacolumn=2
@@ -1173,11 +1168,11 @@ class SBMLEditImpl(SBMLEdit):
         if batch:
             if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile)-datacolumn+1:
                 message = "The there are more model files than number of columns in the datafile"
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
         else:
             if len(sbmlfiles) > 1:
                 message = "Only one file can be submitted when batch mode is set to False"
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
 
         if mappingfile != None:
@@ -1198,7 +1193,7 @@ class SBMLEditImpl(SBMLEdit):
             self.expr, self.exprId = mapper.setup_expr(datafile, datacolumn,batch=batch)
 
 
-        #SBMLEdit_file=SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLEdit","SbmlModelFilesType")).pyclass
+        #SBMLmod_file=SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLmod","SbmlModelFilesType")).pyclass
 
         newsbmlfiles=[]
         header = self.getDataHeader(datafile,datacolumn)
@@ -1214,7 +1209,7 @@ class SBMLEditImpl(SBMLEdit):
 
                     if sbmlDocument.getNumErrors():
                         message = "The SBML file is not valid."
-                        raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                        raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
                     newModel, warnings = editor.replaceGlobalParameters(document=sbmlDocument, data=self.expr,column=i,datainfo=self.exprId, warnings=warnings)
 
                     sbmlDocument.setModel(newModel)
@@ -1226,7 +1221,7 @@ class SBMLEditImpl(SBMLEdit):
 
                 if sbmlDocument.getNumErrors():
                     message = "The SBML file is not valid."
-                    raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                    raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
                 for i in range(len(self.expr[0])):
                     reader = SBMLReader()
@@ -1245,7 +1240,7 @@ class SBMLEditImpl(SBMLEdit):
 
             if sbmlDocument.getNumErrors():
                 message = "The SBML file is not valid."
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
             newModel, warnings = editor.replaceGlobalParameters(document=sbmlDocument, data=self.expr,column=0,datainfo=self.exprId, warnings=warnings)
 
@@ -1256,7 +1251,7 @@ class SBMLEditImpl(SBMLEdit):
         return [newsbmlfiles,header],warnings
 
     def soap_ScaleGlobalParametersText(self,ps):
-        request, response = SBMLEdit.soap_ScaleGlobalParametersText(self,ps)
+        request, response = SBMLmod.soap_ScaleGlobalParametersText(self,ps)
         return self.scaleGlobalParametersText(request,response)
 
     def scaleGlobalParametersText(self,request, response):
@@ -1275,7 +1270,7 @@ class SBMLEditImpl(SBMLEdit):
         return request, response
 
     def soap_ScaleGlobalParametersBase64Encoded(self,ps):
-        request, response = SBMLEdit.soap_ScaleGlobalParametersBase64Encoded(self, ps)
+        request, response = SBMLmod.soap_ScaleGlobalParametersBase64Encoded(self, ps)
         return self.scaleGlobalParametersBase64Encoded(request, response)
 
 
@@ -1293,7 +1288,7 @@ class SBMLEditImpl(SBMLEdit):
         return request, response
 
     def soap_ScaleGlobalParametersGzippedBase64Encoded(self,ps):
-        request, response = SBMLEdit.soap_ScaleGlobalParametersGzippedBase64Encoded(self, ps)
+        request, response = SBMLmod.soap_ScaleGlobalParametersGzippedBase64Encoded(self, ps)
         return self.scaleGlobalParametersGzippedBase64Encoded(request, response)
 
 
@@ -1314,7 +1309,7 @@ class SBMLEditImpl(SBMLEdit):
 
     def executeScaleGlobalParameters(self,request, sbmlfiles, datafile, mappingfile):
 
-        mapper = DataMapper2()
+        mapper = DataMapper()
         warnings=[]
 
         datacolumn=2
@@ -1327,11 +1322,11 @@ class SBMLEditImpl(SBMLEdit):
         if batch:
             if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile)-datacolumn+1:
                 message = "The there are more model files than number of columns in the datafile"
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
         else:
             if len(sbmlfiles) > 1:
                 message = "Only one file can be submitted when batch mode is set to False"
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
 
         if mappingfile != None:
@@ -1351,7 +1346,7 @@ class SBMLEditImpl(SBMLEdit):
             self.expr, self.exprId = mapper.setup_expr(datafile, datacolumn,batch=batch)
 
 
-        #SBMLEdit_file=SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLEdit","SbmlModelFilesType")).pyclass
+        #SBMLmod_file=SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLmod","SbmlModelFilesType")).pyclass
 
         newsbmlfiles=[]
         header = self.getDataHeader(datafile,datacolumn)
@@ -1368,7 +1363,7 @@ class SBMLEditImpl(SBMLEdit):
 
                     if sbmlDocument.getNumErrors():
                         message = "The SBML file is not valid."
-                        raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                        raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
                     newModel, warnings = editor.scaleGlobalParameters(document=sbmlDocument, data=self.expr,column=i,datainfo=self.exprId, warnings=warnings)
 
                     sbmlDocument.setModel(newModel)
@@ -1380,7 +1375,7 @@ class SBMLEditImpl(SBMLEdit):
 
                 if sbmlDocument.getNumErrors():
                     message = "The SBML file is not valid."
-                    raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                    raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
                 for i in range(len(self.expr[0])):
                     reader = SBMLReader()
@@ -1399,7 +1394,7 @@ class SBMLEditImpl(SBMLEdit):
 
             if sbmlDocument.getNumErrors():
                 message = "The SBML file is not valid."
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
             newModel, warnings = editor.scaleGlobalParameters(document=sbmlDocument, data=self.expr,column=0,datainfo=self.exprId, warnings=warnings)
 
@@ -1415,7 +1410,7 @@ class SBMLEditImpl(SBMLEdit):
             mappingfile = zlib.decompress(base64.b64decode(request.get_element_MappingFile())).strip()
         except:
             message = "The mapping file could not be decompressed, ensure file is not emtpy, zipped and then encoded as a string."
-            raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
         return mappingfile
 
     def getSBMLFile(self, request):
@@ -1428,7 +1423,7 @@ class SBMLEditImpl(SBMLEdit):
                 sbmlfiles.append( zlib.decompress(base64.b64decode(file)).strip())
             except:
                 message = "The SBML model could not be decompressed, ensure file is not empty, zipped and then encoded as a string."
-                raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
         return sbmlfiles
 
     def getDataFile(self, request):
@@ -1436,7 +1431,7 @@ class SBMLEditImpl(SBMLEdit):
             datafile = zlib.decompress(base64.b64decode(request.get_element_DataFile())).strip()
         except:
             message = "The data file could not be decompressed, ensure file is not empty, zipped and then encoded as a string."
-            raise SBMLEditFault(message, "FILE_HANDLING_ERROR")
+            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
         return datafile
 
     def isTabDelimitedAndAllRowsContainEqualNumberOfColumns(self,datafile):
@@ -1496,7 +1491,7 @@ class SBMLEditImpl(SBMLEdit):
 
     def writeResultsToFileGzippedBase64Encoded(self,results):
 
-        SBMLEdit_file=SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLEdit","SbmlModelFilesType")).pyclass
+        SBMLmod_file=SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLmod","SbmlModelFilesType")).pyclass
         sbmlDocuments = results[0]
         header = results[1]
 
@@ -1504,7 +1499,7 @@ class SBMLEditImpl(SBMLEdit):
 
         for i in range(len(sbmlDocuments)):
             writer = SBMLWriter()
-            sbmlEditfile = SBMLEdit_file()
+            sbmlEditfile = SBMLmod_file()
             sbmlEditfile.set_element_Name(header[i])
             sbmlEditfile.set_element_SbmlModelFile(base64.b64encode(zlib.compress(writer.writeSBMLToString(sbmlDocuments[i]))))
             writtenFiles.append(sbmlEditfile)
@@ -1513,7 +1508,7 @@ class SBMLEditImpl(SBMLEdit):
 
     def writeResultsToFileBase64Encoded(self,results):
 
-        SBMLEdit_file=SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLEdit","SbmlModelFilesType")).pyclass
+        SBMLmod_file=SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLmod","SbmlModelFilesType")).pyclass
         sbmlDocuments = results[0]
         header = results[1]
 
@@ -1521,7 +1516,7 @@ class SBMLEditImpl(SBMLEdit):
 
         for i in range(len(sbmlDocuments)):
             writer = SBMLWriter()
-            sbmlEditfile = SBMLEdit_file()
+            sbmlEditfile = SBMLmod_file()
             sbmlEditfile.set_element_Name(header[i])
             sbmlEditfile.set_element_SbmlModelFile(base64.b64encode(writer.writeSBMLToString(sbmlDocuments[i])))
             writtenFiles.append(sbmlEditfile)
@@ -1529,7 +1524,7 @@ class SBMLEditImpl(SBMLEdit):
         return writtenFiles
 
     def writeResultsToFileText(self,results):
-        SBMLEdit_file=SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLEdit","SbmlModelFilesType")).pyclass
+        SBMLmod_file=SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLmod","SbmlModelFilesType")).pyclass
         sbmlDocuments = results[0]
         header = results[1]
 
@@ -1537,7 +1532,7 @@ class SBMLEditImpl(SBMLEdit):
 
         for i in range(len(sbmlDocuments)):
             writer = SBMLWriter()
-            sbmlEditfile = SBMLEdit_file()
+            sbmlEditfile = SBMLmod_file()
             sbmlEditfile.set_element_Name(header[i])
             sbmlEditfile.set_element_SbmlModelFile(writer.writeSBMLToString(sbmlDocuments[i]))
             writtenFiles.append(sbmlEditfile)
@@ -1549,7 +1544,7 @@ class SBMLEditImpl(SBMLEdit):
 def main():
     port = 8080
     address = ('', port)
-    sc = ServiceContainer.ServiceContainer(address, [SBMLEditImpl()])
+    sc = ServiceContainer.ServiceContainer(address, [SBMLmodWS()])
     sc.serve_forever()
 
 if __name__ == '__main__':

@@ -10,9 +10,9 @@ from pyserver.config import DEFAULT_LOG_LEVEL, SERVERD_PID_FILE, WS_PORT, SERVER
 from pyserver.utils.logger import ServerLogger
 from pyserver.utils.daemon import Daemon
 
-from sbmledit.SBMLEditImpl import SBMLEditImpl
+from sbmlmod.SBMLmod import SBMLmodWS
 
-SERVICES = [SBMLEditImpl(),
+SERVICES = [SBMLmodWS(),
             ]
 
 class ThreadingServiceContainer(ThreadingMixIn, ServiceContainer.ServiceContainer):

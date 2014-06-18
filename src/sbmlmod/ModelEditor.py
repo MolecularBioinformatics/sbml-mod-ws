@@ -1,9 +1,4 @@
-'''
-Created on 4 Nov 2010
-
-@author: st08574
-'''
-from sbmledit.SBMLEditFault import SBMLEditFault
+from sbmlmod.SBMLmod_fault import SBMLmodFault
 class ModelEditor(object):
     '''
     classdocs
@@ -25,7 +20,7 @@ class ModelEditor(object):
             if reaction.getId() in datainfo:
                 if not reaction.getKineticLaw():
                     message = "Kinetic law is missing from reaction."
-                    raise SBMLEditFault(message, "INTERNAL_ERROR")
+                    raise SBMLmodFault(message, "INTERNAL_ERROR")
                 params = reaction.getKineticLaw().getListOfParameters()
                 self.found=False
                 for e in params:

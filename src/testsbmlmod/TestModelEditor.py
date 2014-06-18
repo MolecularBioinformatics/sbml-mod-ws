@@ -1,11 +1,6 @@
-'''
-Created on 4 Nov 2010
-
-@author: st08574
-'''
 import unittest
 from libsbml import SBMLReader
-from sbmledit import ModelEditor, DataMapper2
+from sbmlmod import ModelEditor, DataMapper
 
 class TestModelEditor(unittest.TestCase):
 
@@ -22,7 +17,7 @@ class TestModelEditor(unittest.TestCase):
         datastr = ''.join(open('./resources/TestingAvGenuttryksformater.csv','r').readlines()).strip()
         mapstr = ''.join(open('./resources/mapping_applied_rat.txt','r').readlines()).strip()
 
-        mapper = DataMapper2.DataMapper2()
+        mapper = DataMapper.DataMapper()
         mapper.setup(mapstr, datastr, batch=True)
         return mapper.mergeExpressionValuesMappingToSameReaction()
 
@@ -37,7 +32,7 @@ class TestModelEditor(unittest.TestCase):
         self.sbml = self.doc.getModel()
         self.editor = ModelEditor.ModelEditor()
 
-        mapper = DataMapper2.DataMapper2()
+        mapper = DataMapper.DataMapper()
         mapper.setup(mapstr, datastr, col=11,batch=True)
         return mapper.mergeExpressionValuesMappingToSameReaction()
 
@@ -53,7 +48,7 @@ class TestModelEditor(unittest.TestCase):
         datastr = ''.join(open('./resources/TestingAvGenuttryksformater.csv','r').readlines()).strip()
         mapstr = ''.join(open('./resources/mappingRat_GlobalParameters.txt','r').readlines()).strip()
 
-        mapper = DataMapper2.DataMapper2()
+        mapper = DataMapper.DataMapper()
         mapper.setup(mapstr, datastr)
         return mapper.mergeExpressionValuesMappingToSameReaction()
 
@@ -202,7 +197,7 @@ class TestModelEditor(unittest.TestCase):
 
         datastr = 'GeneName\tDataValue1\tDataValue2\tDataValue3\nCS\t46.8\t982.8\t9.6\nACN\t83.5\t45.9\t73.9\nICD\t37.2\t78.2\t23.0\nKDH\t24.3\t78.2\t97.0\nTph2\t0.23\t9.6\t4.9'
 
-        mapper = DataMapper2.DataMapper2()
+        mapper = DataMapper.DataMapper()
         datavals,datainfo = mapper.setup_expr(datastr,3)
 
         newsbml, warning = self.editor.addKineticLawParameter(self.doc,'UPPER_BOUND',[],data=datavals,datainfo=datainfo,default_value=1000)
@@ -220,7 +215,7 @@ class TestModelEditor(unittest.TestCase):
 
         datastr = 'GeneName\tDataValue1\tDataValue2\tDataValue3\nCS\t46.8\t982.8\t9.6\nACN\t83.5\t45.9\t73.9\nICD\t37.2\t78.2\t23.0\nKDH\t24.3\t78.2\t97.0\nTph2\t0.23\t9.6\t4.9'
 
-        mapper = DataMapper2.DataMapper2()
+        mapper = DataMapper.DataMapper()
         datavals,datainfo = mapper.setup_expr(datastr,batch=True)
 
         newsbml, warning = self.editor.addKineticLawParameter(self.doc,'UPPER_BOUND',[],9.0,data=datavals,datainfo=datainfo)

@@ -1,12 +1,7 @@
-'''
-Created on 21 Jan 2014
-
-@author: annes
-'''
 import unittest
 
-from sbmledit.facades import ValidateSBMLmodel_facade
-from testsbmledit import resources_folder
+from sbmlmod.facades import ValidateSBMLmodel_facade
+from testsbmlmod import resources_folder
 
 class Test_ValidateSBMLmodel_facade(unittest.TestCase):
 
