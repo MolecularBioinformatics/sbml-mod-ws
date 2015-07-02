@@ -23,20 +23,23 @@ class SBMLmodWS(SBMLmod):
     #_wsdl = "".join(open(WSDL).readlines())
 
 
+    # all SOAP_ functions are according to wsdl definition 
+
     def soap_GetVersion(self, ps):
         request, response = SBMLmod.soap_GetVersion(self, ps)
         
         response.set_element_Version(version_facade.getVersion())
         return request, response
     
-    # handle different versions of model imports (plain text, zipped and/or base64 encoded)
+    # handle different versions of model encoding/compression (plain text, zipped and/or base64 encoded)
+    # this is apparent for all functionality described in this file
     # --
     
     # this method is still included for historical reasons and to still support downstream usage,
     # if users build up on it
     # the content is equivalent to soap_ValidateSBMLModelGzippedBase64Encoded
     def soap_ValidateSBMLModel(self, ps):
-        return self.soap_ValidateSBMLModelGzippedBase64Encoded(ps)
+        return self.soap_ValidateSBMLModelGzippedBase64Encoded(self, ps)
 
     def soap_ValidateSBMLModelText(self, ps):
         request, response = SBMLmod.soap_ValidateSBMLModelText(self, ps)
@@ -53,7 +56,6 @@ class SBMLmodWS(SBMLmod):
         self.checkSBMLFileForErrors(response, sbml_file)
         return request, response
 
-
     def soap_ValidateSBMLModelGzippedBase64Encoded(self, ps):
         request, response = SBMLmod.soap_ValidateSBMLModelGzippedBase64Encoded(self, ps)
         
@@ -65,48 +67,65 @@ class SBMLmodWS(SBMLmod):
             message = "File could not be decompressed, ensure file is not empty and that file is zipped and then encoded as a string."
             raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-
         self.checkSBMLFileForErrors(response, sbml_file)
 
         return request, response
+    
 
     def checkSBMLFileForErrors(self, response, sbml_file):
 
         [has_errors, listOfErrors] = ValidateSBMLmodel_facade.sbmlFileHasErrors(sbml_file)
         response.set_element_ModelIsValid(not has_errors)
         if has_errors:
-            response.set_element_ErrorMessages(listOfErrors)
+            response.set_element_ErrorMessages(listOfErrors)            
             
-            
-
+    # this function is kept for historical reasons, if end-users are accessing still via 1. gen. realisation of this function
+    # which in fact is resembled by the zipped and base64 encoded version
     def soap_ReplaceKineticLawParameter(self, ps):
-        request, response = SBMLmod.soap_ReplaceKineticLawParameter(self, ps)
+        return self.soap_ReplaceKineticLawParameterGzippedBase64Encoded(self, ps)
+
+    def soap_ReplaceKineticLawParameterText(self,ps):
+        request, response = SBMLmod.soap_ReplaceKineticLawParameterText(self, ps)
+        files             = self.getFilesAsText(request)
+        results, warnings = self.replaceKineticLawParameter(request, files)
         
-        datafile = self.getDataFile(request)
-        sbmlfiles = self.getSBMLFile(request)
+        response.set_element_SbmlModelFiles(self.writeResultsToFileText(results))
+        response.set_element_Warnings(warnings)
 
-        if request.get_element_MappingFile():
-            mappingfile = self.getMappingFile(request)
-            if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(mappingfile):
-                message = "The mapping file is not tab delimited or rows contain unequal number of columns."
-                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-        else:                
-            mappingfile = None
+        return request, response
 
-        if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(datafile):
-            message = "The data file is not tab delimited or rows contain unequal number of columns."
-            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-
-        results,warnings= self.executeReplaceKineticLawParameter(request, sbmlfiles, datafile, mappingfile)
-
-        response.set_element_SbmlModelFiles(self.writeResultsToFileGzippedBase64Encoded(results))
+    def soap_ReplaceKineticLawParameterBase64Encoded(self,ps):
+        request, response = SBMLmod.soap_ReplaceKineticLawParameterBase64Encoded(self, ps)
+        files             = self.getFilesDecodeBase64(request)
+        results, warnings = self.replaceKineticLawParameter(request, files)
+        
+        response.set_element_SbmlModelFiles(self.writeResultsToFileBase64Encoded(results))
         response.set_element_Warnings(warnings)
 
         return request, response
 
 
-    def getFilesAsText(self,request):
+    def soap_ReplaceKineticLawParameterGzippedBase64Encoded(self,ps):
+        request, response = SBMLmod.soap_ReplaceKineticLawParameterGzippedBase64Encoded(self, ps)
+        files             = self.getFilesDecodeBase64Gunzip(request)
+        results, warnings = self.replaceKineticLawParameter(request, files)
+        
+        response.set_element_SbmlModelFiles(self.writeResultsToFileGzippedBase64Encoded(results))
+        response.set_element_Warnings(warnings)
 
+        return request, response
+
+    def replaceKineticLawParameter(self, request, files):        
+        sbmlfiles   = files[0]
+        datafile    = files[1]
+        mappingfile = files[2]
+
+        results, warnings = self.executeReplaceKineticLawParameter(request, sbmlfiles, datafile, mappingfile)
+
+        return results, warnings
+
+
+    def getFilesAsText(self,request):
         sbmlfiles = request.get_element_SbmlModelFiles()
 
         for file in sbmlfiles:
@@ -116,22 +135,18 @@ class SBMLmodWS(SBMLmod):
                 message = "Invalid SBML file"
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-        datafile=None
-
+        datafile = None
         if request.get_element_DataFile():
             datafile = request.get_element_DataFile()
-
-
+            
             if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(datafile):
                 message = "The data file is not tab delimited or rows contain unequal number of columns."
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-
         mappingfile=None
-
         if request.get_element_MappingFile():
-
             mappingfile = request.get_element_MappingFile()
+            
             if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(mappingfile):
                 message = "The mapping file is not tab delimited or rows contain unequal number of columns."
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
@@ -140,8 +155,8 @@ class SBMLmodWS(SBMLmod):
 
     def getFilesDecodeBase64(self,request):
 
-        files = request.get_element_SbmlModelFiles()
-        sbmlfiles=[]
+        files     = request.get_element_SbmlModelFiles()
+        sbmlfiles = []
 
         for file in files:
             reader = SBMLReader()
@@ -152,8 +167,7 @@ class SBMLmodWS(SBMLmod):
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
             sbmlfiles.append(file)
 
-        datafile=None
-
+        datafile    = None
         if request.get_element_DataFile():
             datafile = request.get_element_DataFile()
             datafile = base64.b64decode(datafile).strip()
@@ -162,9 +176,7 @@ class SBMLmodWS(SBMLmod):
                 message = "The data file is not tab delimited or rows contain unequal number of columns."
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-
-        mappingfile=None
-
+        mappingfile = None
         if request.get_element_MappingFile():
             mappingfile = request.get_element_MappingFile()
             mappingfile = base64.b64decode(mappingfile).strip()
@@ -181,7 +193,6 @@ class SBMLmodWS(SBMLmod):
         sbmlfiles = self.getSBMLFile(request)
 
         datafile=None
-
         if request.get_element_DataFile():
             datafile = self.getDataFile(request)
 
@@ -189,9 +200,7 @@ class SBMLmodWS(SBMLmod):
                 message = "The data file is not tab delimited or rows contain unequal number of columns."
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-
         mappingfile=None
-
         if request.get_element_MappingFile():
             mappingfile = self.getMappingFile(request)
             if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(mappingfile):
@@ -199,65 +208,6 @@ class SBMLmodWS(SBMLmod):
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         return [sbmlfiles, datafile, mappingfile]
-
-    def soap_ReplaceKineticLawParameterText(self,ps):
-        request, response = SBMLmod.soap_ReplaceKineticLawParameterText(self, ps)
-        return self.replaceKineticLawParameterText(request, response)
-
-    def replaceKineticLawParameterText(self, request, response):
-        files = self.getFilesAsText(request)
-
-        sbmlfiles=files[0]
-        datafile=files[1]
-        mappingfile=files[2]
-
-        results,warnings= self.executeReplaceKineticLawParameter(request, sbmlfiles, datafile, mappingfile)
-
-        response.set_element_SbmlModelFiles(self.writeResultsToFileText(results))
-        response.set_element_Warnings(warnings)
-
-        return request, response
-
-    def soap_ReplaceKineticLawParameterBase64Encoded(self,ps):
-        request, response = SBMLmod.soap_ReplaceKineticLawParameterBase64Encoded(self, ps)
-        return self.replaceKineticLawParameterBase64Encoded(request, response)
-
-
-    def replaceKineticLawParameterBase64Encoded(self, request, response):
-
-        files = self.getFilesDecodeBase64(request)
-
-        sbmlfiles=files[0]
-        datafile=files[1]
-        mappingfile=files[2]
-
-        results,warnings= self.executeReplaceKineticLawParameter(request, sbmlfiles, datafile, mappingfile)
-
-        response.set_element_SbmlModelFiles(self.writeResultsToFileBase64Encoded(results))
-        response.set_element_Warnings(warnings)
-
-        return request, response
-
-
-    def soap_ReplaceKineticLawParameterGzippedBase64Encoded(self,ps):
-        request, response = SBMLmod.soap_ReplaceKineticLawParameterGzippedBase64Encoded(self, ps)
-        return self.replaceKineticLawParameterGzippedBase64Encoded(request, response)
-
-
-    def replaceKineticLawParameterGzippedBase64Encoded(self, request, response):
-
-        files = self.getFilesDecodeBase64Gunzip(request)
-
-        sbmlfiles=files[0]
-        datafile=files[1]
-        mappingfile=files[2]
-
-        results,warnings= self.executeReplaceKineticLawParameter(request, sbmlfiles, datafile, mappingfile)
-
-        response.set_element_SbmlModelFiles(self.writeResultsToFileGzippedBase64Encoded(results))
-        response.set_element_Warnings(warnings)
-
-        return request, response
 
 
     def executeReplaceKineticLawParameter(self, request, sbmlfiles, datafile, mappingfile):
@@ -370,8 +320,6 @@ class SBMLmodWS(SBMLmod):
 
     def soap_ScaleKineticLawParameter(self, ps):
         request, response = SBMLmod.soap_ScaleKineticLawParameter(self, ps)
-        return self.scaleKineticLawParameter(request, response)
-    def scaleKineticLawParameter(self, request, response):
 
         datafile = self.getDataFile(request)
         sbmlfiles = self.getSBMLFile(request)
