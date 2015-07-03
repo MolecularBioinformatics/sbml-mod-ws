@@ -165,7 +165,10 @@ class SBMLmodWS(SBMLmod):
         request, response = SBMLmod.soap_AddKineticLawParameter(self, ps)
         return ManipulateKineticParameters.addKineticLawParameter(request, response)
 
+    # --
+
     # add bounds to kinetic laws
+    # --
     def soap_AddBoundsToKineticLaw(self, ps):
         return self.soap_AddBoundsToKineticLawGzippedBase64Encoded(self, ps)
         
@@ -735,10 +738,7 @@ class SBMLmodWS(SBMLmod):
 
         return header
 
-    def getNumberOfColumnsInDataFile(self, datafile):
-        line = datafile.split('\n')[0]
 
-        return line.count('\t') + 1
 
     def getOption(self, request):
         option1 = 'INSERT_DEFAULT'
