@@ -1,7 +1,8 @@
 # -*- encoding: UTF-8 -*-
-import os
-import logging
 import ConfigParser
+import logging
+import os
+
 
 # Root directory for the BlastWS
 filepath = os.path.abspath(__file__)

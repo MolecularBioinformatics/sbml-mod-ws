@@ -1,16 +1,19 @@
 # -*- encoding: UTF-8 -*-
-import warnings
-warnings.filterwarnings('ignore', category=DeprecationWarning)
-
-import sys
 from SocketServer import ThreadingMixIn
 from ZSI import ServiceContainer
+import sys
+import warnings
 
 from pyserver.config import DEFAULT_LOG_LEVEL, SERVERD_PID_FILE, WS_PORT, SERVERD_LOG_FILE
-from pyserver.utils.logger import ServerLogger
 from pyserver.utils.daemon import Daemon
-
+from pyserver.utils.logger import ServerLogger
 from sbmlmod.SBMLmod import SBMLmodWS
+
+
+warnings.filterwarnings('ignore', category=DeprecationWarning)
+
+
+
 
 SERVICES = [SBMLmodWS(),
             ]
@@ -25,7 +28,7 @@ class MyDaemon(Daemon):
         '''
         address = ('', port)
         tsc = ThreadingServiceContainer(address, services)
-        #for service in services:
+        # for service in services:
         #    path = service.getPost()
         #    sc.setNode(service, path)
         tsc.serve_forever()

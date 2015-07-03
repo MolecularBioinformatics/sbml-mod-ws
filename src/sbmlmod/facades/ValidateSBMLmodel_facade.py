@@ -10,7 +10,7 @@ def sbmlFileHasErrors(sbml_file):
     reader = SBMLReader()
     document = reader.readSBMLFromString(sbml_file)
     number_of_errors = document.getNumErrors()
-    has_errors = number_of_errors >0
+    has_errors = number_of_errors > 0
     listOfErrors = []
     if number_of_errors:
         for error in range(number_of_errors):

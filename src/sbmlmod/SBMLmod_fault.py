@@ -2,6 +2,7 @@ from ZSI import Fault
 
 from sbmlmod.SBMLmod_types import ns0
 
+
 class SBMLmodFault(Fault):
     def __init__(self, message, faultEnum):
         self.message = message

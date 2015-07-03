@@ -1,16 +1,18 @@
-from suds.client import Client
+import base64
 import logging
 import zlib
-import base64
+
+from suds.client import Client
+
 
 def main():
 
 
     url = 'file:///scratch/Home/siv3/st08574/esysbio/pysbmledit/src/sbmledit/SBMLEdit_batchmode.wsdl'
-    #url = 'file:///scratch/Home/siv3/st08574/esysbio/pysbmledit/src/sbmledit/SBMLedit.wsdl'
+    # url = 'file:///scratch/Home/siv3/st08574/esysbio/pysbmledit/src/sbmledit/SBMLedit.wsdl'
 
     client = Client(url, cache=None)
-    #client.service['http://127.0.0.1:11000/sbmledit'].setlocation()
+    # client.service['http://127.0.0.1:11000/sbmledit'].setlocation()
 
     print client
 
@@ -20,21 +22,21 @@ def main():
     logging.getLogger('suds.client').setLevel(logging.CRITICAL)
 
     print 'version: ', client.service.GetVersion()
-    #print 'Are you alive ?', client.service.Alive()
+    # print 'Are you alive ?', client.service.Alive()
 
     print 'reading files'
 
-    sbmlfile_lines = "".join(open('../testsbmledit/resources/TRP_mammal_turnover_Oxy_GlobalParameters.xml','r'))
-    mappingfile_lines = "".join(open('../testsbmledit/resources/mapping_applied_rat.txt','r'))
-    mappingfile2_lines = "".join(open('../testsbmledit/resources/mappingRat_GlobalParameters.txt','r'))
-    datafile_lines = "".join(open('../testsbmledit/resources/RotteBiweightAlleVev.txt','r'))
-    #datafile_lines = "".join(open('../testsbmledit/resources/TestingAvGenuttryksformater.csv','r'))
-    #concfile_lines = "".join(open('../testsbmledit/resources/InitialConc_acetate.txt','r'))
+    sbmlfile_lines = "".join(open('../testsbmledit/resources/TRP_mammal_turnover_Oxy_GlobalParameters.xml', 'r'))
+    mappingfile_lines = "".join(open('../testsbmledit/resources/mapping_applied_rat.txt', 'r'))
+    mappingfile2_lines = "".join(open('../testsbmledit/resources/mappingRat_GlobalParameters.txt', 'r'))
+    datafile_lines = "".join(open('../testsbmledit/resources/RotteBiweightAlleVev.txt', 'r'))
+    # datafile_lines = "".join(open('../testsbmledit/resources/TestingAvGenuttryksformater.csv','r'))
+    # concfile_lines = "".join(open('../testsbmledit/resources/InitialConc_acetate.txt','r'))
 
-    #sbmlfile_lines = "".join(open('../testsbmledit/resources/SBMLwithoutKinetics.xml','r'))
-    #mappingfile_lines = "".join(open('../testsbmledit/resources/mapping.txt','r'))
-    #datafile_lines = "".join(open('../testsbmledit/resources/expression_glu_ace_Oh_etal.dat','r'))
-    #datafile_lines = "".join(open('../testsbmledit/resources/InitialConc_acetate.txt','r'))
+    # sbmlfile_lines = "".join(open('../testsbmledit/resources/SBMLwithoutKinetics.xml','r'))
+    # mappingfile_lines = "".join(open('../testsbmledit/resources/mapping.txt','r'))
+    # datafile_lines = "".join(open('../testsbmledit/resources/expression_glu_ace_Oh_etal.dat','r'))
+    # datafile_lines = "".join(open('../testsbmledit/resources/InitialConc_acetate.txt','r'))
 
 #    sbmlfile_lines = "".join(open('../testsbmledit/resources/SimplifiedModel2.xml','r'))
 #    mappingfile_lines = "".join(open('../testsbmledit/resources/mappingNeisseria.txt','r'))
@@ -51,7 +53,7 @@ def main():
     mapping2e = base64.b64encode(mappingfile2_lines)
     datae = base64.b64encode(datafile_lines)
 
-    sbml_files=[]
+    sbml_files = []
     sbml_files.append(sbml)
     sbml_files.append(sbml)
     sbml_files.append(sbml)
@@ -62,40 +64,40 @@ def main():
     print 'sending request'
 
     response = client.service.ValidateSBMLModelGzippedBase64Encoded(SbmlModelFile=sbml)
-    #response = client.service.ValidateSBMLModelText(SbmlModelFile=sbmlfile_lines)
-    #response = client.service.ValidateSBMLModelBase64Encoded(SbmlModelFile=sbmle)
+    # response = client.service.ValidateSBMLModelText(SbmlModelFile=sbmlfile_lines)
+    # response = client.service.ValidateSBMLModelBase64Encoded(SbmlModelFile=sbmle)
 
-    print 'ModelIsValid:',response.ModelIsValid
-
-
-    #response = client.service.ReplaceGlobalParametersGzippedBase64Encoded(SbmlModelFiles=sbml, DataFile=data,ParameterId="E_T",DataColumnNumber=3,MappingFile=mapping,BatchMode=False)
-    #response = client.service.ReplaceGlobalParametersText(SbmlModelFiles=sbmlfile_lines, DataFile=datafile_lines,ParameterId="E_T",DataColumnNumber=3,MappingFile=mappingfile_lines,BatchMode=False)
-    #response = client.service.ReplaceGlobalParametersBase64Encoded(SbmlModelFiles=sbmle, DataFile=datae,ParameterId="E_T",DataColumnNumbere=3,MappingFile=mappinge,BatchMode=False)
-
-    #response = client.service.ScaleGlobalParametersGzippedBase64Encoded(SbmlModelFiles=sbml, DataFile=data,DataColumnNumber=3,MappingFile=mapping2,BatchMode=False)
-    #response = client.service.ScaleGlobalParametersText(SbmlModelFiles=sbmlfile_lines, DataFile=datafile_lines,DataColumnNumber=3,MappingFile=mappingfile2_lines,BatchMode=False)
-    #response = client.service.ScaleGlobalParametersBase64Encoded(SbmlModelFiles=sbmle, DataFile=datae,DataColumnNumber=3,MappingFile=mapping2e,BatchMode=False)
-
-    #response = client.service.ScaleKineticLawParameterBase64Encoded(SbmlModelFiles=sbmle, DataFile=datae,ParameterId="E_T",DataColumnNumber=2,MappingFile=mappinge,BatchMode=False)
-    #response = client.service.ScaleKineticLawParameterGzippedBase64Encoded(SbmlModelFiles=sbml, DataFile=data,ParameterId="E_T",DataColumnNumber=2,MappingFile=mapping,BatchMode=False)
-    #response = client.service.ScaleKineticLawParameterText(SbmlModelFiles=sbmlfile_lines, DataFile=datafile_lines,ParameterId="E_T",DataColumnNumber=2,MappingFile=mappingfile_lines,BatchMode=False)
+    print 'ModelIsValid:', response.ModelIsValid
 
 
-    #response = client.service.ReplaceKineticLawParameter(SbmlModelFiles=sbml, DataFile=data,ParameterId="E_T",DataColumnNumber=2,MappingFile=mapping,BatchMode=False)
-    #response = client.service.ReplaceKineticLawParameterBase64Encoded(SbmlModelFiles=sbmle, DataFile=datae,ParameterId="E_T",DataColumnNumber=2,MappingFile=mappinge,BatchMode=False)
-    #response = client.service.ReplaceKineticLawParameterGzippedBase64Encoded(SbmlModelFiles=sbml, DataFile=data,ParameterId="E_T",DataColumnNumber=2,MappingFile=mapping,BatchMode=False)
-    #response = client.service.ReplaceKineticLawParameterText(SbmlModelFiles=sbmlfile_lines, DataFile=datafile_lines,ParameterId="E_T",DataColumnNumber=2,MappingFile=mappingfile_lines,BatchMode=False)
+    # response = client.service.ReplaceGlobalParametersGzippedBase64Encoded(SbmlModelFiles=sbml, DataFile=data,ParameterId="E_T",DataColumnNumber=3,MappingFile=mapping,BatchMode=False)
+    # response = client.service.ReplaceGlobalParametersText(SbmlModelFiles=sbmlfile_lines, DataFile=datafile_lines,ParameterId="E_T",DataColumnNumber=3,MappingFile=mappingfile_lines,BatchMode=False)
+    # response = client.service.ReplaceGlobalParametersBase64Encoded(SbmlModelFiles=sbmle, DataFile=datae,ParameterId="E_T",DataColumnNumbere=3,MappingFile=mappinge,BatchMode=False)
 
-    #response = client.service.AddBoundsToKineticLawText(SbmlModelFiles=sbmlfile_lines,DataFile = datafile_lines,DefaultValue=999, DataColumnNumber=10, MappingFile=mappingfile_lines,BatchMode=False)
-    #response = client.service.AddBoundsToKineticLawBase64Encoded(SbmlModelFiles=sbmle,DataFile = datae,DefaultValue=999, DataColumnNumber=10, MappingFile=mappinge,BatchMode=False)
-    #response = client.service.AddBoundsToKineticLawGzippedBase64Encoded(SbmlModelFiles=sbml,DataFile = data,DefaultValue=999, DataColumnNumber=3, MappingFile=mapping,BatchMode=False)
-    #response = client.service.AddBoundsToKineticLaw(SbmlModelFiles=sbml,DataFile = data,DefaultValue=999, DataColumnNumber=3, MappingFile=mapping,BatchMode=False)
-    #response = client.service.AddBoundsToKineticLawText(SbmlModelFiles=sbmlfile_lines,DefaultValue=999, BatchMode=False)
+    # response = client.service.ScaleGlobalParametersGzippedBase64Encoded(SbmlModelFiles=sbml, DataFile=data,DataColumnNumber=3,MappingFile=mapping2,BatchMode=False)
+    # response = client.service.ScaleGlobalParametersText(SbmlModelFiles=sbmlfile_lines, DataFile=datafile_lines,DataColumnNumber=3,MappingFile=mappingfile2_lines,BatchMode=False)
+    # response = client.service.ScaleGlobalParametersBase64Encoded(SbmlModelFiles=sbmle, DataFile=datae,DataColumnNumber=3,MappingFile=mapping2e,BatchMode=False)
+
+    # response = client.service.ScaleKineticLawParameterBase64Encoded(SbmlModelFiles=sbmle, DataFile=datae,ParameterId="E_T",DataColumnNumber=2,MappingFile=mappinge,BatchMode=False)
+    # response = client.service.ScaleKineticLawParameterGzippedBase64Encoded(SbmlModelFiles=sbml, DataFile=data,ParameterId="E_T",DataColumnNumber=2,MappingFile=mapping,BatchMode=False)
+    # response = client.service.ScaleKineticLawParameterText(SbmlModelFiles=sbmlfile_lines, DataFile=datafile_lines,ParameterId="E_T",DataColumnNumber=2,MappingFile=mappingfile_lines,BatchMode=False)
 
 
-    #response = client.service.AddKineticLawParameter(SbmlModelFiles=sbml_files,ParameterId="Upper",DataFile = data,DefaultValue=999, DataColumnNumber=10, MappingFile=mapping,BatchMode=True)
-    #response = client.service.ReplaceInitialConcentrationsOfSpecies(SbmlModelFiles=sbml_files,DataFile = data,DefaultValue=2.5,BatchMode=True)
-    #response = client.service.ReplaceInitialConcentrationsOfSpecies(SbmlModelFiles=sbml,DataFile = data,DefaultValue=2.5,BatchMode=False)
+    # response = client.service.ReplaceKineticLawParameter(SbmlModelFiles=sbml, DataFile=data,ParameterId="E_T",DataColumnNumber=2,MappingFile=mapping,BatchMode=False)
+    # response = client.service.ReplaceKineticLawParameterBase64Encoded(SbmlModelFiles=sbmle, DataFile=datae,ParameterId="E_T",DataColumnNumber=2,MappingFile=mappinge,BatchMode=False)
+    # response = client.service.ReplaceKineticLawParameterGzippedBase64Encoded(SbmlModelFiles=sbml, DataFile=data,ParameterId="E_T",DataColumnNumber=2,MappingFile=mapping,BatchMode=False)
+    # response = client.service.ReplaceKineticLawParameterText(SbmlModelFiles=sbmlfile_lines, DataFile=datafile_lines,ParameterId="E_T",DataColumnNumber=2,MappingFile=mappingfile_lines,BatchMode=False)
+
+    # response = client.service.AddBoundsToKineticLawText(SbmlModelFiles=sbmlfile_lines,DataFile = datafile_lines,DefaultValue=999, DataColumnNumber=10, MappingFile=mappingfile_lines,BatchMode=False)
+    # response = client.service.AddBoundsToKineticLawBase64Encoded(SbmlModelFiles=sbmle,DataFile = datae,DefaultValue=999, DataColumnNumber=10, MappingFile=mappinge,BatchMode=False)
+    # response = client.service.AddBoundsToKineticLawGzippedBase64Encoded(SbmlModelFiles=sbml,DataFile = data,DefaultValue=999, DataColumnNumber=3, MappingFile=mapping,BatchMode=False)
+    # response = client.service.AddBoundsToKineticLaw(SbmlModelFiles=sbml,DataFile = data,DefaultValue=999, DataColumnNumber=3, MappingFile=mapping,BatchMode=False)
+    # response = client.service.AddBoundsToKineticLawText(SbmlModelFiles=sbmlfile_lines,DefaultValue=999, BatchMode=False)
+
+
+    # response = client.service.AddKineticLawParameter(SbmlModelFiles=sbml_files,ParameterId="Upper",DataFile = data,DefaultValue=999, DataColumnNumber=10, MappingFile=mapping,BatchMode=True)
+    # response = client.service.ReplaceInitialConcentrationsOfSpecies(SbmlModelFiles=sbml_files,DataFile = data,DefaultValue=2.5,BatchMode=True)
+    # response = client.service.ReplaceInitialConcentrationsOfSpecies(SbmlModelFiles=sbml,DataFile = data,DefaultValue=2.5,BatchMode=False)
 
 #    files=[]
 #    for file in response.SbmlModelFiles:

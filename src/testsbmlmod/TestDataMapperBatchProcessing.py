@@ -1,6 +1,8 @@
 import unittest
+
 from sbmlmod import DataMapper
 from sbmlmod.SBMLmod_fault import SBMLmodFault
+
 
 class TestDataMapperBatchProcessing(unittest.TestCase):
 
@@ -17,9 +19,9 @@ class TestDataMapperBatchProcessing(unittest.TestCase):
         testexpr = ret[0]
         testinfo = ret[1]
 
-        self.assertEquals(78.2,testexpr[testinfo.index('TPH')][1])
-        self.assertEquals(37.2,testexpr[testinfo.index('TPH')][0])
-        self.assertEquals(73.9,testexpr[testinfo.index('TDO')][2])
+        self.assertEquals(78.2, testexpr[testinfo.index('TPH')][1])
+        self.assertEquals(37.2, testexpr[testinfo.index('TPH')][0])
+        self.assertEquals(73.9, testexpr[testinfo.index('TDO')][2])
 
 
     def testCorrectNumberOfColumnsIncludedInDataTable(self):
@@ -33,7 +35,7 @@ class TestDataMapperBatchProcessing(unittest.TestCase):
 
         testexpr = ret[0]
 
-        self.assertEquals(3,len(testexpr[0]))
+        self.assertEquals(3, len(testexpr[0]))
 
     def testMapExpressionToEnzymesSUM(self):
         mapper = DataMapper.DataMapper()
@@ -47,9 +49,9 @@ class TestDataMapperBatchProcessing(unittest.TestCase):
         testexpr = ret[0]
         testinfo = ret[1]
 
-        self.assertEquals(37.43,testexpr[testinfo.index('TPH')][0])
-        self.assertEquals(87.8,testexpr[testinfo.index('TPH')][1])
-        self.assertEquals(47.9,testexpr[testinfo.index('TPH')][2])
+        self.assertEquals(37.43, testexpr[testinfo.index('TPH')][0])
+        self.assertEquals(87.8, testexpr[testinfo.index('TPH')][1])
+        self.assertEquals(47.9, testexpr[testinfo.index('TPH')][2])
 
 
 
