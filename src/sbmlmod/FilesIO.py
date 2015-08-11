@@ -4,12 +4,14 @@ Created on Jul 3, 2015
 @author: schaeuble
 '''
 
-import zlib
 import base64
+import zlib
 
 from libsbml import SBMLReader, SBMLWriter
+
 from sbmlmod.SBMLmod_fault import SBMLmodFault
 from sbmlmod.SBMLmod_types import ns0 as SBMLfiletypeNs
+
 
 class FilesIO(object):
     '''

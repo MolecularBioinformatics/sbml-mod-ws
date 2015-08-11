@@ -3,6 +3,7 @@ import base64
 import zlib
 
 from libsbml import SBMLReader
+
 from SBMLmod_server import SBMLmod
 from sbmlmod.DataMapper import DataMapper
 from sbmlmod.FilesIO import FilesIO    
@@ -207,56 +208,27 @@ class SBMLmodWS(SBMLmod):
 
     # --
 
-    
+    # replace initial concentrations of model species
 
     def soap_ReplaceInitialConcentrationsOfSpecies(self, ps):
-        request, response = SBMLmod.soap_ReplaceInitialConcentrationsOfSpecies(self, ps)
-        return self.replaceInitialConcentrationsOfSpecies(request, response)
-    def replaceInitialConcentrationsOfSpecies(self, request, response):
-        files = self.getFilesDecodeBase64Gunzip(request)
-
-        sbmlfiles = files[0]
-        datafile = files[1]
-        mappingfile = files[2]
-
-        results, warnings = self.executeReplaceInitialConcentrationsOfSpecies(request, sbmlfiles, datafile, mappingfile)
-
-        response.set_element_SbmlModelFiles(self.writeResultsToFileGzippedBase64Encoded(results))
-        response.set_element_Warnings(warnings)
-
-        return request, response
+        return self.soap_ReplaceInitialConcentrationsOfSpeciesBase64Encoded(self, ps)
 
     def soap_ReplaceInitialConcentrationsOfSpeciesText(self, ps):
         request, response = SBMLmod.soap_ReplaceInitialConcentrationsOfSpeciesText(self, ps)
-        return self.replaceInitialConcentrationsOfSpeciesText(request, response)
-
-    def replaceInitialConcentrationsOfSpeciesText(self, request, response):
         files = self.getFilesText(request)
 
-        sbmlfiles = files[0]
-        datafile = files[1]
-        mappingfile = files[2]
-
-        results, warnings = self.executeReplaceInitialConcentrationsOfSpecies(request, sbmlfiles, datafile, mappingfile)
+        results, warnings = ManipulateKineticParameters.replaceInitialConcentrationsOfSpecies(self, request, files)
 
         response.set_element_SbmlModelFiles(self.writeResultsToFileText(results))
         response.set_element_Warnings(warnings)
 
         return request, response
 
-
     def soap_ReplaceInitialConcentrationsOfSpeciesBase64Encoded(self, ps):
         request, response = SBMLmod.soap_ReplaceInitialConcentrationsOfSpeciesBase64Encoded(self, ps)
-        return self.replaceInitialConcentrationsOfSpeciesBase64Encoded(request, response)
-
-    def replaceInitialConcentrationsOfSpeciesBase64Encoded(self, request, response):
         files = self.getFilesDecodeBase64(request)
 
-        sbmlfiles = files[0]
-        datafile = files[1]
-        mappingfile = files[2]
-
-        results, warnings = self.executeReplaceInitialConcentrationsOfSpecies(request, sbmlfiles, datafile, mappingfile)
+        results, warnings = ManipulateKineticParameters.replaceInitialConcentrationsOfSpecies(self, request, files)
 
         response.set_element_SbmlModelFiles(self.writeResultsToFileBase64Encoded(results))
         response.set_element_Warnings(warnings)
@@ -265,77 +237,18 @@ class SBMLmodWS(SBMLmod):
 
     def soap_ReplaceInitialConcentrationsOfSpeciesGzippedBase64Encoded(self, ps):
         request, response = SBMLmod.soap_ReplaceInitialConcentrationsOfSpeciesGzippedBase64Encoded(self, ps)
-        return self.replaceInitialConcentrationsOfSpeciesGzippedBase64Encoded(request, response)
-
-    def replaceInitialConcentrationsOfSpeciesGzippedBase64Encoded(self, request, response):
         files = self.getFilesDecodeBase64Gunzip(request)
 
-        sbmlfiles = files[0]
-        datafile = files[1]
-        mappingfile = files[2]
-
-        results, warnings = self.executeReplaceInitialConcentrationsOfSpecies(request, sbmlfiles, datafile, mappingfile)
+        results, warnings = ManipulateKineticParameters.replaceInitialConcentrationsOfSpecies(self, request, files)
 
         response.set_element_SbmlModelFiles(self.writeResultsToFileGzippedBase64Encoded(results))
         response.set_element_Warnings(warnings)
 
         return request, response
 
+    # --
 
-
-    def executeReplaceInitialConcentrationsOfSpecies(self, request, sbmlfiles, datafile, mappingfile=None):
-        mapper = DataMapper()
-        warnings = []
-        datacolumn = 2
-
-        if request.get_element_DataColumnNumber():
-            datacolumn = int(request.get_element_DataColumnNumber())
-
-        batch = False
-        if request.get_element_BatchMode():
-            batch = request.get_element_BatchMode()
-
-        if batch:
-            if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile) - datacolumn + 1:
-                message = "The there are more model files than number of columns in the datafile"
-                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-
-        if mappingfile:
-
-            mapper.setup(mappingfile, datafile, col=datacolumn, batch=batch)
-            result = mapper.mergeExpressionValuesMappingToSameReaction()
-
-            self.conc = result[0]
-            self.metId = result[1]
-            warnings = result[2]
-
-        else:
-            self.conc, self.metId = mapper.setup_expr(datafile, col=datacolumn, batch=batch)
-
-
-        newsbmlfiles = []
-        header = self.getDataHeader(datafile, datacolumn)
-        editor = ModelEditor()
-
-        reader = SBMLReader()
-        for i in range(len(sbmlfiles)):
-
-            sbmlDocument = reader.readSBMLFromString(sbmlfiles[i])
-
-            if sbmlDocument.getNumErrors():
-                message = "The SBML file is not valid."
-                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-
-            if batch:
-                newModel, warnings = editor.editInitialConcentrations(document=sbmlDocument, data=self.conc, datainfo=self.metId, warnings=warnings, column=i)
-            else:
-                newModel, warnings = editor.editInitialConcentrations(document=sbmlDocument, data=self.conc, datainfo=self.metId, warnings=warnings, column=datacolumn - 2)
-
-            sbmlDocument.setModel(newModel)
-
-            newsbmlfiles.append(sbmlDocument)
-
-        return [newsbmlfiles, header], warnings
+    # replace global parameters
 
     def soap_ReplaceGlobalParameters(self, ps):
         request, response = SBMLmod.soap_ReplaceGlobalParameters(self, ps)

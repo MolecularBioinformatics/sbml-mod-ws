@@ -6,10 +6,12 @@ Created on Jul 3, 2015
 import base64, zlib
 
 from libsbml import SBMLReader, SBMLWriter
+
 from sbmlmod.DataMapper import DataMapper
 from sbmlmod.ModelEditor import ModelEditor
 from sbmlmod.SBMLmod_fault import SBMLmodFault
 from sbmlmod.SBMLmod_types import ns0 as SBMLfiletypeNs
+
 
 class ManipulateKineticParameters(object):
     '''
@@ -44,6 +46,15 @@ class ManipulateKineticParameters(object):
         results, warnings = self.executeAddBoundsToKineticLaw(request, sbmlfiles, datafile, mappingfile)
 
         return results, warnings    
+
+    def replaceInitialConcentrationsOfSpecies(self, request, files):        
+        sbmlfiles = files[0]
+        datafile = files[1]
+        mappingfile = files[2]
+
+        results, warnings = self.executeReplaceInitialConcentrationsOfSpecies(request, sbmlfiles, datafile, mappingfile)
+
+        return results, warnings 
 
 
     def executeReplaceKineticLawParameter(self, request, sbmlfiles, datafile, mappingfile):
@@ -245,7 +256,6 @@ class ManipulateKineticParameters(object):
 
         return [newsbmlmodels, header], warnings
 
-
     
     def executeAddBoundsToKineticLaw(self, request, sbmlfiles, datafile=None, mappingfile=None):
 
@@ -358,6 +368,61 @@ class ManipulateKineticParameters(object):
                 newsbmlmodels.append(sbmlDocument)
 
         return [newsbmlmodels, header], warnings    
+    
+    
+    def executeReplaceInitialConcentrationsOfSpecies(self, request, sbmlfiles, datafile, mappingfile=None):
+        mapper = DataMapper()
+        warnings = []
+        datacolumn = 2
+
+        if request.get_element_DataColumnNumber():
+            datacolumn = int(request.get_element_DataColumnNumber())
+
+        batch = False
+        if request.get_element_BatchMode():
+            batch = request.get_element_BatchMode()
+
+        if batch:
+            if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile) - datacolumn + 1:
+                message = "The there are more model files than number of columns in the datafile"
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+
+        if mappingfile:
+
+            mapper.setup(mappingfile, datafile, col=datacolumn, batch=batch)
+            result = mapper.mergeExpressionValuesMappingToSameReaction()
+
+            self.conc = result[0]
+            self.metId = result[1]
+            warnings = result[2]
+
+        else:
+            self.conc, self.metId = mapper.setup_expr(datafile, col=datacolumn, batch=batch)
+
+
+        newsbmlfiles = []
+        header = self.getDataHeader(datafile, datacolumn)
+        editor = ModelEditor()
+
+        reader = SBMLReader()
+        for i in range(len(sbmlfiles)):
+
+            sbmlDocument = reader.readSBMLFromString(sbmlfiles[i])
+
+            if sbmlDocument.getNumErrors():
+                message = "The SBML file is not valid."
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+
+            if batch:
+                newModel, warnings = editor.editInitialConcentrations(document=sbmlDocument, data=self.conc, datainfo=self.metId, warnings=warnings, column=i)
+            else:
+                newModel, warnings = editor.editInitialConcentrations(document=sbmlDocument, data=self.conc, datainfo=self.metId, warnings=warnings, column=datacolumn - 2)
+
+            sbmlDocument.setModel(newModel)
+
+            newsbmlfiles.append(sbmlDocument)
+
+        return [newsbmlfiles, header], warnings    
     
     
     def addKineticLawParameter(self, request, response):
