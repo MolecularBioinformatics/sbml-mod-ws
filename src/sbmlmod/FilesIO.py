@@ -102,6 +102,35 @@ class FilesIO(object):
 
         return [sbmlfiles, datafile, mappingfile]
     
+    def getMappingFile(self, request):
+        try:
+            mappingfile = zlib.decompress(base64.b64decode(request.get_element_MappingFile())).strip()
+        except:
+            message = "The mapping file could not be decompressed, ensure file is not emtpy, zipped and then encoded as a string."
+            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+        return mappingfile            
+
+    def getSBMLFile(self, request):
+        sbmlfiles = []
+
+        files = request.get_element_SbmlModelFiles()
+
+        for f in files:
+            try:
+                sbmlfiles.append(zlib.decompress(base64.b64decode(f)).strip())
+            except:
+                message = "The SBML model could not be decompressed, ensure file is not empty, zipped and then encoded as a string."
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+        return sbmlfiles
+    
+    def getDataFile(self, request):
+        try:
+            datafile = zlib.decompress(base64.b64decode(request.get_element_DataFile())).strip()
+        except:
+            message = "The data file could not be decompressed, ensure file is not empty, zipped and then encoded as a string."
+            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+        return datafile
+    
     def writeResultsToFileGzippedBase64Encoded(self, results):
 
         SBMLmod_file = SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLmod", "SbmlModelFilesType")).pyclass
@@ -149,7 +178,6 @@ class FilesIO(object):
             sbmlEditfile.set_element_Name(header[i])
             sbmlEditfile.set_element_SbmlModelFile(writer.writeSBMLToString(sbmlDocuments[i]))
             writtenFiles.append(sbmlEditfile)
-
 
         return writtenFiles
             

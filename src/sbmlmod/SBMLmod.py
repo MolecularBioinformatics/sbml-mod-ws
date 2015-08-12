@@ -288,22 +288,15 @@ class SBMLmodWS(SBMLmod):
 
     # --
 
-
+    # scale global parameters
+    # here, a a function soap_ScaleGlobalParameters is not defined and thus does not need to be mapped to soap_ScaleGlobalParametersGzippedBase64Encoded
 
     def soap_ScaleGlobalParametersText(self, ps):
         request, response = SBMLmod.soap_ScaleGlobalParametersText(self, ps)
-        return self.scaleGlobalParametersText(request, response)
-
-    def scaleGlobalParametersText(self, request, response):
-
         files = self.getFilesAsText(request)
 
-        sbmlfiles = files[0]
-        datafile = files[1]
-        mappingfile = files[2]
-
-        results, warnings = self.executeScaleGlobalParameters(request, sbmlfiles, datafile, mappingfile)
-
+        results, warnings = ManipulateKineticParameters.scaleGlobalParameters(self, request, files)
+        
         response.set_element_SbmlModelFiles(self.writeResultsToFileText(results))
         response.set_element_Warnings(warnings)
 
@@ -311,16 +304,9 @@ class SBMLmodWS(SBMLmod):
 
     def soap_ScaleGlobalParametersBase64Encoded(self, ps):
         request, response = SBMLmod.soap_ScaleGlobalParametersBase64Encoded(self, ps)
-        return self.scaleGlobalParametersBase64Encoded(request, response)
-
-
-    def scaleGlobalParametersBase64Encoded(self, request, response):
         files = self.getFilesDecodeBase64(request)
-        sbmlfiles = files[0]
-        datafile = files[1]
-        mappingfile = files[2]
-
-        results, warnings = self.executeScaleGlobalParameters(request, sbmlfiles, datafile, mappingfile)
+        
+        results, warnings = ManipulateKineticParameters.scaleGlobalParameters(self, request, files)
 
         response.set_element_SbmlModelFiles(self.writeResultsToFileBase64Encoded(results))
         response.set_element_Warnings(warnings)
@@ -329,205 +315,15 @@ class SBMLmodWS(SBMLmod):
 
     def soap_ScaleGlobalParametersGzippedBase64Encoded(self, ps):
         request, response = SBMLmod.soap_ScaleGlobalParametersGzippedBase64Encoded(self, ps)
-        return self.scaleGlobalParametersGzippedBase64Encoded(request, response)
-
-
-    def scaleGlobalParametersGzippedBase64Encoded(self, request, response):
 
         files = self.getFilesDecodeBase64Gunzip(request)
 
-        sbmlfiles = files[0]
-        datafile = files[1]
-        mappingfile = files[2]
-
-        results, warnings = self.executeScaleGlobalParameters(request, sbmlfiles, datafile, mappingfile)
+        results, warnings = ManipulateKineticParameters.scaleGlobalParameters(self, request, files)
 
         response.set_element_SbmlModelFiles(self.writeResultsToFileGzippedBase64Encoded(results))
         response.set_element_Warnings(warnings)
 
         return request, response
-
-    def executeScaleGlobalParameters(self, request, sbmlfiles, datafile, mappingfile):
-
-        mapper = DataMapper()
-        warnings = []
-
-        datacolumn = 2
-
-        if request.get_element_DataColumnNumber():
-            datacolumn = int(request.get_element_DataColumnNumber())
-
-        batch = request.get_element_BatchMode()
-
-        if batch:
-            if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile) - datacolumn + 1:
-                message = "The there are more model files than number of columns in the datafile"
-                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-        else:
-            if len(sbmlfiles) > 1:
-                message = "Only one file can be submitted when batch mode is set to False"
-                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-
-
-        if mappingfile != None:
-            mapper.setup(mappingfile, datafile, datacolumn, batch=batch)
-            if request.get_element_MergeMode():
-                mergemode = request.get_element_MergeMode()
-                result = mapper.mergeExpressionValuesMappingToSameReaction(mode=mergemode)
-            else:
-
-                result = mapper.mergeExpressionValuesMappingToSameReaction()
-
-            self.expr = result[0]
-            self.exprId = result[1]
-            warnings = result[2]
-
-        else:
-            self.expr, self.exprId = mapper.setup_expr(datafile, datacolumn, batch=batch)
-
-
-        # SBMLmod_file=SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLmod","SbmlModelFilesType")).pyclass
-
-        newsbmlfiles = []
-        header = self.getDataHeader(datafile, datacolumn)
-        editor = ModelEditor()
-
-        if batch:
-
-            if len(sbmlfiles) > 1:
-
-
-                for i in range(len(sbmlfiles)):
-                    reader = SBMLReader()
-                    sbmlDocument = reader.readSBMLFromString(sbmlfiles[i])
-
-                    if sbmlDocument.getNumErrors():
-                        message = "The SBML file is not valid."
-                        raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-                    newModel, warnings = editor.scaleGlobalParameters(document=sbmlDocument, data=self.expr, column=i, datainfo=self.exprId, warnings=warnings)
-
-                    sbmlDocument.setModel(newModel)
-                    newsbmlfiles.append(sbmlDocument)
-
-            else:
-                reader = SBMLReader()
-                sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
-
-                if sbmlDocument.getNumErrors():
-                    message = "The SBML file is not valid."
-                    raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-
-                for i in range(len(self.expr[0])):
-                    reader = SBMLReader()
-                    sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
-
-                    newModel, warnings = editor.scaleGlobalParameters(document=sbmlDocument, data=self.expr, column=i, datainfo=self.exprId, warnings=warnings)
-
-                    sbmlDocument.setModel(newModel)
-                    newsbmlfiles.append(sbmlDocument)
-
-
-
-        else:
-            reader = SBMLReader()
-            sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
-
-            if sbmlDocument.getNumErrors():
-                message = "The SBML file is not valid."
-                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-
-            newModel, warnings = editor.scaleGlobalParameters(document=sbmlDocument, data=self.expr, column=0, datainfo=self.exprId, warnings=warnings)
-
-            sbmlDocument.setModel(newModel)
-            newsbmlfiles.append(sbmlDocument)
-
-
-        return [newsbmlfiles, header], warnings
-
-
-    def getMappingFile(self, request):
-        try:
-            mappingfile = zlib.decompress(base64.b64decode(request.get_element_MappingFile())).strip()
-        except:
-            message = "The mapping file could not be decompressed, ensure file is not emtpy, zipped and then encoded as a string."
-            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-        return mappingfile
-
-    def getSBMLFile(self, request):
-        sbmlfiles = []
-
-        files = request.get_element_SbmlModelFiles()
-
-        for f in files:
-            try:
-                sbmlfiles.append(zlib.decompress(base64.b64decode(f)).strip())
-            except:
-                message = "The SBML model could not be decompressed, ensure file is not empty, zipped and then encoded as a string."
-                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-        return sbmlfiles
-
-    def getDataFile(self, request):
-        try:
-            datafile = zlib.decompress(base64.b64decode(request.get_element_DataFile())).strip()
-        except:
-            message = "The data file could not be decompressed, ensure file is not empty, zipped and then encoded as a string."
-            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-        return datafile
-
-    def isTabDelimitedAndAllRowsContainEqualNumberOfColumns(self, datafile):
-        lines = datafile.split('\n')
-
-        firstcolno = 0
-        first = True
-
-        for i in range(1, len(lines)):
-            line = lines[i]
-            if not first:
-                colno = line.count('\t')
-
-                if colno == 0:
-                    return False
-                if colno != firstcolno:
-                    return False
-            else:
-                firstcolno = line.count('\t')
-                if firstcolno == 0:
-                    return False
-                first = False
-        return True
-
-    def getDataHeader(self, datafile, col=2):
-        line = datafile.split('\n')[0]
-        columns = line.split('\t')
-        header = []
-
-        for i in range(col - 1, len(columns)):
-            header.append(columns[i])
-
-        return header
-
-
-
-    def getOption(self, request):
-        option1 = 'INSERT_DEFAULT'
-        option2 = 'INSERT_DATA_THEN_DEFAULT'
-        option3 = 'INSERT_DATA_WITH_MAPPING_THEN_DEFAULT'
-        option = None
-
-        if request.get_element_DataFile():
-            if request.get_element_MappingFile():
-                option = option3
-            else:
-                option = option2
-
-        elif request.get_element_DefaultValue():
-            option = option1
-
-        return option
-
-
-    
-
 
 def main():
     port = 8080

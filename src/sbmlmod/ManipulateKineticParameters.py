@@ -11,6 +11,7 @@ from sbmlmod.DataMapper import DataMapper
 from sbmlmod.ModelEditor import ModelEditor
 from sbmlmod.SBMLmod_fault import SBMLmodFault
 from sbmlmod.SBMLmod_types import ns0 as SBMLfiletypeNs
+from sbmlmod.FilesIO import FilesIO
 
 
 class ManipulateKineticParameters(object):
@@ -64,6 +65,16 @@ class ManipulateKineticParameters(object):
         results, warnings = self.executeReplaceGlobalParameters(request, sbmlfiles, datafile, mappingfile)
 
         return results, warnings 
+
+    def scaleGlobalParameters(self, request, files):
+        sbmlfiles = files[0]
+        datafile = files[1]
+        mappingfile = files[2]
+
+        results, warnings = self.executeScaleGlobalParameters(request, sbmlfiles, datafile, mappingfile)
+
+        return results, warnings 
+    
 
     def executeReplaceKineticLawParameter(self, request, sbmlfiles, datafile, mappingfile):
         if not request.get_element_ParameterId():
@@ -527,6 +538,102 @@ class ManipulateKineticParameters(object):
 
         return [newsbmlfiles, header], warnings    
     
+    def executeScaleGlobalParameters(self, request, sbmlfiles, datafile, mappingfile):
+
+        mapper = DataMapper()
+        warnings = []
+
+        datacolumn = 2
+
+        if request.get_element_DataColumnNumber():
+            datacolumn = int(request.get_element_DataColumnNumber())
+
+        batch = request.get_element_BatchMode()
+
+        if batch:
+            if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile) - datacolumn + 1:
+                message = "The there are more model files than number of columns in the datafile"
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+        else:
+            if len(sbmlfiles) > 1:
+                message = "Only one file can be submitted when batch mode is set to False"
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+
+
+        if mappingfile != None:
+            mapper.setup(mappingfile, datafile, datacolumn, batch=batch)
+            if request.get_element_MergeMode():
+                mergemode = request.get_element_MergeMode()
+                result = mapper.mergeExpressionValuesMappingToSameReaction(mode=mergemode)
+            else:
+
+                result = mapper.mergeExpressionValuesMappingToSameReaction()
+
+            self.expr = result[0]
+            self.exprId = result[1]
+            warnings = result[2]
+
+        else:
+            self.expr, self.exprId = mapper.setup_expr(datafile, datacolumn, batch=batch)
+
+
+        # SBMLmod_file=SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLmod","SbmlModelFilesType")).pyclass
+
+        newsbmlfiles = []
+        header = self.getDataHeader(datafile, datacolumn)
+        editor = ModelEditor()
+
+        if batch:
+
+            if len(sbmlfiles) > 1:
+
+
+                for i in range(len(sbmlfiles)):
+                    reader = SBMLReader()
+                    sbmlDocument = reader.readSBMLFromString(sbmlfiles[i])
+
+                    if sbmlDocument.getNumErrors():
+                        message = "The SBML file is not valid."
+                        raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+                    newModel, warnings = editor.scaleGlobalParameters(document=sbmlDocument, data=self.expr, column=i, datainfo=self.exprId, warnings=warnings)
+
+                    sbmlDocument.setModel(newModel)
+                    newsbmlfiles.append(sbmlDocument)
+
+            else:
+                reader = SBMLReader()
+                sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
+
+                if sbmlDocument.getNumErrors():
+                    message = "The SBML file is not valid."
+                    raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+
+                for i in range(len(self.expr[0])):
+                    reader = SBMLReader()
+                    sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
+
+                    newModel, warnings = editor.scaleGlobalParameters(document=sbmlDocument, data=self.expr, column=i, datainfo=self.exprId, warnings=warnings)
+
+                    sbmlDocument.setModel(newModel)
+                    newsbmlfiles.append(sbmlDocument)
+
+
+
+        else:
+            reader = SBMLReader()
+            sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
+
+            if sbmlDocument.getNumErrors():
+                message = "The SBML file is not valid."
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+
+            newModel, warnings = editor.scaleGlobalParameters(document=sbmlDocument, data=self.expr, column=0, datainfo=self.exprId, warnings=warnings)
+
+            sbmlDocument.setModel(newModel)
+            newsbmlfiles.append(sbmlDocument)
+
+
+        return [newsbmlfiles, header], warnings
     
     
     def addKineticLawParameter(self, request, response):
@@ -561,7 +668,7 @@ class ManipulateKineticParameters(object):
             newsbmlfiles.append(sbmlEditfile)
 
         else:
-            datafile = self.getDataFile(request)
+            datafile = FilesIO.getDataFile(request)
             if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(datafile):
                 message = "The data file is not tab delimited or rows contain unequal number of columns."
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
@@ -594,7 +701,7 @@ class ManipulateKineticParameters(object):
 
             else:
 
-                mappingfile = self.getMappingFile(request)
+                mappingfile = FilesIO.getMappingFile(request)
                 if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(mappingfile):
                     message = "The mapping file is not tab delimited or rows contain unequal number of columns."
                     raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
@@ -678,3 +785,53 @@ class ManipulateKineticParameters(object):
         line = datafile.split('\n')[0]
         return line.count('\t') + 1
     
+    
+    def getDataHeader(self, datafile, col=2):
+        line = datafile.split('\n')[0]
+        columns = line.split('\t')
+        header = []
+
+        for i in range(col - 1, len(columns)):
+            header.append(columns[i])
+
+        return header
+    
+    def getOption(self, request):
+        option1 = 'INSERT_DEFAULT'
+        option2 = 'INSERT_DATA_THEN_DEFAULT'
+        option3 = 'INSERT_DATA_WITH_MAPPING_THEN_DEFAULT'
+        option = None
+
+        if request.get_element_DataFile():
+            if request.get_element_MappingFile():
+                option = option3
+            else:
+                option = option2
+
+        elif request.get_element_DefaultValue():
+            option = option1
+
+        return option
+    
+    
+    def isTabDelimitedAndAllRowsContainEqualNumberOfColumns(self, datafile):
+        lines = datafile.split('\n')
+
+        firstcolno = 0
+        first = True
+
+        for i in range(1, len(lines)):
+            line = lines[i]
+            if not first:
+                colno = line.count('\t')
+
+                if colno == 0:
+                    return False
+                if colno != firstcolno:
+                    return False
+            else:
+                firstcolno = line.count('\t')
+                if firstcolno == 0:
+                    return False
+                first = False
+        return True
