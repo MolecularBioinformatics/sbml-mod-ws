@@ -56,6 +56,14 @@ class ManipulateKineticParameters(object):
 
         return results, warnings 
 
+    def replaceGlobalParameters(self, request, files):
+        sbmlfiles = files[0]
+        datafile = files[1]
+        mappingfile = files[2]
+
+        results, warnings = self.executeReplaceGlobalParameters(request, sbmlfiles, datafile, mappingfile)
+
+        return results, warnings 
 
     def executeReplaceKineticLawParameter(self, request, sbmlfiles, datafile, mappingfile):
         if not request.get_element_ParameterId():
@@ -155,7 +163,6 @@ class ManipulateKineticParameters(object):
             newmodels.append(sbmlDocument)
 
         return [newmodels, header], warnings
-
         
     def executeScaleKineticLawParameter(self, request, sbmlfiles, datafile, mappingfile):
 
@@ -255,7 +262,6 @@ class ManipulateKineticParameters(object):
             newsbmlmodels.append(sbmlDocument)
 
         return [newsbmlmodels, header], warnings
-
     
     def executeAddBoundsToKineticLaw(self, request, sbmlfiles, datafile=None, mappingfile=None):
 
@@ -369,7 +375,6 @@ class ManipulateKineticParameters(object):
 
         return [newsbmlmodels, header], warnings    
     
-    
     def executeReplaceInitialConcentrationsOfSpecies(self, request, sbmlfiles, datafile, mappingfile=None):
         mapper = DataMapper()
         warnings = []
@@ -423,6 +428,105 @@ class ManipulateKineticParameters(object):
             newsbmlfiles.append(sbmlDocument)
 
         return [newsbmlfiles, header], warnings    
+    
+    def executeReplaceGlobalParameters(self, request, sbmlfiles, datafile, mappingfile):
+
+
+        mapper = DataMapper()
+        warnings = []
+
+        datacolumn = 2
+
+        if request.get_element_DataColumnNumber():
+            datacolumn = int(request.get_element_DataColumnNumber())
+
+        batch = request.get_element_BatchMode()
+
+        if batch:
+            if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile) - datacolumn + 1:
+                message = "The there are more model files than number of columns in the datafile"
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+        else:
+            if len(sbmlfiles) > 1:
+                message = "Only one file can be submitted when batch mode is set to False"
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+
+
+        if mappingfile != None:
+            mapper.setup(mappingfile, datafile, datacolumn, batch=batch)
+            if request.get_element_MergeMode():
+                mergemode = request.get_element_MergeMode()
+                result = mapper.mergeExpressionValuesMappingToSameReaction(mode=mergemode)
+            else:
+
+                result = mapper.mergeExpressionValuesMappingToSameReaction()
+
+
+            self.expr = result[0]
+            self.exprId = result[1]
+            warnings = result[2]
+
+        else:
+            self.expr, self.exprId = mapper.setup_expr(datafile, datacolumn, batch=batch)
+
+
+        # SBMLmod_file=SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLmod","SbmlModelFilesType")).pyclass
+
+        newsbmlfiles = []
+        header = self.getDataHeader(datafile, datacolumn)
+        editor = ModelEditor()
+
+        if batch:
+            if len(sbmlfiles) > 1:
+
+
+                for i in range(len(sbmlfiles)):
+                    reader = SBMLReader()
+                    sbmlDocument = reader.readSBMLFromString(sbmlfiles[i])
+
+                    if sbmlDocument.getNumErrors():
+                        message = "The SBML file is not valid."
+                        raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+                    newModel, warnings = editor.replaceGlobalParameters(document=sbmlDocument, data=self.expr, column=i, datainfo=self.exprId, warnings=warnings)
+
+                    sbmlDocument.setModel(newModel)
+                    newsbmlfiles.append(sbmlDocument)
+
+            else:
+                reader = SBMLReader()
+                sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
+
+                if sbmlDocument.getNumErrors():
+                    message = "The SBML file is not valid."
+                    raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+
+                for i in range(len(self.expr[0])):
+                    reader = SBMLReader()
+                    sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
+
+                    newModel, warnings = editor.replaceGlobalParameters(document=sbmlDocument, data=self.expr, column=i, datainfo=self.exprId, warnings=warnings)
+
+                    sbmlDocument.setModel(newModel)
+                    newsbmlfiles.append(sbmlDocument)
+
+
+
+        else:
+            reader = SBMLReader()
+            sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
+
+            if sbmlDocument.getNumErrors():
+                message = "The SBML file is not valid."
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+
+            newModel, warnings = editor.replaceGlobalParameters(document=sbmlDocument, data=self.expr, column=0, datainfo=self.exprId, warnings=warnings)
+
+            sbmlDocument.setModel(newModel)
+            newsbmlfiles.append(sbmlDocument)
+
+
+        return [newsbmlfiles, header], warnings    
+    
     
     
     def addKineticLawParameter(self, request, response):

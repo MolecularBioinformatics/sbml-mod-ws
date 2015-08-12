@@ -211,7 +211,7 @@ class SBMLmodWS(SBMLmod):
     # replace initial concentrations of model species
 
     def soap_ReplaceInitialConcentrationsOfSpecies(self, ps):
-        return self.soap_ReplaceInitialConcentrationsOfSpeciesBase64Encoded(self, ps)
+        return self.soap_ReplaceInitialConcentrationsOfSpeciesGzippedBase64Encoded(self, ps)
 
     def soap_ReplaceInitialConcentrationsOfSpeciesText(self, ps):
         request, response = SBMLmod.soap_ReplaceInitialConcentrationsOfSpeciesText(self, ps)
@@ -251,45 +251,14 @@ class SBMLmodWS(SBMLmod):
     # replace global parameters
 
     def soap_ReplaceGlobalParameters(self, ps):
-        request, response = SBMLmod.soap_ReplaceGlobalParameters(self, ps)
-        return self.replaceGlobalParameters(request, response)
-
-    def replaceGlobalParameters(self, request, response):
-
-        sbmlfiles = self.getSBMLFile(request)
-        datafile = self.getDataFile(request)
-
-        if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(datafile):
-            message = "The data file is not tab delimited or rows contain unequal number of columns."
-            raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-
-        if request.get_element_MappingFile():
-            mappingfile = self.getMappingFile(request)
-            if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(mappingfile):
-                message = "The mapping file is not tab delimited or rows contain unequal number of columns."
-                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-
-        results, warnings = self.executeReplaceGlobalParameters(request, sbmlfiles, datafile, mappingfile)
-
-        response.set_element_SbmlModelFiles(self.writeResultsToFileGzippedBase64Encoded(results))
-        response.set_element_Warnings(warnings)
-
-        return request, response
+        return self.soap_ReplaceGlobalParametersGzippedBase64Encoded(self, ps)
 
 
     def soap_ReplaceGlobalParametersText(self, ps):
         request, response = SBMLmod.soap_ReplaceGlobalParametersText(self, ps)
-        return self.replaceGlobalParametersText(request, response)
-
-    def replaceGlobalParametersText(self, request, response):
-
         files = self.getFilesAsText(request)
 
-        sbmlfiles = files[0]
-        datafile = files[1]
-        mappingfile = files[2]
-
-        results, warnings = self.executeReplaceGlobalParameters(request, sbmlfiles, datafile, mappingfile)
+        results, warnings = ManipulateKineticParameters.replaceGlobalParameters(self, request, files)
 
         response.set_element_SbmlModelFiles(self.writeResultsToFileText(results))
         response.set_element_Warnings(warnings)
@@ -298,17 +267,8 @@ class SBMLmodWS(SBMLmod):
 
     def soap_ReplaceGlobalParametersBase64Encoded(self, ps):
         request, response = SBMLmod.soap_ReplaceGlobalParametersBase64Encoded(self, ps)
-        return self.replaceGlobalParametersBase64Encoded(request, response)
-
-
-    def replaceGlobalParametersBase64Encoded(self, request, response):
         files = self.getFilesDecodeBase64(request)
-
-        sbmlfiles = files[0]
-        datafile = files[1]
-        mappingfile = files[2]
-
-        results, warnings = self.executeReplaceGlobalParameters(request, sbmlfiles, datafile, mappingfile)
+        results, warnings = ManipulateKineticParameters.replaceGlobalParameters(self, request, files)
 
         response.set_element_SbmlModelFiles(self.writeResultsToFileBase64Encoded(results))
         response.set_element_Warnings(warnings)
@@ -317,123 +277,18 @@ class SBMLmodWS(SBMLmod):
 
     def soap_ReplaceGlobalParametersGzippedBase64Encoded(self, ps):
         request, response = SBMLmod.soap_ReplaceGlobalParametersGzippedBase64Encoded(self, ps)
-        return self.replaceGlobalParametersGzippedBase64Encoded(request, response)
-
-
-    def replaceGlobalParametersGzippedBase64Encoded(self, request, response):
-
         files = self.getFilesDecodeBase64Gunzip(request)
 
-        sbmlfiles = files[0]
-        datafile = files[1]
-        mappingfile = files[2]
-
-        results, warnings = self.executeReplaceGlobalParameters(request, sbmlfiles, datafile, mappingfile)
+        results, warnings = ManipulateKineticParameters.replaceGlobalParameters(self, request, files)
 
         response.set_element_SbmlModelFiles(self.writeResultsToFileGzippedBase64Encoded(results))
         response.set_element_Warnings(warnings)
 
         return request, response
 
+    # --
 
 
-    def executeReplaceGlobalParameters(self, request, sbmlfiles, datafile, mappingfile):
-
-
-        mapper = DataMapper()
-        warnings = []
-
-        datacolumn = 2
-
-        if request.get_element_DataColumnNumber():
-            datacolumn = int(request.get_element_DataColumnNumber())
-
-        batch = request.get_element_BatchMode()
-
-        if batch:
-            if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile) - datacolumn + 1:
-                message = "The there are more model files than number of columns in the datafile"
-                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-        else:
-            if len(sbmlfiles) > 1:
-                message = "Only one file can be submitted when batch mode is set to False"
-                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-
-
-        if mappingfile != None:
-            mapper.setup(mappingfile, datafile, datacolumn, batch=batch)
-            if request.get_element_MergeMode():
-                mergemode = request.get_element_MergeMode()
-                result = mapper.mergeExpressionValuesMappingToSameReaction(mode=mergemode)
-            else:
-
-                result = mapper.mergeExpressionValuesMappingToSameReaction()
-
-
-            self.expr = result[0]
-            self.exprId = result[1]
-            warnings = result[2]
-
-        else:
-            self.expr, self.exprId = mapper.setup_expr(datafile, datacolumn, batch=batch)
-
-
-        # SBMLmod_file=SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLmod","SbmlModelFilesType")).pyclass
-
-        newsbmlfiles = []
-        header = self.getDataHeader(datafile, datacolumn)
-        editor = ModelEditor()
-
-        if batch:
-            if len(sbmlfiles) > 1:
-
-
-                for i in range(len(sbmlfiles)):
-                    reader = SBMLReader()
-                    sbmlDocument = reader.readSBMLFromString(sbmlfiles[i])
-
-                    if sbmlDocument.getNumErrors():
-                        message = "The SBML file is not valid."
-                        raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-                    newModel, warnings = editor.replaceGlobalParameters(document=sbmlDocument, data=self.expr, column=i, datainfo=self.exprId, warnings=warnings)
-
-                    sbmlDocument.setModel(newModel)
-                    newsbmlfiles.append(sbmlDocument)
-
-            else:
-                reader = SBMLReader()
-                sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
-
-                if sbmlDocument.getNumErrors():
-                    message = "The SBML file is not valid."
-                    raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-
-                for i in range(len(self.expr[0])):
-                    reader = SBMLReader()
-                    sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
-
-                    newModel, warnings = editor.replaceGlobalParameters(document=sbmlDocument, data=self.expr, column=i, datainfo=self.exprId, warnings=warnings)
-
-                    sbmlDocument.setModel(newModel)
-                    newsbmlfiles.append(sbmlDocument)
-
-
-
-        else:
-            reader = SBMLReader()
-            sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
-
-            if sbmlDocument.getNumErrors():
-                message = "The SBML file is not valid."
-                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-
-            newModel, warnings = editor.replaceGlobalParameters(document=sbmlDocument, data=self.expr, column=0, datainfo=self.exprId, warnings=warnings)
-
-            sbmlDocument.setModel(newModel)
-            newsbmlfiles.append(sbmlDocument)
-
-
-        return [newsbmlfiles, header], warnings
 
     def soap_ScaleGlobalParametersText(self, ps):
         request, response = SBMLmod.soap_ScaleGlobalParametersText(self, ps)
