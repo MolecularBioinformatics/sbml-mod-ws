@@ -3,24 +3,16 @@ import base64
 import zlib
 
 from libsbml import SBMLReader
-
 from SBMLmod_server import SBMLmod
-from sbmlmod.DataMapper import DataMapper
 from sbmlmod.FilesIO import FilesIO    
 from sbmlmod.ManipulateKineticParameters import ManipulateKineticParameters
-from sbmlmod.ModelEditor import ModelEditor
 from sbmlmod.SBMLmod_fault import SBMLmodFault
 from sbmlmod.facades import ValidateSBMLmodel_facade
 from sbmlmod.facades import version_facade
-from mercurial.dispatch import request
 
 
 # from pyserver.config import WSDL
 class SBMLmodWS(SBMLmod):
-    '''
-    classdocs
-    '''
-
 
     # _wsdl = "".join(open(WSDL).readlines())
 
@@ -40,7 +32,8 @@ class SBMLmodWS(SBMLmod):
         response.set_element_Version(version_facade.getVersion())
         return request, response
     
-    # Validate that the SBML model is compatible with given sbml version
+    
+    # Validate that the SBML model is compatible with given SBML version
     # --
     def soap_ValidateSBMLModel(self, ps):
         request, response = SBMLmod.soap_ValidateSBMLModel(self, ps)
@@ -81,7 +74,6 @@ class SBMLmodWS(SBMLmod):
         self.checkSBMLFileForErrors(response, sbml_file)
         return request, response
     
-
     def checkSBMLFileForErrors(self, response, sbml_file):
 
         [has_errors, listOfErrors] = ValidateSBMLmodel_facade.sbmlFileHasErrors(sbml_file)
@@ -90,6 +82,7 @@ class SBMLmodWS(SBMLmod):
             response.set_element_ErrorMessages(listOfErrors)            
     
     # --
+    
     
     # replace kinetic law parameters
     # ==============================
@@ -138,6 +131,7 @@ class SBMLmodWS(SBMLmod):
     
     # --
 
+    
     # scale kinetic parameters section
     # ================================
     # --
@@ -183,6 +177,7 @@ class SBMLmodWS(SBMLmod):
 
     # --
 
+    
     # add kinetic laws
     # ================
     # --
@@ -195,6 +190,7 @@ class SBMLmodWS(SBMLmod):
 
     # --
 
+    
     # add bounds to kinetic laws
     # ==========================
     # --
@@ -240,6 +236,7 @@ class SBMLmodWS(SBMLmod):
 
     # --
 
+    
     # replace initial concentrations of model species
     # ===============================================
     # --
@@ -285,6 +282,7 @@ class SBMLmodWS(SBMLmod):
 
     # --
 
+    
     # replace global parameters
     # =========================
     # --
@@ -330,9 +328,9 @@ class SBMLmodWS(SBMLmod):
 
     # --
 
+    
     # scale global parameters
     # =======================
-    # here, a a function soap_ScaleGlobalParameters is not defined and thus does not need to be mapped to soap_ScaleGlobalParametersGzippedBase64Encoded
     # --
     def soap_ScaleGlobalParametersText(self, ps):
         request, response = SBMLmod.soap_ScaleGlobalParametersText(self, ps)
@@ -367,6 +365,8 @@ class SBMLmodWS(SBMLmod):
         response.set_element_Warnings(warnings)
 
         return request, response
+    
+    
 
 def main():
     port = 8080

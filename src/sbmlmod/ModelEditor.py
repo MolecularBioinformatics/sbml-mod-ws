@@ -2,10 +2,6 @@ from sbmlmod.SBMLmod_fault import SBMLmodFault
 
 
 class ModelEditor(object):
-    '''
-    classdocs
-    '''
-
 
     # Takes a model, a list of reaction Ids with some values, as well as a parameter that should be updated
     # Returns a new model with the new values inserted for a particular parameter
@@ -23,6 +19,7 @@ class ModelEditor(object):
                 if not reaction.getKineticLaw():
                     message = "Kinetic law is missing from reaction."
                     raise SBMLmodFault(message, "INTERNAL_ERROR")
+                
                 params = reaction.getKineticLaw().getListOfParameters()
                 self.found = False
                 for e in params:
@@ -37,24 +34,8 @@ class ModelEditor(object):
             warnings.append('Number of reaction IDs not found in the data is: ' + str(keysNotInData) + ' of ' + str(len(newmodel.getListOfReactions())) + '.')
             warnings.append('The reaction id not found are: ' + str(listKeysNotInData))
 
-#        for key in datainfo:
-#
-#            if newmodel.getReaction(key)!= None :
-#
-#                reac = newmodel.getReaction(key)
-#
-#                params = reac.getKineticLaw().getListOfParameters()
-#                self.found=False
-#                for e in params:
-#                    if parameter.lower() in e.getId().lower():
-#                        e.setValue(data[datainfo.index(key)][column])
-#                        self.found=True
-# #                if not self.found:
-# #                    warnings.append("edit: "+parameter + ' not found in reaction ' + key)
-#            else:
-#                warnings.append(key + ' not found in model')
-
         return newmodel, warnings
+
 
     # Takes a model, a list of reaction IDs with some values, as well as a parameter that should be updated
     # Returns a new model where the old values for a particular parameter have been multiplied with the new values
@@ -73,14 +54,13 @@ class ModelEditor(object):
                     if parameter.lower() in f.getId().lower():
                         self.oldval = f.getValue()
                         self.found = True
+                        
                 if self.found:
                     for e in newparams:
                         if parameter.lower() in e.getId().lower():
                             e.setValue(self.oldval * data[datainfo.index(key)][column])
-
                 else:
                     warnings.append("scale: " + parameter + ' not found in reaction ' + key)
-
             else: warnings.append(key + ' not found in model')
 
         return newmodel, warnings
@@ -108,6 +88,7 @@ class ModelEditor(object):
 
         return newmodel, warnings
 
+    
     def addKineticLawParameter(self, document, parameter, warnings, default_value=None, data=None, datainfo=None, column=0):
 
         model = document.getModel()
@@ -120,6 +101,7 @@ class ModelEditor(object):
         for reaction in reactions:
             if not reaction.isSetKineticLaw():
                 reaction.createKineticLaw()
+                
             reaction.getKineticLaw().createParameter().setId(parameter)
             if data and reaction.getId() in datainfo:
                 reaction.getKineticLaw().getParameter(parameter).setValue(data[datainfo.index(reaction.getId())][column])
@@ -135,6 +117,7 @@ class ModelEditor(object):
             warnings.append('The reaction id  not found are: ' + str(listKeysNotInData))
 
         return newmodel, warnings
+    
 
     def addBounds(self, document, warnings, default_value=1000, data=None, datainfo=None, column=0):
         model = document.getModel()
@@ -149,6 +132,7 @@ class ModelEditor(object):
         for reaction in reactions:
             if not reaction.isSetKineticLaw():
                 reaction.createKineticLaw()
+                
             reaction.getKineticLaw().createParameter().setId(upper)
             reaction.getKineticLaw().createParameter().setId(lower)
 
@@ -160,7 +144,6 @@ class ModelEditor(object):
                     reaction.getKineticLaw().getParameter(lower).setValue(0.0)
             else:
                 reaction.getKineticLaw().getParameter(upper).setValue(default_value)
-
                 if reaction.getReversible():
                     reaction.getKineticLaw().getParameter(lower).setValue(-default_value)
                 else:
@@ -175,6 +158,7 @@ class ModelEditor(object):
             warnings.append('The reaction id  not found are: ' + str(listKeysNotInData))
 
         return newmodel, warnings
+    
 
     def replaceGlobalParameters(self, document, data, column, datainfo, warnings, header=True):
         model = document.getModel()
@@ -195,7 +179,6 @@ class ModelEditor(object):
         newmodel = model.clone()
 
         for key in datainfo:
-
             if newmodel.getParameter(key) != None:
                 param = newmodel.getParameter(key)
                 oldval = param.getValue()
@@ -204,5 +187,3 @@ class ModelEditor(object):
                 warnings.append(key + ' (GlobalParameter) not found in model')
 
         return newmodel, warnings
-
-

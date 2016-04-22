@@ -1,6 +1,4 @@
 '''
-Created on Jul 3, 2015
-
 @author: schaeuble
 '''
 
@@ -8,15 +6,11 @@ import base64
 import zlib
 
 from libsbml import SBMLReader, SBMLWriter
-
 from sbmlmod.SBMLmod_fault import SBMLmodFault
 from sbmlmod.SBMLmod_types import ns0 as SBMLfiletypeNs
 
 
 class FilesIO:
-    '''
-    classdocs
-    '''
 
     def getFilesAsText(self, request):
         sbmlfiles = request.get_element_SbmlModelFiles()
@@ -47,9 +41,9 @@ class FilesIO:
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         return [sbmlfiles, datafile, mappingfile]
+    
 
     def getFilesDecodeBase64(self, request):
-
         files = request.get_element_SbmlModelFiles()
         sbmlfiles = []
 
@@ -60,6 +54,7 @@ class FilesIO:
             if document.getNumErrors():
                 message = "Invalid SBML file"
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+            
             sbmlfiles.append(f)
 
         datafile = None
@@ -84,7 +79,6 @@ class FilesIO:
 
 
     def getFilesDecodeBase64Gunzip(self, request):
-
         sbmlfiles = self.getSBMLFile(request)
 
         datafile = None
@@ -104,6 +98,7 @@ class FilesIO:
 
         return [sbmlfiles, datafile, mappingfile]
     
+    
     def getMappingFile(self, request):
         try:
             mappingfile = zlib.decompress(base64.b64decode(request.get_element_MappingFile())).strip()
@@ -112,9 +107,9 @@ class FilesIO:
             raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
         return mappingfile            
 
+
     def getSBMLFile(self, request):
         sbmlfiles = []
-
         files = request.get_element_SbmlModelFiles()
 
         for f in files:
@@ -125,6 +120,7 @@ class FilesIO:
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
         return sbmlfiles
     
+    
     def getDataFile(self, request):
         try:
             datafile = zlib.decompress(base64.b64decode(request.get_element_DataFile())).strip()
@@ -133,14 +129,13 @@ class FilesIO:
             raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
         return datafile
     
+    
     def writeResultsToFileGzippedBase64Encoded(self, results):
-
         SBMLmod_file = SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLmod", "SbmlModelFilesType")).pyclass
         sbmlDocuments = results[0]
         header = results[1]
-
         writtenFiles = []
-
+ 
         for i in range(len(sbmlDocuments)):
             writer = SBMLWriter()
             sbmlEditfile = SBMLmod_file()
@@ -149,13 +144,12 @@ class FilesIO:
             writtenFiles.append(sbmlEditfile)
 
         return writtenFiles
+    
 
     def writeResultsToFileBase64Encoded(self, results):
-
         SBMLmod_file = SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLmod", "SbmlModelFilesType")).pyclass
         sbmlDocuments = results[0]
         header = results[1]
-
         writtenFiles = []
 
         for i in range(len(sbmlDocuments)):
@@ -166,12 +160,12 @@ class FilesIO:
             writtenFiles.append(sbmlEditfile)
 
         return writtenFiles
+    
 
     def writeResultsToFileText(self, results):
         SBMLmod_file = SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLmod", "SbmlModelFilesType")).pyclass
         sbmlDocuments = results[0]
         header = results[1]
-
         writtenFiles = []
 
         for i in range(len(sbmlDocuments)):
@@ -183,9 +177,9 @@ class FilesIO:
 
         return writtenFiles
     
+
     def isTabDelimitedAndAllRowsContainEqualNumberOfColumns(self, datafile):
         lines = datafile.split('\n')
-
         firstcolno = 0
         first = True
 
@@ -203,4 +197,5 @@ class FilesIO:
                 if firstcolno == 0:
                     return False
                 first = False
+                
         return True

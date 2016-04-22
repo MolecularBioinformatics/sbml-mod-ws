@@ -7,6 +7,7 @@ class DataMapper(object):
         self.setup_mapping(mapping_string)
         self.setup_expr(expr_string, col, header, batch)
 
+ 
     def setup_mapping(self, mapping_string, header=True):
         self.mapping = {}
         self.iso = []
@@ -24,12 +25,14 @@ class DataMapper(object):
                 if len(columns) < 2:
                     message = 'The mapping file must have at least 2 columns'
                     raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+                
                 key = columns[0].strip()
                 value = columns[1].strip()
                 if key not in self.mapping.keys():
                     self.mapping[key] = [value]
                 else:
                     self.mapping[key].append(value)
+                    
                 if len(columns) == 3:
                     if columns[2].strip() == 'ISO':
                         self.iso.append(columns[0])
@@ -39,7 +42,6 @@ class DataMapper(object):
             lno = lno + 1
 
         ret = self.mapping
-
 
         return ret
 
@@ -54,7 +56,6 @@ class DataMapper(object):
         if col > lineLength:
             message = 'The data column index is outside the range of the number of columns in the data file.'
             raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-
 
         self.exprId = []
 
@@ -85,8 +86,6 @@ class DataMapper(object):
                         except:
                             message = 'A value in the data column cannot be converted to float: ' + columns[i]
                             raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-
-
                 else:
                     try:
                         newrow.append(float(columns[col]))
@@ -101,7 +100,6 @@ class DataMapper(object):
 
 
     def mergeExpressionValuesMappingToSameReaction(self, mode='MAX', warning=[]):
-
         warning = self.checkMapping(self.mapping, self.exprId, warning)
 
         if mode == 'MAX':
@@ -127,9 +125,7 @@ class DataMapper(object):
             raise SBMLmodFault(message, "INTERNAL_ERROR")
 
 
-
     def checkMapping(self, mapping, exprId, warning=[]):
-
         missingExpr = []
         noMissing = 0
         total = 0
@@ -145,6 +141,7 @@ class DataMapper(object):
             if noMissing == total:
                 message = "None of the reaction id's can be found in the dataset."
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+            
             warning.append(str(noMissing) + ' of ' + str(total) + " of reaction id's from the mapping file are not found in the dataset.")
             warning.append('Expression value not found for: ' + str(missingExpr))
             warning.append('Make sure the ids in either the mapping file or the data file does not contain '"'"'.')
@@ -153,25 +150,24 @@ class DataMapper(object):
 
 
     def sumExpression(self, mapping, expr, geneNames):
-
         mergeExpression = []
         mergeExprId = []
 
         for key in mapping:
             genes = mapping[key]
             if len(genes) > 1:
-
                 newrow = []
                 for i in range(len(expr[0])):
                     sum = 0
                     for g in genes:
                         if g in geneNames:
                             sum = sum + expr[geneNames.index(g)][i]
+                            
                     if sum:
                         newrow.append(sum)
+                        
                 mergeExpression.append(newrow)
                 mergeExprId.append(key)
-
             else:
                 if genes[0] in geneNames:
                     mergeExpression.append(expr[geneNames.index(genes[0])])
@@ -181,6 +177,7 @@ class DataMapper(object):
         self.exprId = mergeExprId
 
         return mergeExpression, mergeExprId
+
 
     def maxExpression(self, mapping, expr, geneNames):
         mergeExpression = []
@@ -188,31 +185,29 @@ class DataMapper(object):
 
         for key in mapping:
             genes = mapping[key]
-
             if len(genes) > 1:
-
                 newrow = []
                 for i in range(len(expr[0])):
                     values = []
                     for g in genes:
                         if g in geneNames:
                             values.append(expr[geneNames.index(g)][i])
+                            
                     if values:
                         newrow.append(max(values))
+                        
                 mergeExpression.append(newrow)
                 mergeExprId.append(key)
-
             else:
-
                 if genes[0] in geneNames:
                     mergeExpression.append(expr[geneNames.index(genes[0])])
                     mergeExprId.append(key)
-
 
         self.expr = mergeExpression
         self.exprId = mergeExprId
 
         return mergeExpression, mergeExprId
+    
 
     def minExpression(self, mapping, expr, geneNames):
         mergeExpression = []
@@ -221,18 +216,18 @@ class DataMapper(object):
         for key in mapping:
             genes = mapping[key]
             if len(genes) > 1:
-
                 newrow = []
                 for i in range(len(expr[0])):
                     values = []
                     for g in genes:
                         if g in geneNames:
                             values.append(expr[geneNames.index(g)][i])
+                            
                     if values:
                         newrow.append(min(values))
+                        
                 mergeExpression.append(newrow)
                 mergeExprId.append(key)
-
             else:
                 if genes[0] in geneNames:
                     mergeExpression.append(expr[geneNames.index(genes[0])])
@@ -242,6 +237,7 @@ class DataMapper(object):
         self.exprId = mergeExprId
 
         return mergeExpression, mergeExprId
+    
 
     def meanExpression(self, mapping, expr, geneNames):
         mergeExpression = []
@@ -250,7 +246,6 @@ class DataMapper(object):
         for key in mapping:
             genes = mapping[key]
             if len(genes) > 1:
-
                 newrow = []
                 for i in range(len(expr[0])):
                     count = 0
@@ -259,11 +254,12 @@ class DataMapper(object):
                         if g in geneNames:
                             sum = sum + expr[geneNames.index(g)][i]
                             count = count + 1
+                            
                     if sum and count:
                         newrow.append(sum / count)
+                        
                 mergeExpression.append(newrow)
                 mergeExprId.append(key)
-
             else:
                 if genes[0] in geneNames:
                     mergeExpression.append(expr[geneNames.index(genes[0])])
@@ -273,6 +269,7 @@ class DataMapper(object):
         self.exprId = mergeExprId
 
         return mergeExpression, mergeExprId
+    
 
     def medianExpression(self, mapping, expr, geneNames):
         mergeExpression = []
@@ -281,25 +278,26 @@ class DataMapper(object):
         for key in mapping:
             genes = mapping[key]
             if len(genes) > 1:
-
                 newrow = []
                 for i in range(len(expr[0])):
                     values = []
                     for g in genes:
                         if g in geneNames:
                             values.append(expr[geneNames.index(g)][i])
+                    
                     if values:
                         values.sort()
-
+                    
                     if len(values) % 2:
                         val = values[len(values) / 2]
                     else:
                         val = (values[(len(values) / 2) - 1] + values[len(values) / 2]) / 2
+                    
                     if val:
                         newrow.append(val)
+                        
                 mergeExpression.append(newrow)
                 mergeExprId.append(key)
-
             else:
                 if genes[0] in geneNames:
                     mergeExpression.append(expr[geneNames.index(genes[0])])
@@ -309,8 +307,6 @@ class DataMapper(object):
         self.exprId = mergeExprId
 
         return mergeExpression, mergeExprId
-
-
 
 
     def eFlux(self, mapping, expr, geneNames):
@@ -324,7 +320,6 @@ class DataMapper(object):
         for key in mapping:
             genes = mapping[key]
             if len(genes) > 1:
-
                 newrow = []
                 for i in range(len(expr[0])):
                     values = []
@@ -336,15 +331,15 @@ class DataMapper(object):
                         val = sum(values)
                     elif key in self.complex:
                         val = min(values)
-
                     else:
                         message = 'More than one gene maps to the enzyme ' + key + ', however the genes are not annotated with "COMPLEX" or "ISO" in the mapping file'
                         raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+                    
                     if val:
                         newrow.append(val)
+                        
                 mergeExpression.append(newrow)
                 mergeExprId.append(key)
-
             else:
                 if genes[0] in geneNames:
                     mergeExpression.append(expr[geneNames.index(genes[0])])
