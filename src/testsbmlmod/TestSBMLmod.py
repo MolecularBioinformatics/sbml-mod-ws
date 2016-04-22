@@ -56,8 +56,9 @@ class TestSBMLmod(unittest.TestCase):
 
         request.set_element_SbmlModelFile(base64.b64encode(zlib.compress(sbmlfile)))
         request, response = self.impl.validateSBMLModel(request, response)
+
         self.assertFalse(response.get_element_ModelIsValid())
-        self.assertEquals(3, len(response.get_element_ErrorMessages()))
+        self.assertEquals(2, len(response.get_element_ErrorMessages()))
 
     def validateSBMLModelCommonSetup(self):
         request = ValidateSBMLModelRequest()
