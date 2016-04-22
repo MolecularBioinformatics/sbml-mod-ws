@@ -34,9 +34,7 @@ class ManipulateKineticParameters(object):
         sbmlfiles = files[0]
         datafile = files[1]
         mappingfile = files[2]
-
         results, warnings = self.executeScaleKineticLawParameter(request, sbmlfiles, datafile, mappingfile)
-
         return results, warnings
 
     def addBoundsToKineticLaw(self, request, files):        
@@ -85,6 +83,7 @@ class ManipulateKineticParameters(object):
         warnings = []
 
         datacolumn = 2
+        
         if request.get_element_DataColumnNumber():
             datacolumn = int(request.get_element_DataColumnNumber())
 
@@ -812,26 +811,3 @@ class ManipulateKineticParameters(object):
             option = option1
 
         return option
-    
-    
-    def isTabDelimitedAndAllRowsContainEqualNumberOfColumns(self, datafile):
-        lines = datafile.split('\n')
-
-        firstcolno = 0
-        first = True
-
-        for i in range(1, len(lines)):
-            line = lines[i]
-            if not first:
-                colno = line.count('\t')
-
-                if colno == 0:
-                    return False
-                if colno != firstcolno:
-                    return False
-            else:
-                firstcolno = line.count('\t')
-                if firstcolno == 0:
-                    return False
-                first = False
-        return True

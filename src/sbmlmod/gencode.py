@@ -1,5 +1,6 @@
-import ZSI.generate.commands
 import os, warnings
+
+import ZSI.generate.commands
 
 from pyserver.config import SERVER_CODE_DIR, WSDL
 

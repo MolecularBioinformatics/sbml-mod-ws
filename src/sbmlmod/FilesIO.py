@@ -13,7 +13,7 @@ from sbmlmod.SBMLmod_fault import SBMLmodFault
 from sbmlmod.SBMLmod_types import ns0 as SBMLfiletypeNs
 
 
-class FilesIO(object):
+class FilesIO:
     '''
     classdocs
     '''
@@ -29,6 +29,7 @@ class FilesIO(object):
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         datafile = None
+        
         if request.get_element_DataFile():
             datafile = request.get_element_DataFile()
             
@@ -37,6 +38,7 @@ class FilesIO(object):
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         mappingfile = None
+        
         if request.get_element_MappingFile():
             mappingfile = request.get_element_MappingFile()
             
@@ -106,7 +108,7 @@ class FilesIO(object):
         try:
             mappingfile = zlib.decompress(base64.b64decode(request.get_element_MappingFile())).strip()
         except:
-            message = "The mapping file could not be decompressed, ensure file is not emtpy, zipped and then encoded as a string."
+            message = "The mapping file could not be decompressed, ensure file is not empty, zipped and then encoded as a string."
             raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
         return mappingfile            
 
@@ -180,4 +182,25 @@ class FilesIO(object):
             writtenFiles.append(sbmlEditfile)
 
         return writtenFiles
-            
+    
+    def isTabDelimitedAndAllRowsContainEqualNumberOfColumns(self, datafile):
+        lines = datafile.split('\n')
+
+        firstcolno = 0
+        first = True
+
+        for i in range(1, len(lines)):
+            line = lines[i]
+            if not first:
+                colno = line.count('\t')
+
+                if colno == 0:
+                    return False
+                if colno != firstcolno:
+                    return False
+            else:
+                firstcolno = line.count('\t')
+                if firstcolno == 0:
+                    return False
+                first = False
+        return True
