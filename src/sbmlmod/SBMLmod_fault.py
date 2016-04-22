@@ -1,5 +1,4 @@
 from ZSI import Fault
-
 from sbmlmod.SBMLmod_types import ns0
 
 
@@ -11,6 +10,3 @@ class SBMLmodFault(Fault):
         response.set_element_FaultEnum(faultEnum)
         response.set_element_FaultMessage(message)
         Fault.__init__(self, Fault.Server, message, None, response)
-      
-
-      

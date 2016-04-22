@@ -188,6 +188,9 @@ class SBMLmodWS(SBMLmod):
     # --
     def soap_AddKineticLawParameter(self, ps):
         request, response = SBMLmod.soap_AddKineticLawParameter(self, ps)
+        return self.addKineticLawParameter(request, response)
+    
+    def addKineticLawParameter(self, request, response):
         return ManipulateKineticParameters().addKineticLawParameter(request, response)
 
     # --
@@ -253,7 +256,7 @@ class SBMLmodWS(SBMLmod):
         
     def replaceInitialConcentrationsOfSpeciesText(self, request, response):
         files = FilesIO().getFilesText(request)
-        results, warnings = ManipulateKineticParameters().replaceInitialConcentrationsOfSpecies(self, request, files)
+        results, warnings = ManipulateKineticParameters().replaceInitialConcentrationsOfSpecies(request, files)
         response.set_element_SbmlModelFiles(FilesIO().writeResultsToFileText(results))
         response.set_element_Warnings(warnings)
         return request, response
@@ -264,7 +267,7 @@ class SBMLmodWS(SBMLmod):
     
     def replaceInitialConcentrationsOfSpeciesBase64Encoded(self, request, response):
         files = FilesIO().getFilesDecodeBase64(request)
-        results, warnings = ManipulateKineticParameters().replaceInitialConcentrationsOfSpecies(self, request, files)
+        results, warnings = ManipulateKineticParameters().replaceInitialConcentrationsOfSpecies(request, files)
         response.set_element_SbmlModelFiles(FilesIO().writeResultsToFileBase64Encoded(results))
         response.set_element_Warnings(warnings)
         return request, response
@@ -275,7 +278,7 @@ class SBMLmodWS(SBMLmod):
     
     def replaceInitialConcentrationsOfSpeciesGzippedBase64Encoded(self, request, response):
         files = FilesIO().getFilesDecodeBase64Gunzip(request)
-        results, warnings = ManipulateKineticParameters().replaceInitialConcentrationsOfSpecies(self, request, files)
+        results, warnings = ManipulateKineticParameters().replaceInitialConcentrationsOfSpecies(request, files)
         response.set_element_SbmlModelFiles(FilesIO().writeResultsToFileGzippedBase64Encoded(results))
         response.set_element_Warnings(warnings)
         return request, response

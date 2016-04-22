@@ -193,11 +193,11 @@ class ManipulateKineticParameters(object):
 
         if batch:
             if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile) - datacolumn + 1:
-                message = "There are more model files than number of columns in the datafile"
+                message = "There are more model files than number of columns in the datafile."
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
         else:
             if len(sbmlfiles) > 1:
-                message = "Only one model file can be submitted when batch mode is set to False"
+                message = "Only one model file can be submitted when batch mode is set to False."
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
 
@@ -637,7 +637,7 @@ class ManipulateKineticParameters(object):
     
     def addKineticLawParameter(self, request, response):
 
-        sbmlfiles = self.getSBMLFile(request)
+        sbmlfiles = FilesIO().getSBMLFile(request)
         parameter = request.get_element_ParameterId()
 
         self.option = self.getOption(request)
@@ -667,8 +667,8 @@ class ManipulateKineticParameters(object):
             newsbmlfiles.append(sbmlEditfile)
 
         else:
-            datafile = FilesIO.getDataFile(request)
-            if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(datafile):
+            datafile = FilesIO().getDataFile(request)
+            if not FilesIO().isTabDelimitedAndAllRowsContainEqualNumberOfColumns(datafile):
                 message = "The data file is not tab delimited or rows contain unequal number of columns."
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
@@ -700,8 +700,8 @@ class ManipulateKineticParameters(object):
 
             else:
 
-                mappingfile = FilesIO.getMappingFile(request)
-                if not self.isTabDelimitedAndAllRowsContainEqualNumberOfColumns(mappingfile):
+                mappingfile = FilesIO().getMappingFile(request)
+                if not FilesIO().isTabDelimitedAndAllRowsContainEqualNumberOfColumns(mappingfile):
                     message = "The mapping file is not tab delimited or rows contain unequal number of columns."
                     raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 

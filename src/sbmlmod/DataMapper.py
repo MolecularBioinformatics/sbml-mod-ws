@@ -45,9 +45,12 @@ class DataMapper(object):
 
 
     def setup_expr(self, expr_string, col=2, header=True, batch=False):
-        lines = expr_string.split('\n')
-        lineLength = len(lines[0].split('\t'))
-
+        if expr_string is not None:
+            lines = expr_string.split('\n')
+            lineLength = len(lines[0].split('\t'))
+        else:
+            lineLength = -1
+            
         if col > lineLength:
             message = 'The data column index is outside the range of the number of columns in the data file.'
             raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
@@ -95,6 +98,7 @@ class DataMapper(object):
             lno = lno + 1
 
         return self.expr , self.exprId
+
 
     def mergeExpressionValuesMappingToSameReaction(self, mode='MAX', warning=[]):
 
