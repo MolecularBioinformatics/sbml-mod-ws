@@ -414,7 +414,7 @@ class ManipulateKineticParameters(object):
 
         if batch:
             if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile) - datacolumn + 1:
-                message = "The there are more model files than number of columns in the datafile"
+                message = "There are more model files than number of columns in the datafile"
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
         else:
             if len(sbmlfiles) > 1:

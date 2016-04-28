@@ -1,0 +1,14 @@
+Parameter	GeneSymbol
+AADAT_E_T_kat1	Ccbl1
+AADAT_E_T_kat2	Aadat
+AADAT_E_T_kat3	Ccbl2
+AANAT_E_T	Aanat
+AFMID_E_T	Afmid
+DDC_E_T	Ddc
+IDO_E_T	Indo
+IMNT_E_T	Inmt
+Transporter_E_T_Slc7a8	Slc7a8
+KYNU_E_T	Kynu
+Transporter_E_T_Slc7a5	Slc7a5
+MAOA_E_T	Maoa
+MAOB_E_T	Maob
