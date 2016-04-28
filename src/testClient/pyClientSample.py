@@ -5,6 +5,15 @@ import os
 
 from suds.client import Client
 
+####
+#
+# sample Client
+# 
+# exemplarily an SBML is loaded, tested for validity and modified based on given data
+# the resulting two sbml files are again tested for validity and written into new files
+#
+####
+
 wsdlURL 			= 'http://cbu.bioinfo.no/wsdl/SBMLedit.wsdl'
 path 				= './'
 newSBMLbaseFilename = 'newSBML'
@@ -41,8 +50,6 @@ def main():
 	print 'Writing new model(s) to ' + os.getcwd()
 	writeNewModelFile(client, newModels, compress, encode)
 	
-	print 'Done.'
-
 
 
 # ================ #
@@ -72,7 +79,7 @@ def writeNewModelFile(client, newModels, compress, encode):
 		
 		output.write(newSBML)
 		output.close()
-		print 'Done.'
+		print 'Completed.'
 		
 
 	
@@ -84,17 +91,12 @@ def manipulateModels(client, files):
 	sbml_files = []
 	sbml_files.append(files[0])
 	sbml_files.append(files[0])
-	
+
+	# build two new sbml files with replacing 'E_T' parameter values 	
 	newsbml = client.service.ReplaceGlobalParametersGzippedBase64Encoded(sbml_files, 
 																		DataFile=files[2], DataColumnNumber=3,
 																		ParameterId="E_T",
-																		MappingFile=files[1], BatchMode=True)
-	response = client.service.AddBoundsToKineticLawGzippedBase64Encoded(newsbml.SbmlModelFiles[0].SbmlModelFile,
-																	DataFile = files[2], DefaultValue=999, 
-																	DataColumnNumber=10, MappingFile=files[1],
-																	BatchMode=False)
-	newsbml.SbmlModelFiles[0] = response.SbmlModelFiles[0]
-		
+																		MappingFile=files[1], BatchMode=True)		
 	return newsbml.SbmlModelFiles
 
 
