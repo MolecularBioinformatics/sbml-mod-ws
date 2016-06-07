@@ -14,9 +14,9 @@ from suds.client import Client
 #
 ####
 
-wsdlURL 			= 'http://cbu.bioinfo.no/wsdl/SBMLedit.wsdl'
-path 				= './'
-newSBMLbaseFilename = 'newSBML'
+wsdlURL				= 'http://cbu.bioinfo.no/wsdl/SBMLedit.wsdl'
+path				= './'
+newSBMLbaseFilename	= 'newSBML'
 
 def main():
 	compress		= True
@@ -36,10 +36,10 @@ def main():
 	
 	# check model validity of base model
 	print 'base SBML model validity status: ' 
-	#validateModel(client, ceFiles[0], compress, encode)
+	validateModel(client, ceFiles[0], compress, encode)
 	
 	# manipulate models by integrating dataset-specific values
-	print 'Modifying network...'
+	print 'Modifying model...'
 	newModels = manipulateModels(client, ceFiles)
 	
 	# check model validity of new model
