@@ -57,3 +57,5 @@ src/sbmlmod/SBMLmod_client.py
 src/sbmlmod/SBMLmod_server.py
 src/sbmlmod/SBMLmod_types.py
 
+# test Client
+src/testClient/*.xml

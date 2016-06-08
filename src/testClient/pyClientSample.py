@@ -14,18 +14,23 @@ from suds.client import Client
 #
 ####
 
-wsdlURL				= 'http://cbu.bioinfo.no/wsdl/SBMLedit.wsdl'
-path				= './'
+# wsdlURL DEPRECATED: works currently but needs to be updated as soon as service moved to Tromso
+wsdlURL			= 'http://cbu.bioinfo.no/wsdl/SBMLedit.wsdl'
+path			= './'
 newSBMLbaseFilename	= 'newSBML'
 
 def main():
-	compress		= True
-	encode			= True
+	global path
+	compress = True
+	encode	 = True
 	
-	client = set_client(False)
-
+	client   = set_client(False)
+		
 	logging.basicConfig(level=logging.INFO)
 	logging.getLogger('suds.client').setLevel(logging.CRITICAL)	
+
+	# get absolute path of running code
+	path = os.path.dirname( os.path.realpath(__file__) ) + '/'
 
 	# print minimal information about client
 	print 'Client version: ', client.service.GetVersion()
