@@ -14,53 +14,53 @@ from sbmlmod.FilesIO import FilesIO
 
 class ManipulateKineticParameters(object):
 
-    def replaceKineticLawParameter(self, request, files):        
+    def replaceKineticLawParameter(self, request, files):
         sbmlfiles = files[0]
         datafile = files[1]
         mappingfile = files[2]
         results, warnings = self.executeReplaceKineticLawParameter(request, sbmlfiles, datafile, mappingfile)
         return results, warnings
-    
-    
-    def scaleKineticLawParameter(self, request, files):        
+
+
+    def scaleKineticLawParameter(self, request, files):
         sbmlfiles = files[0]
         datafile = files[1]
         mappingfile = files[2]
         results, warnings = self.executeScaleKineticLawParameter(request, sbmlfiles, datafile, mappingfile)
         return results, warnings
-    
 
-    def addBoundsToKineticLaw(self, request, files):        
+
+    def addBoundsToKineticLaw(self, request, files):
         sbmlfiles = files[0]
         datafile = files[1]
         mappingfile = files[2]
         results, warnings = self.executeAddBoundsToKineticLaw(request, sbmlfiles, datafile, mappingfile)
-        return results, warnings    
-    
+        return results, warnings
 
-    def replaceInitialConcentrationsOfSpecies(self, request, files):        
+
+    def replaceInitialConcentrationsOfSpecies(self, request, files):
         sbmlfiles = files[0]
         datafile = files[1]
         mappingfile = files[2]
         results, warnings = self.executeReplaceInitialConcentrationsOfSpecies(request, sbmlfiles, datafile, mappingfile)
-        return results, warnings 
-    
+        return results, warnings
+
 
     def replaceGlobalParameters(self, request, files):
         sbmlfiles = files[0]
         datafile = files[1]
         mappingfile = files[2]
         results, warnings = self.executeReplaceGlobalParameters(request, sbmlfiles, datafile, mappingfile)
-        return results, warnings 
-    
+        return results, warnings
+
 
     def scaleGlobalParameters(self, request, files):
         sbmlfiles = files[0]
         datafile = files[1]
         mappingfile = files[2]
         results, warnings = self.executeScaleGlobalParameters(request, sbmlfiles, datafile, mappingfile)
-        return results, warnings 
-        
+        return results, warnings
+
 
     def executeReplaceKineticLawParameter(self, request, sbmlfiles, datafile, mappingfile):
         if not request.get_element_ParameterId():
@@ -70,7 +70,7 @@ class ManipulateKineticParameters(object):
         mapper = DataMapper()
         warnings = []
         datacolumn = 2
-        
+
         if request.get_element_DataColumnNumber():
             datacolumn = int(request.get_element_DataColumnNumber())
 
@@ -119,7 +119,7 @@ class ManipulateKineticParameters(object):
                     if sbmlDocument.getNumErrors():
                         message = "The SBML file is not valid."
                         raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-                    
+
                     for j in range(len(self.expr[0])):
                         newModel, warnings = editor.replaceKineticLawParameter(document=sbmlDocument, data=self.expr, column=j, datainfo=self.exprId, parameter=request.get_element_ParameterId(), warnings=warnings)
 
@@ -148,15 +148,15 @@ class ManipulateKineticParameters(object):
             if sbmlDocument.getNumErrors():
                 message = "The SBML file is not valid."
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-            
+
             newModel, warnings = editor.replaceKineticLawParameter(document=sbmlDocument, data=self.expr, column=0, datainfo=self.exprId, parameter=request.get_element_ParameterId(), warnings=warnings)
 
             sbmlDocument.setModel(newModel)
             newmodels.append(sbmlDocument)
 
         return [newmodels, header], warnings
-    
-        
+
+
     def executeScaleKineticLawParameter(self, request, sbmlfiles, datafile, mappingfile):
 
         if not request.get_element_ParameterId():
@@ -187,7 +187,7 @@ class ManipulateKineticParameters(object):
 
             if request.get_element_MergeMode():
                 mergemode = request.get_element_MergeMode()
-                result = mapper.mergeExpressionValuesMappingToSameReaction(mergemode)
+                result = mapper.mergeExpressionValuesMappingToSameReaction(mode=mergemode)
             else:
                 result = mapper.mergeExpressionValuesMappingToSameReaction()
 
@@ -214,10 +214,10 @@ class ManipulateKineticParameters(object):
                     if sbmlDocument.getNumErrors():
                         message = "The SBML file is not valid."
                         raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-                    
+
                     for j in range(len(self.expr[0])):
                         newModel, warnings = editor.scaleKineticLawParameter(document=sbmlDocument, data=self.expr, column=j, datainfo=self.exprId, parameter=request.get_element_ParameterId(), warnings=warnings)
-    
+
                         sbmlDocument.setModel(newModel)
                         newsbmlmodels.append(sbmlDocument)
             else:
@@ -243,15 +243,15 @@ class ManipulateKineticParameters(object):
             if sbmlDocument.getNumErrors():
                 message = "The SBML file is not valid."
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-            
+
             newModel, warnings = editor.scaleKineticLawParameter(document=sbmlDocument, data=self.expr, column=0, datainfo=self.exprId, parameter=request.get_element_ParameterId(), warnings=warnings)
 
             sbmlDocument.setModel(newModel)
             newsbmlmodels.append(sbmlDocument)
 
         return [newsbmlmodels, header], warnings
-    
-    
+
+
     def executeAddBoundsToKineticLaw(self, request, sbmlfiles, datafile=None, mappingfile=None):
         if not request.get_element_DefaultValue():
                 message = "A default value must be set for the parameter 'DefaultValue' for reactions that do not have an entry in the data file"
@@ -293,16 +293,16 @@ class ManipulateKineticParameters(object):
 
             mapper = DataMapper()
             if mappingfile == None:
-            # if self.option=='INSERT_DATA_THEN_DEFAULT':
                 self.expr, self.exprId = mapper.setup_expr(expr_string=datafile, col=datacolumn, batch=batch)
             else:
                 mapper.setup(mapping_string=mappingfile, expr_string=datafile, col=datacolumn, batch=batch)
                 ret = []
                 if request.get_element_MergeMode():
-                    ret = mapper.mergeExpressionValuesMappingToSameReaction(request.get_element_MergeMode())
-                else: 
+                    mergemode = request.get_element_MergeMode()
+                    ret = mapper.mergeExpressionValuesMappingToSameReaction(mode=mergemode)
+                else:
                     ret = mapper.mergeExpressionValuesMappingToSameReaction()
-                    
+
                 self.expr = ret[0]
                 self.exprId = ret[1]
                 warnings = ret[2]
@@ -321,7 +321,7 @@ class ManipulateKineticParameters(object):
                         for j in range(len(self.expr[0])):
                             newModel, warnings = editor.addBounds(document=sbmlDocument, warnings=warnings, default_value=request.get_element_DefaultValue(), data=self.expr, column=j, datainfo=self.exprId)
                             sbmlDocument.setModel(newModel)
-                            newsbmlmodels.append(sbmlDocument)                
+                            newsbmlmodels.append(sbmlDocument)
                 else:
                     reader = SBMLReader()
 
@@ -348,9 +348,9 @@ class ManipulateKineticParameters(object):
                 sbmlDocument.setModel(newModel)
                 newsbmlmodels.append(sbmlDocument)
 
-        return [newsbmlmodels, header], warnings    
-    
-    
+        return [newsbmlmodels, header], warnings
+
+
     def executeReplaceInitialConcentrationsOfSpecies(self, request, sbmlfiles, datafile, mappingfile=None):
         mapper = DataMapper()
         warnings = []
@@ -399,9 +399,9 @@ class ManipulateKineticParameters(object):
             sbmlDocument.setModel(newModel)
             newsbmlfiles.append(sbmlDocument)
 
-        return [newsbmlfiles, header], warnings    
-    
-    
+        return [newsbmlfiles, header], warnings
+
+
     def executeReplaceGlobalParameters(self, request, sbmlfiles, datafile, mappingfile):
         mapper = DataMapper()
         warnings = []
@@ -448,7 +448,7 @@ class ManipulateKineticParameters(object):
                     if sbmlDocument.getNumErrors():
                         message = "The SBML file is not valid."
                         raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-                    
+
                     newModel, warnings = editor.replaceGlobalParameters(document=sbmlDocument, data=self.expr, column=i, datainfo=self.exprId, warnings=warnings)
 
                     sbmlDocument.setModel(newModel)
@@ -482,9 +482,9 @@ class ManipulateKineticParameters(object):
             sbmlDocument.setModel(newModel)
             newsbmlfiles.append(sbmlDocument)
 
-        return [newsbmlfiles, header], warnings    
-    
-    
+        return [newsbmlfiles, header], warnings
+
+
     def executeScaleGlobalParameters(self, request, sbmlfiles, datafile, mappingfile):
         mapper = DataMapper()
         warnings = []
@@ -565,8 +565,8 @@ class ManipulateKineticParameters(object):
             newsbmlfiles.append(sbmlDocument)
 
         return [newsbmlfiles, header], warnings
-    
-    
+
+
     def addKineticLawParameter(self, request, response):
         sbmlfiles = FilesIO().getSBMLFile(request)
         parameter = request.get_element_ParameterId()
@@ -636,9 +636,9 @@ class ManipulateKineticParameters(object):
                 ret = []
                 if request.get_element_MergeMode():
                     ret = mapper.mergeExpressionValuesMappingToSameReaction(mode=request.get_element_MergeMode())
-                else: 
+                else:
                     ret = mapper.mergeExpressionValuesMappingToSameReaction()
-                    
+
                 self.expr = ret[0]
                 self.exprId = ret[1]
                 warnings = ret[2]
@@ -657,13 +657,13 @@ class ManipulateKineticParameters(object):
 
                         for j in range(len(self.expr[0])):
                             newModel, warnings = editor.addKineticLawParameter(document=sbmlDocument, parameter=parameter, warnings=warnings, default_value=request.get_element_DefaultValue(), data=self.expr, column=j, datainfo=self.exprId)
-    
+
                             sbmlDocument.setModel(newModel)
                             writer = SBMLWriter()
                             sbmlEditfile = SBMLmod_file()
                             sbmlEditfile.set_element_Name(header[j + datacolumn - 1])
                             sbmlEditfile.set_element_SbmlModelFile(base64.b64encode(zlib.compress(writer.writeSBMLToString(sbmlDocument))))
-    
+
                             newsbmlfiles.append(sbmlEditfile)
                 else:
                     reader = SBMLReader()
@@ -691,7 +691,7 @@ class ManipulateKineticParameters(object):
                 if sbmlDocument.getNumErrors():
                     message = "The SBML file is not valid."
                     raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
-                
+
                 newModel, warnings = editor.addKineticLawParameter(document=sbmlDocument, parameter=parameter, warnings=warnings, default_value=request.get_element_DefaultValue(), data=self.expr, datainfo=self.exprId)
                 sbmlDocument.setModel(newModel)
                 writer = SBMLWriter()
@@ -706,13 +706,13 @@ class ManipulateKineticParameters(object):
         response.set_element_Warnings(warnings)
 
         return request, response
-        
-    
+
+
     def getNumberOfColumnsInDataFile(self, datafile):
         line = datafile.split('\n')[0]
         return line.count('\t') + 1
-    
-    
+
+
     def getDataHeader(self, datafile, col=2):
         line = datafile.split('\n')[0]
         columns = line.split('\t')
@@ -721,8 +721,8 @@ class ManipulateKineticParameters(object):
             header.append(columns[i])
 
         return header
-    
-    
+
+
     def getOption(self, request):
         option1 = 'INSERT_DEFAULT'
         option2 = 'INSERT_DATA_THEN_DEFAULT'

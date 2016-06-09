@@ -19,7 +19,7 @@ class ModelEditor(object):
                 if not reaction.getKineticLaw():
                     message = "Kinetic law is missing from reaction."
                     raise SBMLmodFault(message, "INTERNAL_ERROR")
-                
+
                 params = reaction.getKineticLaw().getListOfParameters()
                 self.found = False
                 for e in params:
@@ -32,7 +32,7 @@ class ModelEditor(object):
 
         if keysNotInData:
             warnings.append('Number of reaction IDs not found in the data is: ' + str(keysNotInData) + ' of ' + str(len(newmodel.getListOfReactions())) + '.')
-            warnings.append('The reaction id not found are: ' + str(listKeysNotInData))
+            warnings.append('The reaction IDs not found are: ' + str(listKeysNotInData))
 
         return newmodel, warnings
 
@@ -54,7 +54,7 @@ class ModelEditor(object):
                     if parameter.lower() in f.getId().lower():
                         self.oldval = f.getValue()
                         self.found = True
-                        
+
                 if self.found:
                     for e in newparams:
                         if parameter.lower() in e.getId().lower():
@@ -83,12 +83,13 @@ class ModelEditor(object):
                 keysNotInModel += 1
                 listKeysNotInModel = listKeysNotInModel + ' ' + key
 
-        warnings.append(str(keysNotInModel) + 'species from the model are not found in the data file. The default value have been entered for these species.')
-        warnings.append('The keys  not found are: ' + str(listKeysNotInModel))
+        if keysNotInModel:
+            warnings.append(str(keysNotInModel) + ' species from the model are not found in the data file. The default value have been entered for these species.')
+            warnings.append('The keys  not found are: ' + str(listKeysNotInModel))
 
         return newmodel, warnings
 
-    
+
     def addKineticLawParameter(self, document, parameter, warnings, default_value=None, data=None, datainfo=None, column=0):
 
         model = document.getModel()
@@ -101,7 +102,7 @@ class ModelEditor(object):
         for reaction in reactions:
             if not reaction.isSetKineticLaw():
                 reaction.createKineticLaw()
-                
+
             reaction.getKineticLaw().createParameter().setId(parameter)
             if data and reaction.getId() in datainfo:
                 reaction.getKineticLaw().getParameter(parameter).setValue(data[datainfo.index(reaction.getId())][column])
@@ -114,10 +115,10 @@ class ModelEditor(object):
 
         if keysNotInData:
             warnings.append('Number of reaction IDs not found in the data is: ' + str(keysNotInData) + ' of ' + str(len(newmodel.getListOfReactions())) + '. Default value: ' + str(default_value) + ' has been inserted to these reactions.')
-            warnings.append('The reaction id  not found are: ' + str(listKeysNotInData))
+            warnings.append('The reaction IDs not found are: ' + str(listKeysNotInData))
 
         return newmodel, warnings
-    
+
 
     def addBounds(self, document, warnings, default_value=1000, data=None, datainfo=None, column=0):
         model = document.getModel()
@@ -132,7 +133,7 @@ class ModelEditor(object):
         for reaction in reactions:
             if not reaction.isSetKineticLaw():
                 reaction.createKineticLaw()
-                
+
             reaction.getKineticLaw().createParameter().setId(upper)
             reaction.getKineticLaw().createParameter().setId(lower)
 
@@ -155,10 +156,10 @@ class ModelEditor(object):
 
         if keysNotInData:
             warnings.append('Number of reaction IDs not found in the data is: ' + str(keysNotInData) + ' of ' + str(len(newmodel.getListOfReactions())) + '. Default value: ' + str(default_value) + ' has been inserted to these reactions.')
-            warnings.append('The reaction id  not found are: ' + str(listKeysNotInData))
+            warnings.append('The reaction IDs not found are: ' + str(listKeysNotInData))
 
         return newmodel, warnings
-    
+
 
     def replaceGlobalParameters(self, document, data, column, datainfo, warnings, header=True):
         model = document.getModel()
