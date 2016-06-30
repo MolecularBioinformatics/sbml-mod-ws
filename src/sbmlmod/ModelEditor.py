@@ -81,11 +81,12 @@ class ModelEditor(object):
                 newmodel.getSpecies(key).setInitialConcentration(data[datainfo.index(key)][column])
             else:
                 keysNotInModel += 1
-                listKeysNotInModel = listKeysNotInModel + ' ' + key
+                listKeysNotInModel = listKeysNotInModel + ', ' + key
 
         if keysNotInModel:
-            warnings.append(str(keysNotInModel) + ' species from the model are not found in the data file. The default value have been entered for these species.')
-            warnings.append('The keys  not found are: ' + str(listKeysNotInModel))
+            warnings.append(str(keysNotInModel) + 
+                            " species from the data file are not found in the current model.")
+            warnings.append( 'Unknown species:\n' + str( listKeysNotInModel[2:len( listKeysNotInModel )] ) )
 
         return newmodel, warnings
 

@@ -144,7 +144,7 @@ class DataMapper(object):
 
             warning.append(str(noMissing) + ' of ' + str(total) + " of reaction id's from the mapping file are not found in the dataset.")
             warning.append('Expression value not found for: ' + str(missingExpr))
-            warning.append('Make sure the ids in either the mapping file or the data file does not contain quotation marks.')
+            warning.append('Make sure the IDs in either the mapping file or the data file do not contain quotation marks.')
 
         return warning
 
