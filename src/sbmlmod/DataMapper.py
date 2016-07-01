@@ -99,7 +99,11 @@ class DataMapper(object):
         return self.expr , self.exprId
 
 
-    def mergeExpressionValuesMappingToSameReaction(self, mode='MAX', warning=[]):
+    def mergeExpressionValuesMappingToSameReaction(self, mode='MAX', warning=None):
+        # note that the warning list needs to be initialized in this way, as it is a mutable object 
+        if warning is None:
+            warning = []
+            
         warning = self.checkMapping(self.mapping, self.exprId, warning)
 
         if mode == 'MAX':
