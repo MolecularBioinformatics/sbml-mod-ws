@@ -100,10 +100,10 @@ class DataMapper(object):
 
 
     def mergeExpressionValuesMappingToSameReaction(self, mode='MAX', warning=None):
-        # note that the warning list needs to be initialized in this way, as it is a mutable object 
+        # note that the warning list needs to be initialized in this way, as it is a mutable object
         if warning is None:
             warning = []
-            
+
         warning = self.checkMapping(self.mapping, self.exprId, warning)
 
         if mode == 'MAX':
@@ -129,7 +129,9 @@ class DataMapper(object):
             raise SBMLmodFault(message, "INTERNAL_ERROR")
 
 
-    def checkMapping(self, mapping, exprId, warning=[]):
+    def checkMapping(self, mapping, exprId, warning=None):
+		if warning is None:
+			warning = []
         missingExpr = []
         noMissing = 0
         total = 0
