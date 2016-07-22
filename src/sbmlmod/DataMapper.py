@@ -130,8 +130,8 @@ class DataMapper(object):
 
 
     def checkMapping(self, mapping, exprId, warning=None):
-		if warning is None:
-			warning = []
+        if warning is None:
+            warning = []
         missingExpr = []
         noMissing = 0
         total = 0
