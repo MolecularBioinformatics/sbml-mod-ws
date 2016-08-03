@@ -15,7 +15,8 @@ from suds.client import Client
 ####
 
 # wsdlURL DEPRECATED: works currently but needs to be updated as soon as service moved to Tromso
-wsdlURL			= 'http://cbu.bioinfo.no/wsdl/SBMLedit.wsdl'
+# wsdlURL			= 'http://cbu.bioinfo.no/wsdl/SBMLedit.wsdl'
+wsdlURL			= 'file://' + os.path.dirname(os.path.dirname( os.path.realpath(__file__) ))  + '/sbmlmod/SBMLmod.wsdl'
 path			= './'
 newSBMLbaseFilename	= 'newSBML'
 
@@ -23,6 +24,8 @@ def main():
 	global path
 	compress = True
 	encode	 = True
+	
+	print(wsdlURL)
 	
 	client   = set_client(False)
 		
