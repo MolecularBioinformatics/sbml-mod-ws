@@ -6,7 +6,7 @@ Dependencies
  - Python > 2.6
  - [zc.buildout](http://www.buildout.org) `pip install zc.buildout`
  - [Setuptools](https://bitbucket.org/pypa/setuptools/raw/0.8/ez_setup.py) `pip install setuptools`
- - [libSBML](http://sbml.org/Software/libSBML/docs/python-api/libsbml-installation.html)
+ - [libSBML](http://sbml.org/Software/libSBML/docs/python-api/libsbml-installation.html) `pip install python-libsbml`
 
 
 Setup/install
