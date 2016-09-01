@@ -4,8 +4,8 @@ SBMLmod web service
 Dependencies
 ------------
  - Python > 2.6
- - [zc.buildout](http://www.buildout.org)
- - [Setuptools](https://bitbucket.org/pypa/setuptools/raw/0.8/ez_setup.py)
+ - [zc.buildout](http://www.buildout.org) `pip install zc.buildout`
+ - [Setuptools](https://bitbucket.org/pypa/setuptools/raw/0.8/ez_setup.py) `pip install setuptools`
  - [libSBML](http://sbml.org/Software/libSBML/docs/python-api/libsbml-installation.html)
 
 
@@ -14,13 +14,13 @@ Setup/install
 
 From within the `sbml_mod_ws` directory (where the `bootstrap.py` file is located) run:
 
-`python bootstrap.py`
+```bash
+python bootstrap.py
 
-`./bin/buildout`
+./bin/buildout
 
-To generate web service stub code:
-
-`./bin/gencode`
+./bin/gencode
+```
 
 Configure service (if needed) by editing `parts/etc/pyserver.cfg`. Note that the port in `parts/etc/pyserver.cfg` must correspond to the one defined in the WSDL file `src/sbmlmod/SBMLmod.wsdl`.
 
