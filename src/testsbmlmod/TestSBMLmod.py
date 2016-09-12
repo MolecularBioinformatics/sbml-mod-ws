@@ -4,6 +4,7 @@ import unittest
 import zlib
 
 from libsbml import SBMLReader
+from libsbml import LIBSBML_VERSION
 
 from sbmlmod.SBMLmod import SBMLmodWS
 from sbmlmod.SBMLmod_fault import SBMLmodFault
@@ -56,9 +57,12 @@ class TestSBMLmod(unittest.TestCase):
 
         request.set_element_SbmlModelFile(base64.b64encode(zlib.compress(sbmlfile)))
         request, response = self.impl.validateSBMLModel(request, response)
-
+        
         self.assertFalse(response.get_element_ModelIsValid())
-        self.assertEquals(2, len(response.get_element_ErrorMessages()))
+        if LIBSBML_VERSION >= 51300:
+            self.assertEquals(1, len(response.get_element_ErrorMessages()))
+        else:
+            self.assertEquals(2, len(response.get_element_ErrorMessages()))
 
     
     def testSBMLFileNotCompressedCorrectlyToReplaceKineticLawParameterRaisesException(self):
