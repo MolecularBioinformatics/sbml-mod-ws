@@ -40,6 +40,6 @@ or:
 
 `./bin/serverd debug`
 
-For serverd parameters:
+For serverd parameters only type:
 
-`./bin/serverd --help`
+`./bin/serverd
