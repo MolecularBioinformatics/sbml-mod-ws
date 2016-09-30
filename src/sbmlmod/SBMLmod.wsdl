@@ -2223,10 +2223,7 @@
 	</wsdl:binding>
 	<wsdl:service name="SBMLmod">
 		<wsdl:port binding="tns:SBMLmodSOAP" name="SBMLmodSOAP">
-			  <soap:address location="http://localhost:8080/sbmlmod" />
-
-			<!--<soap:address location="http://test-app.bccs.uib.no:8105/sbmlmod" />-->
-
+			  <soap:address location="http://sbmlmod.uit.no:8080/sbmlmod" />
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>
