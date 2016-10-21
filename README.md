@@ -31,7 +31,7 @@ Running web service
 
 The web service can be started by `./bin/serverd start` or `./bin/serverd debug`. For more serverd parameters, run `./bin/serverd`.
 
-If the computer or service should crash, you need to clean up the server by running `./bin/serverd stop` before starting it again (with `./bin/serverd start`).
+If the service should stop unexpectedly (e.g. by shutting down the computer), you need to clean up the server by running `./bin/serverd stop` before starting it again (with `./bin/serverd start`).
 
 Access service
 --------------
