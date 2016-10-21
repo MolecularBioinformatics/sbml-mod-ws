@@ -2,13 +2,13 @@
 from setuptools import setup, find_packages
 
 
-version = '0.1.6'
+version = '1.0.0'
 
 setup(name='sbmlmod',
       version=version,
       description="SBMLmod Web Service",
-      author=["Siv Hollup and Anne-Kristin Stavrum"],
-      author_email=["annes@ii.uib.no"],
+      author=["Anne-Kristin Stavrum, Sascha Schäuble, Mathias Bockwoldt, Pål Puntervoll, Ines Heiland"],
+      author_email=["ines.heiland@uit.no"],
       package_dir={'': 'src'},
       packages=find_packages('src'),
       include_package_data=True,
