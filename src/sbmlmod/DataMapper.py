@@ -141,11 +141,11 @@ class DataMapper(object):
         elif mode == 'MEDIAN':
             self.medianExpression(self.mapping, self.expr, self.exprId)
             return self.expr, self.exprId, warning
-        elif mode == 'E-FLUX':
+        elif mode == 'CUSTOM':
             self.eFlux(self.mapping, self.expr, self.exprId)
             return self.expr, self.exprId, warning
         else:
-            message = "The merge mode parameter has not been set to a valid option. Valid options are: 'MAX','MIN','MEDIAN','MEAN' and'SUM'."
+            message = "The merge mode parameter has not been set to a valid option. Valid options are: 'MAX', 'MIN', 'MEDIAN', 'MEAN', 'SUM', and 'CUSTOM'."
             raise SBMLmodFault(message, "INTERNAL_ERROR")
 
 
@@ -340,7 +340,7 @@ class DataMapper(object):
         mergeExprId = []
 
         if not self.iso and not self.complex:
-            message = 'To use E-FLUX a third column must be specified in the mapping file marking genes that contributes to enzyme complexes and/or iso-enzymes. Annotation should be "COMPLEX" and "ISO" respectively.'
+            message = 'To use CUSTOM a third column must be specified in the mapping file marking genes that contributes to enzyme complexes and/or iso-enzymes. Annotation should be "COMPLEX" and "ISO" respectively.'
             raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         for key in mapping:

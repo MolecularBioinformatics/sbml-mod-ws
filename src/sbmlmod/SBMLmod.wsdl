@@ -18,7 +18,7 @@
 					<xsd:enumeration value="SUM"/>
 					<xsd:enumeration value="MEAN"/>
 					<xsd:enumeration value="MEDIAN"/>
-					<xsd:enumeration value="E-FLUX"/>
+					<xsd:enumeration value="CUSTOM"/>
 				</xsd:restriction>
 			</xsd:simpleType>
 
