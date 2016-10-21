@@ -1,3 +1,21 @@
+# SBMLmod Web Service
+# Copyright (C) 2016 Computational Biology Unit, University of Bergen and
+#               Molecular Bioinformatics, UiT The Arctic University of Norway
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
 import base64
 import os
 import unittest
@@ -25,7 +43,7 @@ class TestSBMLmod(unittest.TestCase):
 
     def setUp(self):
         self.impl = SBMLmodWS()
-        
+
     def testValidateModelGzippedBase64EncodedGivesException(self):
         request = ValidateSBMLModelRequest()
         response = ValidateSBMLModelResponse()
@@ -49,7 +67,7 @@ class TestSBMLmod(unittest.TestCase):
         except SBMLmodFault as e:
             self.assertEquals("FILE_HANDLING_ERROR", e.faultEnum)
 
-    
+
     def testWrongFileAsInputToValidateSBMLModelTriggersNotValidModelResponse(self):
         request, response = self.validateSBMLModelCommonSetup()
         sbmlfile_lines = open(os.path.join(resources_folder, 'mapping.txt'), 'r').readlines()
@@ -57,14 +75,14 @@ class TestSBMLmod(unittest.TestCase):
 
         request.set_element_SbmlModelFile(base64.b64encode(zlib.compress(sbmlfile)))
         request, response = self.impl.validateSBMLModel(request, response)
-        
+
         self.assertFalse(response.get_element_ModelIsValid())
         if LIBSBML_VERSION >= 51300:
             self.assertEquals(1, len(response.get_element_ErrorMessages()))
         else:
             self.assertEquals(2, len(response.get_element_ErrorMessages()))
 
-    
+
     def testSBMLFileNotCompressedCorrectlyToReplaceKineticLawParameterRaisesException(self):
         request, response = self.replaceKineticLawParameterCommonSetup()
         filelines = "".join(open(os.path.join(resources_folder, 'TRPcatabolism.xml'), 'r'))
@@ -72,7 +90,7 @@ class TestSBMLmod(unittest.TestCase):
 
         self.assertRaises(SBMLmodFault, self.impl.replaceKineticLawParameter, request, response)
 
-    
+
     def testDataFileNotCompressedCorrectlyToReplaceKineticLawParameterRaisesException(self):
         request, response = self.replaceKineticLawParameterCommonSetup()
         filelines = "".join(open(os.path.join(resources_folder, 'TestingAvGenuttryksformater.csv'), 'r'))
@@ -80,7 +98,7 @@ class TestSBMLmod(unittest.TestCase):
 
         self.assertRaises(SBMLmodFault, self.impl.replaceKineticLawParameter, request, response)
 
-    
+
     def testMappingFileNotCompressedCorrectlyToReplaceKineticLawParameterRaisesException(self):
         request, response = self.replaceKineticLawParameterCommonSetup()
         filelines = "".join(open(os.path.join(resources_folder, 'mapping_applied_rat.txt'), 'r'))
@@ -88,7 +106,7 @@ class TestSBMLmod(unittest.TestCase):
 
         self.assertRaises(SBMLmodFault, self.impl.replaceKineticLawParameter, request, response)
 
-    
+
     def testFileEmptyRaisesException(self):
         request, response = self.replaceKineticLawParameterCommonSetup()
         request.set_element_DataFile("")
@@ -150,7 +168,7 @@ class TestSBMLmod(unittest.TestCase):
 
         self.assertRaises(SBMLmodFault, self.impl.scaleKineticLawParameter, request, response)
 
-    
+
     def testMappingFileNotCompressedCorrectlyToScaleKineticLawParameterRaisesException(self):
         request, response = self.scaleKineticLawParameterCommonSetup()
         filelines = "".join(open(os.path.join(resources_folder, 'mapping_applied_rat.txt'), 'r'))
@@ -158,14 +176,14 @@ class TestSBMLmod(unittest.TestCase):
 
         self.assertRaises(SBMLmodFault, self.impl.scaleKineticLawParameter, request, response)
 
-    
+
     def testFileEmptyToScaleKineticLawParameterRaisesException(self):
         request, response = self.scaleKineticLawParameterCommonSetup()
         request.set_element_DataFile("")
 
         self.assertRaises(SBMLmodFault, self.impl.scaleKineticLawParameter, request, response)
 
-    
+
     def testFileHandlingErrorThrownFromScaleKineticLawParameterWhenDataFileIsNotTabDelimitedOrContainsUnEvenNumberOfColumns(self):
         request, response = self.scaleKineticLawParameterCommonSetup()
         filelines = "".join(open(os.path.join(resources_folder, 'TestingAvGenuttryksformater_commaSeparated.csv'), 'r'))
@@ -193,7 +211,7 @@ class TestSBMLmod(unittest.TestCase):
         warnings = response.get_element_Warnings()
         self.assertTrue(warnings)
 
-    
+
     def testScaleKineticLawParameterBatchModeReturnsCorrectNumberOfFiles (self):
         request, response = self.scaleKineticLawParameterCommonSetup()
         request.set_element_BatchMode(True)
@@ -212,7 +230,7 @@ class TestSBMLmod(unittest.TestCase):
 
         self.assertRaises(SBMLmodFault, self.impl.addKineticLawParameter, request, response)
 
-    
+
     def testDataFileNotCompressedCorrectlyToAddKineticLawParameterRaisesException(self):
         request, response = self.addKineticLawParameterCommonSetup()
         filelines = "".join(open(os.path.join(resources_folder, 'expression_glu_ace_Oh_etal.dat'), 'r'))
@@ -220,7 +238,7 @@ class TestSBMLmod(unittest.TestCase):
 
         self.assertRaises(SBMLmodFault, self.impl.addKineticLawParameter, request, response)
 
-    
+
     def testMappingFileNotCompressedCorrectlyToAddKineticLawParameterRaisesException(self):
         request, response = self.addKineticLawParameterCommonSetup()
         filelines = "".join(open(os.path.join(resources_folder, 'mapping.txt'), 'r'))
@@ -228,14 +246,14 @@ class TestSBMLmod(unittest.TestCase):
 
         self.assertRaises(SBMLmodFault, self.impl.addKineticLawParameter, request, response)
 
-    
+
     def testFileEmptyToAddKineticLawParameterRaisesException(self):
         request, response = self.addKineticLawParameterCommonSetup()
         request.set_element_SbmlModelFiles([""])
 
         self.assertRaises(SBMLmodFault, self.impl.addKineticLawParameter, request, response)
 
-    
+
     def testFileHandlingErrorThrownFromAddKineticLawParameterWhenDataFileIsNotTabDelimitedOrContainsUnEvenNumberOfColumns(self):
         request, response = self.addKineticLawParameterCommonSetup()
         filelines = "".join(open(os.path.join(resources_folder, 'TestingAvGenuttryksformater_commaSeparated.csv'), 'r'))
@@ -269,7 +287,7 @@ class TestSBMLmod(unittest.TestCase):
         request, response = self.impl.validateSBMLModelText(request, response)
         self.assertTrue(response.get_element_ModelIsValid())
 
-    
+
     def testAddKineticLawParameterUsingDataOnlyWithoutMapping(self):
         request = AddKineticLawParameterRequest()
         response = AddKineticLawParameterResponse()
@@ -297,7 +315,7 @@ class TestSBMLmod(unittest.TestCase):
         request, response = self.impl.validateSBMLModel(request, response)
         self.assertTrue(response.get_element_ModelIsValid())
 
-    
+
     def testAddKineticLawParameterUsingDataAndDefaultWithoutMapping(self):
         request = AddKineticLawParameterRequest()
         response = AddKineticLawParameterResponse()
@@ -313,7 +331,7 @@ class TestSBMLmod(unittest.TestCase):
 
         sbmlfiles = response.get_element_SbmlModelFiles()
         sbmldecomp = zlib.decompress(base64.b64decode(sbmlfiles[0].SbmlModelFile))
- 
+
         reader = SBMLReader()
         sbmlDocument = reader.readSBMLFromString(sbmldecomp)
 
@@ -325,7 +343,7 @@ class TestSBMLmod(unittest.TestCase):
         request, response = self.impl.validateSBMLModelText(request, response)
         self.assertTrue(response.get_element_ModelIsValid())
 
-    
+
     def testAddKineticLawParameterUsingDataOnlyWithMapping(self):
         request = AddKineticLawParameterRequest()
         response = AddKineticLawParameterResponse()
@@ -343,7 +361,7 @@ class TestSBMLmod(unittest.TestCase):
 
         sbmlfiles = response.get_element_SbmlModelFiles()
         sbmldecomp = zlib.decompress(base64.b64decode(sbmlfiles[0].SbmlModelFile))
-        
+
         reader = SBMLReader()
         sbmlDocument = reader.readSBMLFromString(sbmldecomp)
 
@@ -362,7 +380,7 @@ class TestSBMLmod(unittest.TestCase):
 
         sbmlfiles = response.get_element_SbmlModelFiles()
         sbmldecomp = zlib.decompress(base64.b64decode(sbmlfiles[0].SbmlModelFile))
-        
+
         reader = SBMLReader()
         sbmlDocument = reader.readSBMLFromString(sbmldecomp)
 
@@ -404,7 +422,7 @@ class TestSBMLmod(unittest.TestCase):
 
         self.assertRaises(SBMLmodFault, self.impl.replaceInitialConcentrationsOfSpecies, request, response)
 
-    
+
     def testMappingFileNotCompressedCorrectlyToReplaceInitialConcentrationsOfSpeciesRaisesException(self):
         request = ReplaceInitialConcentrationsOfSpeciesRequest()
         response = ReplaceInitialConcentrationsOfSpeciesResponse()
@@ -415,7 +433,7 @@ class TestSBMLmod(unittest.TestCase):
 
         self.assertRaises(SBMLmodFault, self.impl.replaceInitialConcentrationsOfSpecies, request, response)
 
-    
+
     def testFileHandlingErrorThrownFromReplaceInitialConcentrationsWhenDataFileIsNotTabDelimitedOrContainsUnEvenNumberOfColumns(self):
         request, response = self.replaceKineticLawParameterCommonSetup()
         filelines = "".join(open(os.path.join(resources_folder, 'InitialConc_acetateCommaSeparated.txt'), 'r'))
@@ -423,7 +441,7 @@ class TestSBMLmod(unittest.TestCase):
 
         self.assertRaises(SBMLmodFault, self.impl.replaceKineticLawParameter, request, response)
 
-    
+
     def testReplaceInitialConcentrationsOfSpeciesWorksInBestCase(self):
         request = ReplaceInitialConcentrationsOfSpeciesRequest()
         response = ReplaceInitialConcentrationsOfSpeciesResponse()
@@ -439,7 +457,7 @@ class TestSBMLmod(unittest.TestCase):
         request, response = self.impl.validateSBMLModelText(request, response)
         self.assertTrue(response.get_element_ModelIsValid())
 
-    
+
     def testReplaceInitialConcentrationsOfSpeciesReturnsWarnings(self):
         request = ReplaceInitialConcentrationsOfSpeciesRequest()
         response = ReplaceInitialConcentrationsOfSpeciesResponse()
@@ -465,7 +483,7 @@ class TestSBMLmod(unittest.TestCase):
 
         sbmlfiles = response.get_element_SbmlModelFiles()
         sbmldecomp = zlib.decompress(base64.b64decode(sbmlfiles[0].SbmlModelFile))
-        
+
         reader = SBMLReader()
         sbmlDocument = reader.readSBMLFromString(sbmldecomp)
 
@@ -491,7 +509,7 @@ class TestSBMLmod(unittest.TestCase):
 
         self.assertEquals(2, len(sbmlfiles))
 
-    
+
     def testAddBoundsUsingCorrectDataColumnFromDataFile(self):
         request, response = self.addBoundsCommonSetup()
         request.set_element_DataColumnNumber(5)
@@ -510,8 +528,8 @@ class TestSBMLmod(unittest.TestCase):
         request = ValidateSBMLModelRequest()
         response = ValidateSBMLModelResponse()
         return request, response
-    
-    
+
+
     def replaceKineticLawParameterCommonSetup(self):
         request = ReplaceKineticLawParameterRequest()
         response = ReplaceKineticLawParameterResponse()
@@ -525,8 +543,8 @@ class TestSBMLmod(unittest.TestCase):
         request.set_element_ParameterId("E_T")
         request.set_element_DataColumnNumber(2)
         return request, response
-    
-    
+
+
     def scaleKineticLawParameterCommonSetup(self):
         request = ScaleKineticLawParameterRequest()
         response = ScaleKineticLawParameterResponse()
@@ -540,8 +558,8 @@ class TestSBMLmod(unittest.TestCase):
         request.set_element_DataColumnNumber(2)
         request.set_element_MergeMode('MIN')
         return request, response
-    
-    
+
+
     def addKineticLawParameterCommonSetup(self):
         request = AddKineticLawParameterRequest()
         response = AddKineticLawParameterResponse()
@@ -556,8 +574,8 @@ class TestSBMLmod(unittest.TestCase):
         request.set_element_MergeMode("MIN")
         request.set_element_ParameterId('UPPER')
         return request, response
-    
-    
+
+
     def addBoundsCommonSetup(self):
         request = AddKineticLawParameterRequest()
         response = AddKineticLawParameterResponse()
