@@ -1,3 +1,6 @@
+#!/usr/bin/env python2
+# -*- encoding: UTF-8 -*-
+
 # SBMLmod Web Service
 # Copyright (C) 2016 Computational Biology Unit, University of Bergen and
 #               Molecular Bioinformatics, UiT The Arctic University of Norway
