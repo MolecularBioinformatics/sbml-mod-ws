@@ -66,7 +66,7 @@ class ModelEditor(object):
 
         for key in datainfo:
 
-            if newmodel.getReaction(key) != None :
+            if newmodel.getReaction(key) is not None :
                 oldparams = model.getReaction(key).getKineticLaw().getListOfParameters()
                 newparams = newmodel.getReaction(key).getKineticLaw().getListOfParameters()
                 self.oldval = None
@@ -98,7 +98,7 @@ class ModelEditor(object):
         listKeysNotInModel = ''
 
         for key in datainfo:
-            if newmodel.getSpecies(key) != None:
+            if newmodel.getSpecies(key) is not None:
                 newmodel.getSpecies(key).setInitialConcentration(data[datainfo.index(key)][column])
             else:
                 keysNotInModel += 1
@@ -188,7 +188,7 @@ class ModelEditor(object):
         newmodel = model.clone()
 
         for key in datainfo:
-            if newmodel.getParameter(key) != None:
+            if newmodel.getParameter(key) is not None:
                 param = newmodel.getParameter(key)
                 param.setValue(data[datainfo.index(key)][column])
             else:
@@ -202,7 +202,7 @@ class ModelEditor(object):
         newmodel = model.clone()
 
         for key in datainfo:
-            if newmodel.getParameter(key) != None:
+            if newmodel.getParameter(key) is not None:
                 param = newmodel.getParameter(key)
                 oldval = param.getValue()
                 param.setValue(oldval * data[datainfo.index(key)][column])
