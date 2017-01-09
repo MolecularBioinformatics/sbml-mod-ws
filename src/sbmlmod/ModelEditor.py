@@ -33,7 +33,7 @@ class ModelEditor(object):
         reactions = newmodel.getListOfReactions()
 
         keysNotInData = 0
-        listKeysNotInData = ''
+        listKeysNotInData = []
 
         for reaction in reactions:
             if reaction.getId() in datainfo:
@@ -42,18 +42,28 @@ class ModelEditor(object):
                     raise SBMLmodFault(message, "INTERNAL_ERROR")
 
                 params = reaction.getKineticLaw().getListOfParameters()
-                self.found = False
                 for e in params:
                     if parameter.lower() in e.getId().lower():
                         e.setValue(data[datainfo.index(reaction.getId())][column])
-                        self.found = True
             else:
-                keysNotInData += 1
-                listKeysNotInData = listKeysNotInData + ' ' + reaction.getId()
+                if not reaction.getKineticLaw():
+                    message = "Kinetic law is missing from reaction."
+                    raise SBMLmodFault(message, "INTERNAL_ERROR")
+
+                params = reaction.getKineticLaw().getListOfParameters()
+                found = False
+                for e in params:
+                    if parameter.lower() in e.getId().lower():
+                        found = True
+                        break
+
+                if found:
+                    keysNotInData += 1
+                    listKeysNotInData.append(reaction.getId())
 
         if keysNotInData:
-            warnings.append('Number of reaction IDs not found in the data is: ' + str(keysNotInData) + ' of ' + str(len(newmodel.getListOfReactions())) + '.')
-            warnings.append('The reaction IDs not found are: ' + str(listKeysNotInData))
+            warnings.append('Number of reaction IDs not found in the data is: {} of {}.'.format(keysNotInData, len(newmodel.getListOfReactions())))
+            warnings.append('The reaction IDs not found are: {}'.format(' '.join(listKeysNotInData)))
 
         return newmodel, warnings
 
@@ -64,25 +74,40 @@ class ModelEditor(object):
         model = document.getModel()
         newmodel = model.clone()
 
-        for key in datainfo:
+        reactions = newmodel.getListOfReactions()
 
-            if newmodel.getReaction(key) is not None :
-                oldparams = model.getReaction(key).getKineticLaw().getListOfParameters()
-                newparams = newmodel.getReaction(key).getKineticLaw().getListOfParameters()
-                self.oldval = None
-                self.found = False
-                for f in oldparams:
-                    if parameter.lower() in f.getId().lower():
-                        self.oldval = f.getValue()
-                        self.found = True
+        keysNotInData = 0
+        listKeysNotInData = []
 
-                if self.found:
-                    for e in newparams:
-                        if parameter.lower() in e.getId().lower():
-                            e.setValue(self.oldval * data[datainfo.index(key)][column])
-                else:
-                    warnings.append("scale: " + parameter + ' not found in reaction ' + key)
-            else: warnings.append(key + ' not found in model')
+        for reaction in reactions:
+            if reaction.getId() in datainfo:
+                if not reaction.getKineticLaw():
+                    message = "Kinetic law is missing from reaction."
+                    raise SBMLmodFault(message, "INTERNAL_ERROR")
+
+                params = reaction.getKineticLaw().getListOfParameters()
+                for e in params:
+                    if parameter.lower() in e.getId().lower():
+                        e.setValue(e.getValue() * data[datainfo.index(reaction.getId())][column])
+            else:
+                if not reaction.getKineticLaw():
+                    message = "Kinetic law is missing from reaction."
+                    raise SBMLmodFault(message, "INTERNAL_ERROR")
+
+                params = reaction.getKineticLaw().getListOfParameters()
+                found = False
+                for e in params:
+                    if parameter.lower() in e.getId().lower():
+                        found = True
+                        break
+
+                if found:
+                    keysNotInData += 1
+                    listKeysNotInData.append(reaction.getId())
+
+        if keysNotInData:
+            warnings.append('Number of reaction IDs not found in the data is: {} of {}.'.format(keysNotInData, len(newmodel.getListOfReactions())))
+            warnings.append('The reaction IDs not found are: {}'.format(' '.join(listKeysNotInData)))
 
         return newmodel, warnings
 
