@@ -30,7 +30,9 @@ from suds.client import Client
 
 ####
 #
-# exsample Client, which works purely localy
+# example Client, which works purely localy
+# run in any python2 shell
+#
 # PRE: server needs to run: ./bin/serverd start
 #
 # exemplarily an SBML is loaded, tested for validity and modified based on given data
@@ -38,9 +40,7 @@ from suds.client import Client
 #
 ####
 
-# wsdlURL DEPRECATED: works currently but needs to be updated as soon as service moved to Tromso
-#wsdlURL			= 'http://cbu.bioinfo.no/wsdl/SBMLedit.wsdl'
-# use local version, which gets shipped with the project
+# use local wsdl version, which gets shipped with the project
 wsdlURL			= 'file://' + os.path.dirname(os.path.dirname( os.path.realpath(__file__) ))  + '/sbmlmod/SBMLmod.wsdl'
 path			= './'
 newSBMLbaseFilename	= 'newSBML'
