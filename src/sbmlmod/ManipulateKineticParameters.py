@@ -105,7 +105,7 @@ class ManipulateKineticParameters(object):
                 message = "Only one model file can be submitted when batch mode is set to False"
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-        if mappingfile != None:
+        if mappingfile is not None:
             mapper.setup(mappingfile, datafile, datacolumn, batch=batch)
 
             if request.get_element_MergeMode():
@@ -138,11 +138,11 @@ class ManipulateKineticParameters(object):
                         message = "The SBML file is not valid."
                         raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-                    for j in range(len(self.expr[0])):
-                        newModel, warnings = editor.replaceKineticLawParameter(document=sbmlDocument, data=self.expr, column=j, datainfo=self.exprId, parameter=request.get_element_ParameterId(), warnings=warnings)
+                    #for j in range(len(self.expr[0])):
+                    newModel, warnings = editor.replaceKineticLawParameter(document=sbmlDocument, data=self.expr, column=i, datainfo=self.exprId, parameter=request.get_element_ParameterId(), warnings=warnings)
 
-                        sbmlDocument.setModel(newModel)
-                        newmodels.append(sbmlDocument)
+                    sbmlDocument.setModel(newModel)
+                    newmodels.append(sbmlDocument)
             else:
                 reader = SBMLReader()
                 sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
@@ -200,7 +200,7 @@ class ManipulateKineticParameters(object):
                 message = "Only one model file can be submitted when batch mode is set to False."
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-        if mappingfile != None:
+        if mappingfile is not None:
             mapper.setup(mappingfile, datafile, datacolumn, batch=batch)
 
             if request.get_element_MergeMode():
@@ -283,7 +283,7 @@ class ManipulateKineticParameters(object):
         header = []
 
         # if self.option=='INSERT_DEFAULT':
-        if datafile == None:
+        if datafile is None:
             sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
             newModel, warnings = editor.addBounds(document=sbmlDocument, warnings=warnings, default_value=request.get_element_DefaultValue())
 
@@ -310,7 +310,7 @@ class ManipulateKineticParameters(object):
                     raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
             mapper = DataMapper()
-            if mappingfile == None:
+            if mappingfile is None:
                 self.expr, self.exprId = mapper.setup_expr(expr_string=datafile, col=datacolumn, batch=batch)
             else:
                 mapper.setup(mapping_string=mappingfile, expr_string=datafile, col=datacolumn, batch=batch)
@@ -383,11 +383,10 @@ class ManipulateKineticParameters(object):
 
         if batch:
             if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile) - datacolumn + 1:
-                message = "The there are more model files than number of columns in the datafile"
+                message = "There are more model files than number of columns in the datafile"
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         if mappingfile:
-
             mapper.setup(mappingfile, datafile, col=datacolumn, batch=batch)
             result = mapper.mergeExpressionValuesMappingToSameReaction()
 
@@ -439,7 +438,7 @@ class ManipulateKineticParameters(object):
                 message = "Only one file can be submitted when batch mode is set to False"
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-        if mappingfile != None:
+        if mappingfile is not None:
             mapper.setup(mappingfile, datafile, datacolumn, batch=batch)
             if request.get_element_MergeMode():
                 mergemode = request.get_element_MergeMode()
@@ -522,7 +521,7 @@ class ManipulateKineticParameters(object):
                 message = "Only one file can be submitted when batch mode is set to False"
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-        if mappingfile != None:
+        if mappingfile is not None:
             mapper.setup(mappingfile, datafile, datacolumn, batch=batch)
             if request.get_element_MergeMode():
                 mergemode = request.get_element_MergeMode()
