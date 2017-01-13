@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
 	targetNamespace="http://sbmlmod.uit.no:8080/sbmlmod"
-	xmlns:tns="http://sbmlmod.uit.no:8080/sbmlmod" 
+	xmlns:tns="http://sbmlmod.uit.no:8080/sbmlmod"
 	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SBMLmod"
 	xmlns:sawsdl="http://www.w3.org/ns/sawsdl"
@@ -48,10 +48,10 @@
 							sawsdl:modelReference="http://edamontology.org/data_0950 http://edamontology.org/format_2585 http://wsio.org/transfer_011 http://wsio.org/compression_022"
 							maxOccurs="unbounded" minOccurs="1" />
 						<xsd:element name="DataFile" type="xsd:string"
-							sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011  http://wsio.org/compression_022" />
+							sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011 http://wsio.org/compression_022" />
 						<xsd:element name="MappingFile"
 							type="xsd:string" minOccurs="0" maxOccurs="1"
-							sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011  http://wsio.org/compression_022" />
+							sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011 http://wsio.org/compression_022" />
 						<xsd:element name="MergeMode"
 							type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
 						</xsd:element>
@@ -101,10 +101,10 @@
 							sawsdl:modelReference="http://edamontology.org/data_0950 http://edamontology.org/format_2585 http://wsio.org/transfer_011 http://wsio.org/compression_022"
 							maxOccurs="unbounded" minOccurs="1" />
 						<xsd:element name="DataFile" type="xsd:string"
-							sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011  http://wsio.org/compression_022" />
+							sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011 http://wsio.org/compression_022" />
 						<xsd:element name="MappingFile"
 							type="xsd:string" minOccurs="0" maxOccurs="1"
-							sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011  http://wsio.org/compression_022" />
+							sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011 http://wsio.org/compression_022" />
 						<xsd:element name="BatchMode"
 							type="xsd:boolean" maxOccurs="1" minOccurs="0">
 						</xsd:element>
@@ -151,10 +151,10 @@
 							sawsdl:modelReference="http://edamontology.org/data_0950 http://edamontology.org/format_2585 http://wsio.org/transfer_011 http://wsio.org/compression_022"
 							maxOccurs="unbounded" minOccurs="1" />
 						<xsd:element name="DataFile" type="xsd:string"
-							sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011  http://wsio.org/compression_022" />
+							sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011 http://wsio.org/compression_022" />
 						<xsd:element name="MappingFile"
 							type="xsd:string" minOccurs="0" maxOccurs="1"
-							sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011  http://wsio.org/compression_022" />
+							sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011 http://wsio.org/compression_022" />
 						<xsd:element name="BatchMode"
 							type="xsd:boolean" maxOccurs="1" minOccurs="0">
 						</xsd:element>
@@ -214,10 +214,10 @@
 								type="tns:MergeModeType" minOccurs="0" maxOccurs="1" />
 							<xsd:element name="MappingFile"
 								type="xsd:string" minOccurs="0" maxOccurs="1"
-								sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011  http://wsio.org/compression_022" />
+								sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011 http://wsio.org/compression_022" />
 							<xsd:element name="DataFile"
 								type="xsd:string"
-								sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011  http://wsio.org/compression_022" />
+								sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011 http://wsio.org/compression_022" />
 						</xsd:sequence>
 						<xsd:element name="BatchMode"
 							type="xsd:boolean" maxOccurs="1" minOccurs="0">
@@ -272,10 +272,10 @@
 								type="tns:MergeModeType" minOccurs="0" maxOccurs="1" />
 							<xsd:element name="MappingFile"
 								type="xsd:string" minOccurs="0" maxOccurs="1"
-								sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011  http://wsio.org/compression_022" />
+								sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011 http://wsio.org/compression_022" />
 							<xsd:element name="DataFile"
 								type="xsd:string"
-								sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011  http://wsio.org/compression_022" />
+								sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011 http://wsio.org/compression_022" />
 						</xsd:sequence>
 						<xsd:element name="BatchMode"
 							type="xsd:boolean" maxOccurs="1" minOccurs="0">
@@ -312,7 +312,7 @@
 							sawsdl:modelReference="http://edamontology.org/data_0950 http://edamontology.org/format_2585 http://wsio.org/transfer_011 http://wsio.org/compression_022"
 							maxOccurs="unbounded" minOccurs="1" />
 						<xsd:element name="DataFile" type="xsd:string"
-							sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011  http://wsio.org/compression_022"
+							sawsdl:modelReference="http://edamontology.org/data_0006 http://filext.com/file-extension/TSV http://wsio.org/transfer_011 http://wsio.org/compression_022"
 							maxOccurs="1" minOccurs="1" />
 						<xsd:element name="MappingFile"
 							type="xsd:string" maxOccurs="1" minOccurs="0">
@@ -409,960 +409,960 @@
 			</xsd:complexType>
 
 
-            <xsd:complexType name="ListSbmlModelFiles"></xsd:complexType>
+			<xsd:complexType name="ListSbmlModelFiles"></xsd:complexType>
 
-            <xsd:element name="GetVersion">
-            	<xsd:annotation>
+			<xsd:element name="GetVersion">
+				<xsd:annotation>
 					<xsd:documentation>
 						Returns the webservice version.
 					</xsd:documentation>
 				</xsd:annotation>
-            	<xsd:complexType>
-            		<xsd:sequence>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="GetVersionResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="Version" type="xsd:string"></xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ValidateSBMLModelText">
-            	<xsd:complexType>
+				<xsd:complexType>
+					<xsd:sequence>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="GetVersionResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Version" type="xsd:string"></xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ValidateSBMLModelText">
+				<xsd:complexType>
 					<xsd:sequence>
 						<xsd:element name="SbmlModelFile"
 						type="xsd:string"
 						sawsdl:modelReference="http://edamontology.org/data_0950 http://edamontology.org/format_2585 http://wsio.org/transfer_011"/>
 					</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ValidateSBMLModelTextResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="ModelIsValid" type="xsd:boolean" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ValidateSBMLModelTextResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="ModelIsValid" type="xsd:boolean" />
 						<xsd:element name="ErrorMessages" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ValidateSBMLModelBase64Encoded">
-            	<xsd:complexType>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ValidateSBMLModelBase64Encoded">
+				<xsd:complexType>
 					<xsd:sequence>
 						<xsd:element name="SbmlModelFile" type="xsd:string" sawsdl:modelReference="http://edamontology.org/data_0950 http://edamontology.org/format_2585 http://wsio.org/transfer_011 "/>
 					</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ValidateSBMLModelBase64EncodedResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="ModelIsValid" type="xsd:boolean"></xsd:element>
-            			<xsd:element name="ErrorMessages" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ValidateSBMLModelGzippedBase64Encoded">
-            	<xsd:complexType>
-            		<xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ValidateSBMLModelBase64EncodedResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="ModelIsValid" type="xsd:boolean"></xsd:element>
+						<xsd:element name="ErrorMessages" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ValidateSBMLModelGzippedBase64Encoded">
+				<xsd:complexType>
+					<xsd:sequence>
 						<xsd:element name="SbmlModelFile" type="xsd:string" sawsdl:modelReference="http://edamontology.org/data_0950 http://edamontology.org/format_2585 http://wsio.org/transfer_011 "/>
 					</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ValidateSBMLModelGzippedBase64EncodedResponse">
-  				<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="ModelIsValid" type="xsd:boolean"></xsd:element>
-            			<xsd:element name="ErrorMessages" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ReplaceGlobalParametersText">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="xsd:string" minOccurs="1" maxOccurs="unbounded">
-            			</xsd:element>
-            			<xsd:element name="DataFile" type="xsd:string"
-            				minOccurs="1" maxOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataColumnNumber"
-            				type="xsd:int" minOccurs="0" maxOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="MergeMode"
-            				type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MappingFile"
-            				type="xsd:string" minOccurs="0" maxOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="BatchMode" type="xsd:boolean"
-            				minOccurs="0" maxOccurs="1">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-             <xsd:element name="ReplaceGlobalParametersTextResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="tns:SbmlModelFilesType" minOccurs="1"
-            				maxOccurs="unbounded">
-            			</xsd:element>
-            			<xsd:element name="Warnings"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ReplaceGlobalParametersTextFault">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element
-            				name="ReplaceGlobalParametersTextFault"
-            				type="xsd:string">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ReplaceGlobalParametersBase64Encoded">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataFile" type="xsd:string"
-            				maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataColumnNumber"
-            				type="xsd:int" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MergeMode"
-            				type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MappingFile"
-            				type="xsd:string" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="BatchMode" type="xsd:boolean"
-            				maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ReplaceGlobalParametersBase64EncodedResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="tns:SbmlModelFilesType" minOccurs="1"
-            				maxOccurs="unbounded">
-            			</xsd:element>
-            			<xsd:element name="Warnings"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element
-            	name="ReplaceGlobalParametersBase64EncodedFault">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element
-            				name="ReplaceGlobalParametersBase64EncodedFault"
-            				type="xsd:string">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ReplaceGlobalParametersGzippedBase64Encoded">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataFile" type="xsd:string"
-            				maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataColumnNumber"
-            				type="xsd:int" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MergeMode"
-            				type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MappingFile"
-            				type="xsd:string" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="BatchMode" type="xsd:boolean"
-            				maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ReplaceGlobalParametersGzippedBase64EncodedResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="tns:SbmlModelFilesType" maxOccurs="unbounded"
-            				minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="Warnings"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element
-            	name="ReplaceGlobalParametersGzippedBase64EncodedFault">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element
-            				name="ReplaceGlobalParametersGzippedBase64EncodedFault"
-            				type="xsd:string">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ReplaceKineticLawParameterText">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="ParameterId"
-            				type="xsd:string" maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataFile" type="xsd:string"
-            				maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataColumnNumber"
-            				type="xsd:int" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MappingFile"
-            				type="xsd:string" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MergeMode"
-            				type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="BatchMode" type="xsd:boolean"
-            				maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ReplaceKineticLawParameterTextResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="tns:SbmlModelFilesType" maxOccurs="unbounded"
-            				minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="Warnings"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ReplaceKineticLawParameterBase64Encoded">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="ParameterId"
-            				type="xsd:string" maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataFile" type="xsd:string"
-            				maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataColumnNumber"
-            				type="xsd:int" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MappingFile"
-            				type="xsd:string" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MergeMode"
-            				type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="BatchMode" type="xsd:boolean"
-            				maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ReplaceKineticLawParameterBase64EncodedResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="tns:SbmlModelFilesType" maxOccurs="unbounded" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="Warnings"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ReplaceKineticLawParameterGzippedBase64Encoded">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="ParameterId"
-            				type="xsd:string" maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataFile" type="xsd:string"
-            				maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataColumnNumber"
-            				type="xsd:int" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MappingFile"
-            				type="xsd:string" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MergeMode"
-            				type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="BatchMode" type="xsd:boolean"
-            				maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ReplaceKineticLawParameterGzippedBase64EncodedResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="tns:SbmlModelFilesType" maxOccurs="unbounded"
-            				minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="Warnings"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ReplaceKineticLawParameterTextFault">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element
-            				name="ReplaceKineticLawParameterTextFault"
-            				type="xsd:string">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element
-            	name="ReplaceKineticLawParameterBase64EncodedFault">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element
-            				name="ReplaceKineticLawParameterBase64EncodedFault"
-            				type="xsd:string">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element
-            	name="ReplaceKineticLawParameterGzippedBase64EncodedFault">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element
-            				name="ReplaceKineticLawParameterGzippedBase64EncodedFault"
-            				type="xsd:string">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element
-            	name="ReplaceGlobalParamtersBase64EncodedFault">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element
-            				name="ReplaceGlobalParamtersBase64EncodedFault"
-            				type="xsd:string">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ScaleKineticLawParameterText">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="ParameterId"
-            				type="xsd:string" maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataFile" type="xsd:string"
-            				maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataColumnNumber"
-            				type="xsd:int" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MappingFile"
-            				type="xsd:string" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MergeMode"
-            				type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="BatchMode"
-            				type="xsd:boolean" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ScaleKineticLawParameterTextResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="tns:SbmlModelFilesType" maxOccurs="unbounded"
-            				minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="Warnings"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ScaleKineticLawParameterBase64Encoded">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="ParameterId"
-            				type="xsd:string" maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataFile" type="xsd:string"
-            				maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataColumnNumber"
-            				type="xsd:int" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MappingFile"
-            				type="xsd:string" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MergeMode"
-            				type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="BatchMode"
-            				type="xsd:boolean" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ScaleKineticLawParameterBase64EncodedResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="tns:SbmlModelFilesType" maxOccurs="unbounded"
-            				minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="Warnings"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ScaleKineticLawParameterGzippedBase64Encoded">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="ParameterId"
-            				type="xsd:string" maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataFile" type="xsd:string"
-            				maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataColumnNumber"
-            				type="xsd:int" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MappingFile"
-            				type="xsd:string" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MergeMode"
-            				type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="BatchMode"
-            				type="xsd:boolean" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ScaleKineticLawParameterGzippedBase64EncodedResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="tns:SbmlModelFilesType" maxOccurs="unbounded"
-            				minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="Warnings"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ScaleKineticLawParameterTextFault">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element
-            				name="ScaleKineticLawParameterTextFault"
-            				type="xsd:string">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element
-            	name="ScaleKineticLawParameterBase64EncodedFault">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element
-            				name="ScaleKineticLawParameterBase64EncodedFault"
-            				type="xsd:string">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element
-            	name="ScaleKineticLawParameterGzippedBase64EncodedFault">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element
-            				name="ScaleKineticLawParameterGzippedBase64EncodedFault"
-            				type="xsd:string">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="AddBoundsToKineticLawText">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DefaultValue" type="xsd:int"
-            				maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataFile" type="xsd:string"
-            				maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="DataColumnNumber"
-            				type="xsd:int" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MappingFile"
-            				type="xsd:string" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MergeMode"
-            				type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="BatchMode"
-            				type="xsd:boolean" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="AddBoundsToKineticLawTextResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="tns:SbmlModelFilesType" maxOccurs="unbounded"
-            				minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="Warnings"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="AddBoundsToKineticLawBase64Encoded">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DefaultValue" type="xsd:int"
-            				maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataFile" type="xsd:string"
-            				maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="DataColumnNumber"
-            				type="xsd:int" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MappingFile"
-            				type="xsd:string" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MergeMode"
-            				type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="BatchMode"
-            				type="xsd:boolean" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="AddBoundsToKineticLawBase64EncodedResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="tns:SbmlModelFilesType" maxOccurs="unbounded"
-            				minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="Warnings"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="AddBoundsToKineticLawGzippedBase64Encoded">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DefaultValue"
-            				type="xsd:int" maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataFile" type="xsd:string"
-            				maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="DataColumnNumber"
-            				type="xsd:int" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MappingFile"
-            				type="xsd:string" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MergeMode"
-            				type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="BatchMode"
-            				type="xsd:boolean" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="AddBoundsToKineticLawGzippedBase64EncodedResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="tns:SbmlModelFilesType" maxOccurs="unbounded"
-            				minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="Warnings"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="AddBoundsToKineticLawTextFault">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element
-            				name="AddBoundsToKineticLawTextFault"
-            				type="xsd:string">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element
-            	name="AddBoundsToKineticLawBase64EncodedFault">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element
-            				name="AddBoundsToKineticLawBase64EncodedFault"
-            				type="xsd:string">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element
-            	name="AddBoundsToKineticLawGzippedBase64EncodedFault">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element
-            				name="AddBoundsToKineticLawGzippedBase64EncodedFault"
-            				type="xsd:string">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ReplaceInitialConcentrationsOfSpeciesText">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataFile" type="xsd:string"
-            				maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataColumnNumber"
-            				type="xsd:int" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MappingFile"
-            				type="xsd:string" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="BatchMode"
-            				type="xsd:boolean" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ReplaceInitialConcentrationsOfSpeciesTextResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="tns:SbmlModelFilesType" maxOccurs="unbounded"
-            				minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="Warnings"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ReplaceInitialConcentrationsOfSpeciesBase64Encoded">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataFile" type="xsd:string"
-            				maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataColumnNumber"
-            				type="xsd:int" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MappingFile"
-            				type="xsd:string" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="BatchMode"
-            				type="xsd:boolean" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ReplaceInitialConcentrationsOfSpeciesBase64EncodedResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="tns:SbmlModelFilesType" maxOccurs="unbounded"
-            				minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="Warnings"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ReplaceInitialConcentrationsOfSpeciesGzippedBase64Encoded">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataFile" type="xsd:string"
-            				maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataColumnNumber"
-            				type="xsd:int" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MappingFile"
-            				type="xsd:string" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="BatchMode"
-            				type="xsd:boolean" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ReplaceInitialConcentrationsOfSpeciesGzippedBase64EncodedResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="tns:SbmlModelFilesType" maxOccurs="unbounded"
-            				minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="Warnings"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element
-            	name="ReplaceInitialConcentrationsOfSpeciesTextFault">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element
-            				name="ReplaceInitialConcentrationsOfSpeciesTextFault"
-            				type="xsd:string">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element
-            	name="ReplaceInitialConcentrationsOfSpeciesBase64EncodedFault">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element
-            				name="ReplaceInitialConcentrationsOfSpeciesBase64EncodedFault"
-            				type="xsd:string">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element
-            	name="ReplaceInitialConcentrationsOfSpeciesGzippedBase64EncodedFault">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element
-            				name="ReplaceInitialConcentrationsOfSpeciesGzippedBase64EncodedFault"
-            				type="xsd:string">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ScaleGlobalParametersText">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataFile" type="xsd:string"
-            				maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataColumnNumber"
-            				type="xsd:int" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MappingFile"
-            				type="xsd:string" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MergeMode"
-            				type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="BatchMode" type="xsd:boolean"
-            				maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ScaleGlobalParametersTextResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="tns:SbmlModelFilesType" maxOccurs="unbounded"
-            				minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="Warnings"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ScaleGlobalParametersBase64Encoded">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataFile" type="xsd:string"
-            				maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataColumnNumber"
-            				type="xsd:int" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MappingFile"
-            				type="xsd:string" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MergeMode"
-            				type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="BatchMode" type="xsd:boolean"
-            				maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ScaleGlobalParametersBase64EncodedResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="tns:SbmlModelFilesType" maxOccurs="unbounded"
-            				minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="Warnings"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ScaleGlobalParametersGzippedBase64Encoded">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataFile" type="xsd:string"
-            				maxOccurs="1" minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="DataColumnNumber"
-            				type="xsd:int" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MappingFile"
-            				type="xsd:string" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="MergeMode"
-            				type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            			<xsd:element name="BatchMode" type="xsd:boolean"
-            				maxOccurs="1" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ScaleGlobalParametersGzippedBase64EncodedResponse">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element name="SbmlModelFiles"
-            				type="tns:SbmlModelFilesType" maxOccurs="unbounded"
-            				minOccurs="1">
-            			</xsd:element>
-            			<xsd:element name="Warnings"
-            				type="xsd:string" maxOccurs="unbounded" minOccurs="0">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element name="ScaleGlobalParametersTextFault">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element
-            				name="ScaleGlobalParametersTextFault"
-            				type="xsd:string">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element
-            	name="ScaleGlobalParametersBase64EncodedFault">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element
-            				name="ScaleGlobalParametersBase64EncodedFault"
-            				type="xsd:string">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
-            <xsd:element
-            	name="ScaleGlobalParametersGzippedBase64EncodedFault">
-            	<xsd:complexType>
-            		<xsd:sequence>
-            			<xsd:element
-            				name="ScaleGlobalParametersGzippedBase64EncodedFault"
-            				type="xsd:string">
-            			</xsd:element>
-            		</xsd:sequence>
-            	</xsd:complexType>
-            </xsd:element>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ValidateSBMLModelGzippedBase64EncodedResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="ModelIsValid" type="xsd:boolean"></xsd:element>
+						<xsd:element name="ErrorMessages" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceGlobalParametersText">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="xsd:string" minOccurs="1" maxOccurs="unbounded">
+						</xsd:element>
+						<xsd:element name="DataFile" type="xsd:string"
+							minOccurs="1" maxOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataColumnNumber"
+							type="xsd:int" minOccurs="0" maxOccurs="1">
+						</xsd:element>
+						<xsd:element name="MergeMode"
+							type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MappingFile"
+							type="xsd:string" minOccurs="0" maxOccurs="1">
+						</xsd:element>
+						<xsd:element name="BatchMode" type="xsd:boolean"
+							minOccurs="0" maxOccurs="1">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceGlobalParametersTextResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="tns:SbmlModelFilesType" minOccurs="1"
+							maxOccurs="unbounded">
+						</xsd:element>
+						<xsd:element name="Warnings"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceGlobalParametersTextFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element
+							name="ReplaceGlobalParametersTextFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceGlobalParametersBase64Encoded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataFile" type="xsd:string"
+							maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataColumnNumber"
+							type="xsd:int" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MergeMode"
+							type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MappingFile"
+							type="xsd:string" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="BatchMode" type="xsd:boolean"
+							maxOccurs="1" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceGlobalParametersBase64EncodedResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="tns:SbmlModelFilesType" minOccurs="1"
+							maxOccurs="unbounded">
+						</xsd:element>
+						<xsd:element name="Warnings"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element
+				name="ReplaceGlobalParametersBase64EncodedFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element
+							name="ReplaceGlobalParametersBase64EncodedFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceGlobalParametersGzippedBase64Encoded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataFile" type="xsd:string"
+							maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataColumnNumber"
+							type="xsd:int" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MergeMode"
+							type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MappingFile"
+							type="xsd:string" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="BatchMode" type="xsd:boolean"
+							maxOccurs="1" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceGlobalParametersGzippedBase64EncodedResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="tns:SbmlModelFilesType" maxOccurs="unbounded"
+							minOccurs="1">
+						</xsd:element>
+						<xsd:element name="Warnings"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element
+				name="ReplaceGlobalParametersGzippedBase64EncodedFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element
+							name="ReplaceGlobalParametersGzippedBase64EncodedFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceKineticLawParameterText">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="ParameterId"
+							type="xsd:string" maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataFile" type="xsd:string"
+							maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataColumnNumber"
+							type="xsd:int" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MappingFile"
+							type="xsd:string" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MergeMode"
+							type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="BatchMode" type="xsd:boolean"
+							maxOccurs="1" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceKineticLawParameterTextResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="tns:SbmlModelFilesType" maxOccurs="unbounded"
+							minOccurs="1">
+						</xsd:element>
+						<xsd:element name="Warnings"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceKineticLawParameterBase64Encoded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="ParameterId"
+							type="xsd:string" maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataFile" type="xsd:string"
+							maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataColumnNumber"
+							type="xsd:int" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MappingFile"
+							type="xsd:string" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MergeMode"
+							type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="BatchMode" type="xsd:boolean"
+							maxOccurs="1" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceKineticLawParameterBase64EncodedResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="tns:SbmlModelFilesType" maxOccurs="unbounded" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="Warnings"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceKineticLawParameterGzippedBase64Encoded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="ParameterId"
+							type="xsd:string" maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataFile" type="xsd:string"
+							maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataColumnNumber"
+							type="xsd:int" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MappingFile"
+							type="xsd:string" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MergeMode"
+							type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="BatchMode" type="xsd:boolean"
+							maxOccurs="1" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceKineticLawParameterGzippedBase64EncodedResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="tns:SbmlModelFilesType" maxOccurs="unbounded"
+							minOccurs="1">
+						</xsd:element>
+						<xsd:element name="Warnings"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceKineticLawParameterTextFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element
+							name="ReplaceKineticLawParameterTextFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element
+				name="ReplaceKineticLawParameterBase64EncodedFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element
+							name="ReplaceKineticLawParameterBase64EncodedFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element
+				name="ReplaceKineticLawParameterGzippedBase64EncodedFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element
+							name="ReplaceKineticLawParameterGzippedBase64EncodedFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element
+				name="ReplaceGlobalParamtersBase64EncodedFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element
+							name="ReplaceGlobalParamtersBase64EncodedFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ScaleKineticLawParameterText">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="ParameterId"
+							type="xsd:string" maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataFile" type="xsd:string"
+							maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataColumnNumber"
+							type="xsd:int" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MappingFile"
+							type="xsd:string" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MergeMode"
+							type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="BatchMode"
+							type="xsd:boolean" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ScaleKineticLawParameterTextResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="tns:SbmlModelFilesType" maxOccurs="unbounded"
+							minOccurs="1">
+						</xsd:element>
+						<xsd:element name="Warnings"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ScaleKineticLawParameterBase64Encoded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="ParameterId"
+							type="xsd:string" maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataFile" type="xsd:string"
+							maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataColumnNumber"
+							type="xsd:int" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MappingFile"
+							type="xsd:string" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MergeMode"
+							type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="BatchMode"
+							type="xsd:boolean" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ScaleKineticLawParameterBase64EncodedResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="tns:SbmlModelFilesType" maxOccurs="unbounded"
+							minOccurs="1">
+						</xsd:element>
+						<xsd:element name="Warnings"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ScaleKineticLawParameterGzippedBase64Encoded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="ParameterId"
+							type="xsd:string" maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataFile" type="xsd:string"
+							maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataColumnNumber"
+							type="xsd:int" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MappingFile"
+							type="xsd:string" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MergeMode"
+							type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="BatchMode"
+							type="xsd:boolean" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ScaleKineticLawParameterGzippedBase64EncodedResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="tns:SbmlModelFilesType" maxOccurs="unbounded"
+							minOccurs="1">
+						</xsd:element>
+						<xsd:element name="Warnings"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ScaleKineticLawParameterTextFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element
+							name="ScaleKineticLawParameterTextFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element
+				name="ScaleKineticLawParameterBase64EncodedFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element
+							name="ScaleKineticLawParameterBase64EncodedFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element
+				name="ScaleKineticLawParameterGzippedBase64EncodedFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element
+							name="ScaleKineticLawParameterGzippedBase64EncodedFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="AddBoundsToKineticLawText">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DefaultValue" type="xsd:int"
+							maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataFile" type="xsd:string"
+							maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="DataColumnNumber"
+							type="xsd:int" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MappingFile"
+							type="xsd:string" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MergeMode"
+							type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="BatchMode"
+							type="xsd:boolean" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="AddBoundsToKineticLawTextResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="tns:SbmlModelFilesType" maxOccurs="unbounded"
+							minOccurs="1">
+						</xsd:element>
+						<xsd:element name="Warnings"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="AddBoundsToKineticLawBase64Encoded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DefaultValue" type="xsd:int"
+							maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataFile" type="xsd:string"
+							maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="DataColumnNumber"
+							type="xsd:int" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MappingFile"
+							type="xsd:string" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MergeMode"
+							type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="BatchMode"
+							type="xsd:boolean" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="AddBoundsToKineticLawBase64EncodedResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="tns:SbmlModelFilesType" maxOccurs="unbounded"
+							minOccurs="1">
+						</xsd:element>
+						<xsd:element name="Warnings"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="AddBoundsToKineticLawGzippedBase64Encoded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DefaultValue"
+							type="xsd:int" maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataFile" type="xsd:string"
+							maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="DataColumnNumber"
+							type="xsd:int" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MappingFile"
+							type="xsd:string" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MergeMode"
+							type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="BatchMode"
+							type="xsd:boolean" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="AddBoundsToKineticLawGzippedBase64EncodedResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="tns:SbmlModelFilesType" maxOccurs="unbounded"
+							minOccurs="1">
+						</xsd:element>
+						<xsd:element name="Warnings"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="AddBoundsToKineticLawTextFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element
+							name="AddBoundsToKineticLawTextFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element
+				name="AddBoundsToKineticLawBase64EncodedFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element
+							name="AddBoundsToKineticLawBase64EncodedFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element
+				name="AddBoundsToKineticLawGzippedBase64EncodedFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element
+							name="AddBoundsToKineticLawGzippedBase64EncodedFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceInitialConcentrationsOfSpeciesText">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataFile" type="xsd:string"
+							maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataColumnNumber"
+							type="xsd:int" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MappingFile"
+							type="xsd:string" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="BatchMode"
+							type="xsd:boolean" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceInitialConcentrationsOfSpeciesTextResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="tns:SbmlModelFilesType" maxOccurs="unbounded"
+							minOccurs="1">
+						</xsd:element>
+						<xsd:element name="Warnings"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceInitialConcentrationsOfSpeciesBase64Encoded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataFile" type="xsd:string"
+							maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataColumnNumber"
+							type="xsd:int" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MappingFile"
+							type="xsd:string" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="BatchMode"
+							type="xsd:boolean" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceInitialConcentrationsOfSpeciesBase64EncodedResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="tns:SbmlModelFilesType" maxOccurs="unbounded"
+							minOccurs="1">
+						</xsd:element>
+						<xsd:element name="Warnings"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceInitialConcentrationsOfSpeciesGzippedBase64Encoded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataFile" type="xsd:string"
+							maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataColumnNumber"
+							type="xsd:int" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MappingFile"
+							type="xsd:string" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="BatchMode"
+							type="xsd:boolean" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ReplaceInitialConcentrationsOfSpeciesGzippedBase64EncodedResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="tns:SbmlModelFilesType" maxOccurs="unbounded"
+							minOccurs="1">
+						</xsd:element>
+						<xsd:element name="Warnings"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element
+				name="ReplaceInitialConcentrationsOfSpeciesTextFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element
+							name="ReplaceInitialConcentrationsOfSpeciesTextFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element
+				name="ReplaceInitialConcentrationsOfSpeciesBase64EncodedFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element
+							name="ReplaceInitialConcentrationsOfSpeciesBase64EncodedFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element
+				name="ReplaceInitialConcentrationsOfSpeciesGzippedBase64EncodedFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element
+							name="ReplaceInitialConcentrationsOfSpeciesGzippedBase64EncodedFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ScaleGlobalParametersText">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataFile" type="xsd:string"
+							maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataColumnNumber"
+							type="xsd:int" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MappingFile"
+							type="xsd:string" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MergeMode"
+							type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="BatchMode" type="xsd:boolean"
+							maxOccurs="1" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ScaleGlobalParametersTextResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="tns:SbmlModelFilesType" maxOccurs="unbounded"
+							minOccurs="1">
+						</xsd:element>
+						<xsd:element name="Warnings"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ScaleGlobalParametersBase64Encoded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataFile" type="xsd:string"
+							maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataColumnNumber"
+							type="xsd:int" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MappingFile"
+							type="xsd:string" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MergeMode"
+							type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="BatchMode" type="xsd:boolean"
+							maxOccurs="1" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ScaleGlobalParametersBase64EncodedResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="tns:SbmlModelFilesType" maxOccurs="unbounded"
+							minOccurs="1">
+						</xsd:element>
+						<xsd:element name="Warnings"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ScaleGlobalParametersGzippedBase64Encoded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataFile" type="xsd:string"
+							maxOccurs="1" minOccurs="1">
+						</xsd:element>
+						<xsd:element name="DataColumnNumber"
+							type="xsd:int" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MappingFile"
+							type="xsd:string" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="MergeMode"
+							type="tns:MergeModeType" maxOccurs="1" minOccurs="0">
+						</xsd:element>
+						<xsd:element name="BatchMode" type="xsd:boolean"
+							maxOccurs="1" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ScaleGlobalParametersGzippedBase64EncodedResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="SbmlModelFiles"
+							type="tns:SbmlModelFilesType" maxOccurs="unbounded"
+							minOccurs="1">
+						</xsd:element>
+						<xsd:element name="Warnings"
+							type="xsd:string" maxOccurs="unbounded" minOccurs="0">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ScaleGlobalParametersTextFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element
+							name="ScaleGlobalParametersTextFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element
+				name="ScaleGlobalParametersBase64EncodedFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element
+							name="ScaleGlobalParametersBase64EncodedFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element
+				name="ScaleGlobalParametersGzippedBase64EncodedFault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element
+							name="ScaleGlobalParametersGzippedBase64EncodedFault"
+							type="xsd:string">
+						</xsd:element>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
 		</xsd:schema>
 	</wsdl:types>
 
@@ -1677,93 +1677,93 @@
 		<wsdl:operation name="ReplaceGlobalParametersText">
 			<wsdl:input message="tns:ReplaceGlobalParametersTextRequest"></wsdl:input>
 			<wsdl:output message="tns:ReplaceGlobalParametersTextResponse"></wsdl:output>
-            <wsdl:fault name="ReplaceGlobalParamtersTextFault" message="tns:SBMLmodFault"></wsdl:fault>
-        </wsdl:operation>
+			<wsdl:fault name="ReplaceGlobalParamtersTextFault" message="tns:SBMLmodFault"></wsdl:fault>
+		</wsdl:operation>
 		<wsdl:operation name="ReplaceGlobalParametersGzippedBase64Encoded">
 			<wsdl:input message="tns:ReplaceGlobalParametersGzippedBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ReplaceGlobalParametersGzippedBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="ReplaceGlobalParametersGzippedBase64EncodedFault" message="tns:SBMLmodFault"></wsdl:fault>
-        </wsdl:operation>
+			<wsdl:fault name="ReplaceGlobalParametersGzippedBase64EncodedFault" message="tns:SBMLmodFault"></wsdl:fault>
+		</wsdl:operation>
 		<wsdl:operation name="ReplaceKineticLawParameterText">
 			<wsdl:input message="tns:ReplaceKineticLawParameterTextRequest"></wsdl:input>
 			<wsdl:output message="tns:ReplaceKineticLawParameterTextResponse"></wsdl:output>
-            <wsdl:fault name="ReplaceKineticLawParameterTextFault" message="tns:SBMLmodFault"></wsdl:fault>
-        </wsdl:operation>
+			<wsdl:fault name="ReplaceKineticLawParameterTextFault" message="tns:SBMLmodFault"></wsdl:fault>
+		</wsdl:operation>
 		<wsdl:operation name="ReplaceKineticLawParameterBase64Encoded">
 			<wsdl:input message="tns:ReplaceKineticLawParameterBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ReplaceKineticLawParameterBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="ReplaceKineticLawParamterBase64EncodedFault" message="tns:SBMLmodFault"></wsdl:fault>
-        </wsdl:operation>
+			<wsdl:fault name="ReplaceKineticLawParamterBase64EncodedFault" message="tns:SBMLmodFault"></wsdl:fault>
+		</wsdl:operation>
 		<wsdl:operation name="ReplaceKineticLawParameterGzippedBase64Encoded">
 			<wsdl:input message="tns:ReplaceKineticLawParameterGzippedBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ReplaceKineticLawParameterGzippedBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="ReplaceKineticLawParamterGzippedBase64Encoded" message="tns:SBMLmodFault"></wsdl:fault>
-        </wsdl:operation>
+			<wsdl:fault name="ReplaceKineticLawParamterGzippedBase64Encoded" message="tns:SBMLmodFault"></wsdl:fault>
+		</wsdl:operation>
 		<wsdl:operation name="ReplaceGlobalParametersBase64Encoded">
 			<wsdl:input message="tns:ReplaceGlobalParametersBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ReplaceGlobalParametersBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="ReplaceGlobalParametersBase64EncodedFault" message="tns:SBMLmodFault"></wsdl:fault>
-        </wsdl:operation>
+			<wsdl:fault name="ReplaceGlobalParametersBase64EncodedFault" message="tns:SBMLmodFault"></wsdl:fault>
+		</wsdl:operation>
 		<wsdl:operation name="ScaleKineticLawParameterText">
 			<wsdl:input message="tns:ScaleKineticLawParameterTextRequest"></wsdl:input>
 			<wsdl:output message="tns:ScaleKineticLawParameterTextResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
-        </wsdl:operation>
+			<wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
+		</wsdl:operation>
 		<wsdl:operation name="ScaleKineticLawParameterBase64Encoded">
 			<wsdl:input message="tns:ScaleKineticLawParameterBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ScaleKineticLawParameterBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
-        </wsdl:operation>
+			<wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
+		</wsdl:operation>
 		<wsdl:operation name="ScaleKineticLawParameterGzippedBase64Encoded">
 			<wsdl:input message="tns:ScaleKineticLawParameterGzippedBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ScaleKineticLawParameterGzippedBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
-        </wsdl:operation>
+			<wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
+		</wsdl:operation>
 		<wsdl:operation name="AddBoundsToKineticLawText">
 			<wsdl:input message="tns:AddBoundsToKineticLawTextRequest"></wsdl:input>
 			<wsdl:output message="tns:AddBoundsToKineticLawTextResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
-        </wsdl:operation>
+			<wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
+		</wsdl:operation>
 		<wsdl:operation name="AddBoundsToKineticLawBase64Encoded">
 			<wsdl:input message="tns:AddBoundsToKineticLawBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:AddBoundsToKineticLawBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
-        </wsdl:operation>
+			<wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
+		</wsdl:operation>
 		<wsdl:operation name="AddBoundsToKineticLawGzippedBase64Encoded">
 			<wsdl:input message="tns:AddBoundsToKineticLawGzippedBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:AddBoundsToKineticLawGzippedBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
-        </wsdl:operation>
+			<wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
+		</wsdl:operation>
 		<wsdl:operation name="ReplaceInitialConcentrationsOfSpeciesText">
 			<wsdl:input message="tns:ReplaceInitialConcentrationsOfSpeciesTextRequest"></wsdl:input>
 			<wsdl:output message="tns:ReplaceInitialConcentrationsOfSpeciesTextResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
-        </wsdl:operation>
+			<wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
+		</wsdl:operation>
 		<wsdl:operation name="ReplaceInitialConcentrationsOfSpeciesBase64Encoded">
 			<wsdl:input message="tns:ReplaceInitialConcentrationsOfSpeciesBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ReplaceInitialConcentrationsOfSpeciesBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
-        </wsdl:operation>
+			<wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
+		</wsdl:operation>
 		<wsdl:operation name="ReplaceInitialConcentrationsOfSpeciesGzippedBase64Encoded">
 			<wsdl:input message="tns:ReplaceInitialConcentrationsOfSpeciesGzippedBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ReplaceInitialConcentrationsOfSpeciesGzippedBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
-        </wsdl:operation>
+			<wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
+		</wsdl:operation>
 		<wsdl:operation name="ScaleGlobalParametersText">
 			<wsdl:input message="tns:ScaleGlobalParametersTextRequest"></wsdl:input>
 			<wsdl:output message="tns:ScaleGlobalParametersTextResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
-        </wsdl:operation>
+			<wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
+		</wsdl:operation>
 		<wsdl:operation name="ScaleGlobalParametersBase64Encoded">
 			<wsdl:input message="tns:ScaleGlobalParametersBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ScaleGlobalParametersBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
-        </wsdl:operation>
+			<wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
+		</wsdl:operation>
 		<wsdl:operation name="ScaleGlobalParametersGzippedBase64Encoded">
 			<wsdl:input message="tns:ScaleGlobalParametersGzippedBase64EncodedRequest"></wsdl:input>
 			<wsdl:output message="tns:ScaleGlobalParametersGzippedBase64EncodedResponse"></wsdl:output>
-            <wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
-        </wsdl:operation>
+			<wsdl:fault name="fault" message="tns:SBMLmodFault"></wsdl:fault>
+		</wsdl:operation>
 	</wsdl:portType>
 
 
@@ -2175,7 +2175,7 @@
 	</wsdl:binding>
 	<wsdl:service name="SBMLmod">
 		<wsdl:port binding="tns:SBMLmodSOAP" name="SBMLmodSOAP">
-			  <soap:address location="http://sbmlmod.uit.no:8080/sbmlmod" />
+			<soap:address location="http://sbmlmod.uit.no:8080/sbmlmod" />
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>
