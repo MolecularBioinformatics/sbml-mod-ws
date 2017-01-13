@@ -41,7 +41,7 @@ from suds.client import Client
 ####
 
 # use local wsdl version, which gets shipped with the project
-wsdlURL			= 'file://' + os.path.dirname(os.path.dirname( os.path.realpath(__file__) ))  + '/sbmlmod/SBMLmod.wsdl'
+wsdlURL			= 'file://' + os.path.dirname(os.path.dirname( os.path.realpath(__file__) ))  + '/src/sbmlmod/SBMLmod.wsdl'
 path			= './'
 newSBMLbaseFilename	= 'newSBML'
 
