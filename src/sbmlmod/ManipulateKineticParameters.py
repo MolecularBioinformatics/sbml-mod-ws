@@ -92,9 +92,7 @@ class ManipulateKineticParameters(object):
         if request.get_element_DataColumnNumber():
             datacolumn = int(request.get_element_DataColumnNumber())
 
-        batch = False
-        if request.get_element_BatchMode():
-            batch = request.get_element_BatchMode()
+        batch = request.get_element_BatchMode()
 
         if batch:
             if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile) - datacolumn + 1:
@@ -187,9 +185,7 @@ class ManipulateKineticParameters(object):
         if request.get_element_DataColumnNumber():
             datacolumn = int(request.get_element_DataColumnNumber())
 
-        batch = False
-        if request.get_element_BatchMode():
-            batch = request.get_element_BatchMode()
+        batch = request.get_element_BatchMode()
 
         if batch:
             if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile) - datacolumn + 1:
@@ -292,9 +288,7 @@ class ManipulateKineticParameters(object):
 
             header.append("NewModelWithDefaultLimits")
         else:
-            batch = False
-            if request.get_element_BatchMode():
-                batch = request.get_element_BatchMode()
+            batch = request.get_element_BatchMode()
 
             datacolumn = 2
             if request.get_element_DataColumnNumber():
@@ -377,9 +371,7 @@ class ManipulateKineticParameters(object):
         if request.get_element_DataColumnNumber():
             datacolumn = int(request.get_element_DataColumnNumber())
 
-        batch = False
-        if request.get_element_BatchMode():
-            batch = request.get_element_BatchMode()
+        batch = request.get_element_BatchMode()
 
         if batch:
             if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile) - datacolumn + 1:
@@ -623,9 +615,7 @@ class ManipulateKineticParameters(object):
                 message = "A default value must be set for the parameter 'DefaultValue' for reactions that do not have an entry in the data file"
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-            batch = False
-            if request.get_element_BatchMode():
-                batch = request.get_element_BatchMode()
+            batch = request.get_element_BatchMode()
 
             datacolumn = 2
             if request.get_element_DataColumnNumber():
