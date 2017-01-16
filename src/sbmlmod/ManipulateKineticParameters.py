@@ -80,7 +80,7 @@ class ManipulateKineticParameters(object):
         return results, warnings
 
 
-    def executeReplaceKineticLawParameter(self, request, sbmlfiles, datafile, mappingfile):
+    def executeReplaceKineticLawParameter(self, request, sbmlfiles, datafile, mappingfile = None):
         if not request.get_element_ParameterId():
             message = "Please state which parameter to scale."
             raise SBMLmodFault(message, "MISSING_ELEMENT")
@@ -103,7 +103,7 @@ class ManipulateKineticParameters(object):
                 message = "Only one model file can be submitted when batch mode is set to False"
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-        if mappingfile is not None:
+        if mappingfile:
             mapper.setup(mappingfile, datafile, datacolumn, batch=batch)
 
             if request.get_element_MergeMode():
@@ -122,13 +122,13 @@ class ManipulateKineticParameters(object):
             else:
                 self.expr, self.exprId = mapper.setup_expr(datafile, batch=batch)
 
-        newmodels = []
+        newsbmlfiles = []
         header = self.getDataHeader(datafile, datacolumn)
         editor = ModelEditor()
 
         if batch:
             if len(sbmlfiles) > 1:
-                for i in range(len(sbmlfiles)):
+                for i in xrange(len(sbmlfiles)):
                     reader = SBMLReader()
                     sbmlDocument = reader.readSBMLFromString(sbmlfiles[i])
 
@@ -136,11 +136,10 @@ class ManipulateKineticParameters(object):
                         message = "The SBML file is not valid."
                         raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-                    #for j in range(len(self.expr[0])):
                     newModel, warnings = editor.replaceKineticLawParameter(document=sbmlDocument, data=self.expr, column=i, datainfo=self.exprId, parameter=request.get_element_ParameterId(), warnings=warnings)
 
                     sbmlDocument.setModel(newModel)
-                    newmodels.append(sbmlDocument)
+                    newsbmlfiles.append(sbmlDocument)
             else:
                 reader = SBMLReader()
                 sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
@@ -149,14 +148,14 @@ class ManipulateKineticParameters(object):
                     message = "The SBML file is not valid."
                     raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-                for i in range(len(self.expr[0])):
+                for i in xrange(len(self.expr[0])):
                     reader = SBMLReader()
                     sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
 
                     newModel, warnings = editor.replaceKineticLawParameter(document=sbmlDocument, data=self.expr, column=i, datainfo=self.exprId, parameter=request.get_element_ParameterId(), warnings=warnings)
 
                     sbmlDocument.setModel(newModel)
-                    newmodels.append(sbmlDocument)
+                    newsbmlfiles.append(sbmlDocument)
         else:
             reader = SBMLReader()
             sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
@@ -168,9 +167,9 @@ class ManipulateKineticParameters(object):
             newModel, warnings = editor.replaceKineticLawParameter(document=sbmlDocument, data=self.expr, column=0, datainfo=self.exprId, parameter=request.get_element_ParameterId(), warnings=warnings)
 
             sbmlDocument.setModel(newModel)
-            newmodels.append(sbmlDocument)
+            newsbmlfiles.append(sbmlDocument)
 
-        return [newmodels, header], warnings
+        return [newsbmlfiles, header], warnings
 
 
     def executeScaleKineticLawParameter(self, request, sbmlfiles, datafile, mappingfile):
@@ -221,7 +220,7 @@ class ManipulateKineticParameters(object):
 
         if batch:
             if len(sbmlfiles) > 1:
-                for i in range(len(sbmlfiles)):
+                for i in xrange(len(sbmlfiles)):
                     reader = SBMLReader()
                     sbmlDocument = reader.readSBMLFromString(sbmlfiles[i])
 
@@ -229,7 +228,7 @@ class ManipulateKineticParameters(object):
                         message = "The SBML file is not valid."
                         raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-                    for j in range(len(self.expr[0])):
+                    for j in xrange(len(self.expr[0])):
                         newModel, warnings = editor.scaleKineticLawParameter(document=sbmlDocument, data=self.expr, column=j, datainfo=self.exprId, parameter=request.get_element_ParameterId(), warnings=warnings)
 
                         sbmlDocument.setModel(newModel)
@@ -242,7 +241,7 @@ class ManipulateKineticParameters(object):
                     message = "The SBML file is not valid."
                     raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-                for i in range(len(self.expr[0])):
+                for i in xrange(len(self.expr[0])):
                     reader = SBMLReader()
                     sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
 
@@ -323,14 +322,14 @@ class ManipulateKineticParameters(object):
 
             if batch:
                 if len(sbmlfiles) > 1:
-                    for i in range(len(sbmlfiles)):
+                    for i in xrange(len(sbmlfiles)):
                         reader = SBMLReader()
                         sbmlDocument = reader.readSBMLFromString(sbmlfiles[i])
                         if sbmlDocument.getNumErrors():
                             message = "The SBML file is not valid."
                             raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-                        for j in range(len(self.expr[0])):
+                        for j in xrange(len(self.expr[0])):
                             newModel, warnings = editor.addBounds(document=sbmlDocument, warnings=warnings, default_value=request.get_element_DefaultValue(), data=self.expr, column=j, datainfo=self.exprId)
                             sbmlDocument.setModel(newModel)
                             newsbmlmodels.append(sbmlDocument)
@@ -338,7 +337,7 @@ class ManipulateKineticParameters(object):
                     reader = SBMLReader()
 
                     sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
-                    for i in range(len(self.expr[0])):
+                    for i in xrange(len(self.expr[0])):
                         if sbmlDocument.getNumErrors():
                             message = "The SBML file is not valid."
                             raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
@@ -377,6 +376,10 @@ class ManipulateKineticParameters(object):
             if len(sbmlfiles) > self.getNumberOfColumnsInDataFile(datafile) - datacolumn + 1:
                 message = "There are more model files than number of columns in the datafile"
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+        else:
+            if len(sbmlfiles) > 1:
+                message = "Only one model file can be submitted when batch mode is set to False"
+                raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
         if mappingfile:
             mapper.setup(mappingfile, datafile, col=datacolumn, batch=batch)
@@ -393,17 +396,45 @@ class ManipulateKineticParameters(object):
         header = self.getDataHeader(datafile, datacolumn)
         editor = ModelEditor()
 
-        reader = SBMLReader()
-        for i in range(len(sbmlfiles)):
-            sbmlDocument = reader.readSBMLFromString(sbmlfiles[i])
+        if batch:
+            if len(sbmlfiles) > 1:
+                for i in xrange(len(sbmlfiles)):
+                    reader = SBMLReader()
+                    sbmlDocument = reader.readSBMLFromString(sbmlfiles[i])
+
+                    if sbmlDocument.getNumErrors():
+                        message = "The SBML file is not valid."
+                        raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+
+                    newModel, warnings = editor.editInitialConcentrations(document=sbmlDocument, data=self.conc, datainfo=self.metId, warnings=warnings, column=i)
+
+                    sbmlDocument.setModel(newModel)
+                    newsbmlfiles.append(sbmlDocument)
+            else:
+                reader = SBMLReader()
+                sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
+
+                if sbmlDocument.getNumErrors():
+                    message = "The SBML file is not valid."
+                    raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
+
+                for i in xrange(len(self.conc[0])):
+                    reader = SBMLReader()
+                    sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
+
+                    newModel, warnings = editor.editInitialConcentrations(document=sbmlDocument, data=self.conc, datainfo=self.metId, warnings=warnings, column=i)
+
+                    sbmlDocument.setModel(newModel)
+                    newsbmlfiles.append(sbmlDocument)
+        else:
+            reader = SBMLReader()
+            sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
+
             if sbmlDocument.getNumErrors():
                 message = "The SBML file is not valid."
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-            if batch:
-                newModel, warnings = editor.editInitialConcentrations(document=sbmlDocument, data=self.conc, datainfo=self.metId, warnings=warnings, column=i)
-            else:
-                newModel, warnings = editor.editInitialConcentrations(document=sbmlDocument, data=self.conc, datainfo=self.metId, warnings=warnings, column=datacolumn - 2)
+            newModel, warnings = editor.editInitialConcentrations(document=sbmlDocument, data=self.conc, datainfo=self.metId, warnings=warnings, column=datacolumn - 2)
 
             sbmlDocument.setModel(newModel)
             newsbmlfiles.append(sbmlDocument)
@@ -450,7 +481,7 @@ class ManipulateKineticParameters(object):
 
         if batch:
             if len(sbmlfiles) > 1:
-                for i in range(len(sbmlfiles)):
+                for i in xrange(len(sbmlfiles)):
                     reader = SBMLReader()
                     sbmlDocument = reader.readSBMLFromString(sbmlfiles[i])
 
@@ -470,7 +501,7 @@ class ManipulateKineticParameters(object):
                     message = "The SBML file is not valid."
                     raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-                for i in range(len(self.expr[0])):
+                for i in xrange(len(self.expr[0])):
                     reader = SBMLReader()
                     sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
 
@@ -533,7 +564,7 @@ class ManipulateKineticParameters(object):
 
         if batch:
             if len(sbmlfiles) > 1:
-                for i in range(len(sbmlfiles)):
+                for i in xrange(len(sbmlfiles)):
                     reader = SBMLReader()
                     sbmlDocument = reader.readSBMLFromString(sbmlfiles[i])
 
@@ -552,7 +583,7 @@ class ManipulateKineticParameters(object):
                     message = "The SBML file is not valid."
                     raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-                for i in range(len(self.expr[0])):
+                for i in xrange(len(self.expr[0])):
                     reader = SBMLReader()
                     sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
 
@@ -654,7 +685,7 @@ class ManipulateKineticParameters(object):
 
             if batch:
                 if len(sbmlfiles) > 1:
-                    for i in range(len(sbmlfiles)):
+                    for i in xrange(len(sbmlfiles)):
                         reader = SBMLReader()
                         sbmlDocument = reader.readSBMLFromString(sbmlfiles[i])
 
@@ -662,7 +693,7 @@ class ManipulateKineticParameters(object):
                             message = "The SBML file is not valid."
                             raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-                        for j in range(len(self.expr[0])):
+                        for j in xrange(len(self.expr[0])):
                             newModel, warnings = editor.addKineticLawParameter(document=sbmlDocument, parameter=parameter, warnings=warnings, default_value=request.get_element_DefaultValue(), data=self.expr, column=j, datainfo=self.exprId)
 
                             sbmlDocument.setModel(newModel)
@@ -675,7 +706,7 @@ class ManipulateKineticParameters(object):
                 else:
                     reader = SBMLReader()
 
-                    for i in range(len(self.expr[0])):
+                    for i in xrange(len(self.expr[0])):
                         sbmlDocument = reader.readSBMLFromString(sbmlfiles[0])
 
                         if sbmlDocument.getNumErrors():
@@ -724,7 +755,7 @@ class ManipulateKineticParameters(object):
         line = datafile.split('\n')[0]
         columns = line.split('\t')
         header = []
-        for i in range(col - 1, len(columns)):
+        for i in xrange(col - 1, len(columns)):
             header.append(columns[i])
 
         return header
