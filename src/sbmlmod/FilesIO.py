@@ -148,7 +148,7 @@ class FilesIO:
 
 
     def writeResultsToFileGzippedBase64Encoded(self, results):
-        SBMLmod_file = SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLmod", "SbmlModelFilesType")).pyclass
+        SBMLmod_file = SBMLfiletypeNs.SbmlModelFilesType_Def(("http://sbmlmod.uit.no:8080/sbmlmod", "SbmlModelFilesType")).pyclass
         sbmlDocuments = results[0]
         header = results[1]
         writtenFiles = []
@@ -164,7 +164,7 @@ class FilesIO:
 
 
     def writeResultsToFileBase64Encoded(self, results):
-        SBMLmod_file = SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLmod", "SbmlModelFilesType")).pyclass
+        SBMLmod_file = SBMLfiletypeNs.SbmlModelFilesType_Def(("http://sbmlmod.uit.no:8080/sbmlmod", "SbmlModelFilesType")).pyclass
         sbmlDocuments = results[0]
         header = results[1]
         writtenFiles = []
@@ -180,7 +180,7 @@ class FilesIO:
 
 
     def writeResultsToFileText(self, results):
-        SBMLmod_file = SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLmod", "SbmlModelFilesType")).pyclass
+        SBMLmod_file = SBMLfiletypeNs.SbmlModelFilesType_Def(("http://sbmlmod.uit.no:8080/sbmlmod", "SbmlModelFilesType")).pyclass
         sbmlDocuments = results[0]
         header = results[1]
         writtenFiles = []

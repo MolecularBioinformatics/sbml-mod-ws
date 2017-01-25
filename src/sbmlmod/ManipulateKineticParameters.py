@@ -622,7 +622,7 @@ class ManipulateKineticParameters(object):
         newsbmlfiles = []
         editor = ModelEditor()
 
-        SBMLmod_file = SBMLfiletypeNs.SbmlModelFilesType_Def(("http://esysbio.org/service/bio/SBMLmod", "SbmlModelFilesType")).pyclass
+        SBMLmod_file = SBMLfiletypeNs.SbmlModelFilesType_Def(("http://sbmlmod.uit.no:8080/sbmlmod", "SbmlModelFilesType")).pyclass
 
         if self.option == 'INSERT_DEFAULT':
 
