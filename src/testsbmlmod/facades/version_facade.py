@@ -31,7 +31,7 @@ class Test_version_facade(unittest.TestCase):
         pass
 
     def testGetVersion(self):
-        self.assertEquals (version_facade.getVersion(), '1.0.0')
+        self.assertEquals (version_facade.getVersion(), '1.2.0')
 
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testIsSBMLValid']
