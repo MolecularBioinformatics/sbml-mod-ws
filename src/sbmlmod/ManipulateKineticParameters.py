@@ -434,7 +434,7 @@ class ManipulateKineticParameters(object):
                 message = "The SBML file is not valid."
                 raise SBMLmodFault(message, "FILE_HANDLING_ERROR")
 
-            newModel, warnings = editor.editInitialConcentrations(document=sbmlDocument, data=self.conc, datainfo=self.metId, warnings=warnings, column=datacolumn - 2)
+            newModel, warnings = editor.editInitialConcentrations(document=sbmlDocument, data=self.conc, datainfo=self.metId, warnings=warnings, column=0)
 
             sbmlDocument.setModel(newModel)
             newsbmlfiles.append(sbmlDocument)
