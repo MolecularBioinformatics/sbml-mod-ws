@@ -13,7 +13,7 @@ setup(name='sbmlmod',
       packages=find_packages('src'),
       include_package_data=True,
       zip_safe=False,
-      install_requires=['ZSI==2.1-a4', 'suds==0.3.9'],
+      install_requires=['ZSI==2.1-a4', 'suds==1.0.0'],
       entry_points="""
           [console_scripts]
           gencode = sbmlmod.gencode:generate_server_code
